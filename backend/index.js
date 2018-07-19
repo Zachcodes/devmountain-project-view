@@ -21,6 +21,10 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => app.set('db', dbInstan
 
 //** Cohort Program Routes routes **
 app.get('/api/programs', ctc.getAllPrograms)
+app.get('/api/programs/:programtype', ctc.getProgramByType)
+
+//cohort project routes 
+app.get('/api/cohorts/:id/projects', cc.getProjectsByCohort)
 
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)

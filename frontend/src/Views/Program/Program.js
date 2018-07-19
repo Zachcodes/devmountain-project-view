@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
+import { Link } from 'react-router-dom'
+import './Program.css'
 
 export default class Home extends Component {
     constructor() {
@@ -34,11 +36,11 @@ export default class Home extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="program-container">
                 {this.state.programs.map(element => {
-                   return( <div key={element.id}>
+                   return( <Link to={`programs/cohorts/${element.id}`} key={element.id}>
                         {element.type}
-                    </div>)
+                    </Link>)
                 })}
             </div>
         )

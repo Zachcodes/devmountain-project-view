@@ -13,10 +13,10 @@ import ProjectDetails from './Views/ProjectDetails/ProjectDetails';
 export default (
 <Switch>
     <Route exact path="/" component={Program}/>
-    <Route exact path="/programs/cohorts" component={CohortOverview}/>
-    <Route path="/programs/cohorts/:id" component={CohortDetails}/>
-    <Route path="/students/:id" component={Student}/>
+    <Route exact path="/programs/cohorts/:programtype" component={CohortOverview}/>
+    <Route exact path="/programs/cohorts/:programtype/:cohortid" component={CohortDetails}/>
+    <Route path="/students/:studentid" component={Student}/>
     <Route exact path="/projects" component={Projects}/>
-    <Route path="/projects/:id" component={ProjectDetails}/>
+    <Route path="/projects/:projectid" component={ProjectDetails}/>
 </Switch>
 )
