@@ -4,3 +4,54 @@
     border: 1px solid black;
     padding: 30px;
 }
+/* body */
+.body-wrapper {
+    padding: 10px;
+}
+/* Navbar styles */
+.navbar-container {
+    position: relative;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 8vh;
+    background-color: #535455;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 5px;
+    width: 20%;
+}
+
+.navbar-left span {
+    font-size:10px;
+    color: white;
+}
+.navbar-left a {
+    text-decoration: none;
+}
+.devmountain-logo {
+    height: 30px;
+    width: 30px;
+}
+/* .navbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 25%;
+    padding: 5px;
+}
+.navbar-right a {
+    text-decoration: none;
+}
+.navbar-right span {
+    font-size: 10px;
+    color: white;
+    text-decoration: none;
+} */

@@ -16,10 +16,14 @@ export default class CohortDetails extends Component {
     componentDidMount() {
         let {cohortid} = this.props.match.params;
         axios.get(`/api/cohorts/${cohortid}/projects`).then(res => {
-            let personal = res.data.filter(element => element.project_type === 1)
-            let group = res.data.filter(element => element.project_type === 2)
+            let personal = res.data.personalProjects;
+            let group = res.data.splitGroups;
+            let tempGroup = []
+            for(let groupid in group) {
+                tempGroup.push(group[groupid])
+            }
             this.setState({
-                groupProjects: group,
+                groupProjects: tempGroup,
                 personalProjects: personal
             })
         })
@@ -40,7 +44,7 @@ export default class CohortDetails extends Component {
                     <h2>Group Projects</h2>
                     {
                         this.state.groupProjects.map( (project, index) => {
-                            return <GroupProject key={index} projectDetails={project} />
+                            return <GroupProject key={index} projectDetails={project.projectInfo} members={project.members} />
                         })
                     }
                 </div>

@@ -26,6 +26,9 @@ app.get('/api/programs/:programtype', ctc.getProgramByType)
 //cohort project routes 
 app.get('/api/cohorts/:id/projects', cc.getProjectsByCohort)
 
+//students routes 
+app.get('/api/students/:id', sc.getStudent)
+
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
 })
