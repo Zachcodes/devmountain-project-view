@@ -12,37 +12,30 @@ export default class Home extends Component {
         }
     }
     componentDidMount() {
-        if(!this.state.grabbedData){
             axios.get('/api/programs').then(programs => {
-                if(programs.data.length) {
-                    this.setState({
-                        programs: programs.data,
-                        grabbedData: true
-                    })
-                }
-                else {
-                    this.setState({
-                        grabbedData: true
-                    })
-                }
+                this.setState({
+                    programs: programs.data
+                })
             }).catch(err => {
                 if(err) {
-                    this.setState({
-                        grabbedData: true
-                    })
+                    alert('Could no get programs')
                 }
             })
-        }
     }
     render() {
         return (
+            this.state.programs.length > 0 ?
             <div className="program-container">
                 {this.state.programs.map(element => {
-                   return( <Link to={`programs/cohorts/${element.id}`} key={element.id}>
+                   return (
+                    <Link to={`programs/cohorts/${element.id}`} key={element.id}>
                         {element.type}
-                    </Link>)
+                    </Link>
+                    )
                 })}
             </div>
+            :
+            null
         )
     }
 }
