@@ -15,7 +15,8 @@ export default class CohortDetails extends Component {
         this.state = {
             groupProjects: [],
             personalProjects: [],
-            students: []    
+            students: [],
+            loaded: false  
         }
     }
     componentDidMount() {
@@ -31,7 +32,8 @@ export default class CohortDetails extends Component {
             this.setState({
                 groupProjects: tempGroup,
                 personalProjects: personal,
-                students: students
+                students: students, 
+                loaded: true
             })
         })
     }
@@ -39,13 +41,15 @@ export default class CohortDetails extends Component {
         let {search} = this.props.location 
         let queryValues = queryString.parse(search) 
         return (
+            this.state.loaded 
+            ?
             <div className="cohort-details-main-container">
                 <div className="cohort-details-title-div">
                    Cohort {queryValues.name}
                 </div>
                 <div className="cohort-details-body-div">
                     <div className="cohort-details-left-container">
-                        <div className="cohort-details-left-title">
+                        <div className="cohort-details-title">
                             <h2>Students</h2>
                         </div>
                         <div className="cohort-details-left-student-container">
@@ -55,25 +59,33 @@ export default class CohortDetails extends Component {
                         </div>
                     </div>
                     <div className="cohort-details-right-container">
-                        <div className="cohort-details-project-container">
-                            <h2>Personal Projects</h2>
-                            {
-                                this.state.personalProjects.map( (project, index) => {
-                                    return <PersonalProject key={index} projectDetails={project} />
-                                })
-                                
-                            }
+                        <div className="cohort-details-project-main-container">
+                            <div className="cohort-details-title">Personal Projects</div>
+                            <div className="cohort-details-project-container">
+                                {
+                                    this.state.personalProjects.map( (project, index) => {
+                                        return <PersonalProject key={index} projectDetails={project} />
+                                    })
+                                    
+                                }
+                            </div>
                         </div>
-                        <div className="cohort-details-project-container">
-                            <h2>Group Projects</h2>
-                            {
-                                this.state.groupProjects.map( (project, index) => {
-                                    return <GroupProject key={index} projectDetails={project.projectInfo} members={project.members} />
-                                })
-                            }
+                        <div className="cohort-details-project-main-container">
+                            <div className="cohort-details-title">Group Projects</div>
+                            <div className="cohort-details-project-container">
+                                {
+                                    this.state.groupProjects.map( (project, index) => {
+                                        return <GroupProject key={index} projectDetails={project.projectInfo} members={project.members} />
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            :
+            <div>
+                Loading!
             </div>
         )
     }

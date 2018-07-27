@@ -13,7 +13,8 @@ export default function PersonalProject(props) {
         display: 'flex',
         flexDirection: 'column',
         padding: '10px',
-        height: '300px'
+        height: '150px',
+        width: '45%'
     }
     // TODO Come back and make it so students can upload images
     const personalProjectPicture = {
@@ -29,16 +30,17 @@ export default function PersonalProject(props) {
         height: '50%',
         padding: '10px',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        fontSize: '10px'
     }
-    console.log(props)
+
     let {project_name: projectName, first, last, url} = props.projectDetails
     return (
         <div style={personalProjectContainer}> 
-            <div style={personalProjectPicture}></div>  
+            <div style={personalProjectPicture} class="project-url-link" onClick={() => openWindow(url)}></div>  
             <div style={personalProjectInformation}>
                 <div>Project name: {projectName}</div>
-                <div>Student: {projectDetails.first} {projectDetails.last}</div>
+                <div>Student: {first} {last}</div>
                 <div>Url: {url}</div>
             </div>
         </div>

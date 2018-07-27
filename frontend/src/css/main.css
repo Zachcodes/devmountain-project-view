@@ -55,3 +55,8 @@
     color: white;
     text-decoration: none;
 } */
+
+/* General */
+.project-url-link:hover {
+    cursor: pointer;
+}

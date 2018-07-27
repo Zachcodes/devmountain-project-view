@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import placeholder from '../images/thumbnail_placeholder.png'
+import '../css/main.css'
 
 
 export default function GroupProject(props) {
@@ -14,8 +15,8 @@ export default function GroupProject(props) {
     const personalProjectContainer = {
         display: 'flex',
         flexDirection: 'column',
-        padding: '10px',
-        height: '300px'
+        height: '150px',
+        width: '45%'
     }
     // TODO Come back and make it so students can upload images
     const personalProjectPicture = {
@@ -31,12 +32,13 @@ export default function GroupProject(props) {
         height: '50%',
         padding: '10px',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        fontSize: '10px'
     }
 
     return (
         <div style={personalProjectContainer}> 
-            <div style={personalProjectPicture}></div>  
+            <div style={personalProjectPicture} class="project-url-link" onClick={() => openWindow(url)}></div>
             <div style={personalProjectInformation}>
                 <div>Project name: {projectName}</div>
                 <div>Group Members: {
