@@ -7,7 +7,7 @@ export default function Cohort(props) {
         <div>
             <p>{name}</p>
             <p>{cohortid}</p>
-            <Link to={`/programs/cohorts/${type}/${cohortid}`}><button>Cohort Details</button></Link>
+                <Link to={`/programs/cohorts/${type}/${cohortid}?name=${name}`}><button>Cohort Details</button></Link>
         </div>
     )
 }

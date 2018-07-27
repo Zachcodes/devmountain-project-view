@@ -1,16 +1,39 @@
+a {
+    text-decoration: none;
+    color: black;
+}
 .cohort-details-main-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     padding: 10px;
 }
-
+.cohort-details-title-div {
+    width: auto;
+    height: 10%;
+    display: flex;
+    justify-content: flex-start;
+}
+.cohort-details-body-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
 .cohort-details-left-container {
     width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .cohort-details-right-container {
     width: 45%;
     display: flex;
     flex-direction: column;
+    padding: 10px;
+}
+
+.cohort-details-project-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
 }
