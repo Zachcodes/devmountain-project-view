@@ -11,10 +11,8 @@ class App extends Component {
   render() {
     return (
       <div>
-      <NavBar/>
-      <div className="body-wrapper">
+        <NavBar/>
         {routes}
-      </div>
       </div>
     );
   }
