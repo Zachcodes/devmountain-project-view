@@ -11,18 +11,20 @@ export default class Student extends Component {
             last: '',
             projects: [],
             image: '',
+            about: '',
             doneLoading: false
         }
     }
     componentDidMount() {
         axios.get(`/api/students/${this.props.match.params.studentid}`).then( response => {
             let {data} = response;
-            let first, last;
+            let first, last, about;
             let projects = [];
             let image;
             for(let i = 0; i < data.length; i++) {
                 if(!first) first = data[i].first 
                 if(!last) last = data[i].last 
+                if(!about) about = data[i].about 
                 if(!image) image = data[i].image 
                 let tempProject = {
                     projectName: data[i].project_name,
@@ -36,23 +38,36 @@ export default class Student extends Component {
                 last,
                 projects,
                 image,
+                about,
                 doneLoading: true
             })
 
         })
     }
 
+    openWindow = (url) => {
+        window.open(url)
+    }
+
     render() {
-        let {doneLoading, first, last, projects} = this.state
+        let {doneLoading, first, last, projects, about, image} = this.state
 
         //styles 
         let studentLeftPicture = {
+            width: '100%',
+            height: '40%',
+            background: `url(${image}) no-repeat`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'center top'
+        }
+        let studentRightPicture = {
             width: '100%',
             height: '40%',
             background: `url(${placeholder}) no-repeat`,
             backgroundSize: 'contain',
             backgroundPosition: 'center top'
         }
+        
         return (
             doneLoading 
             ?
@@ -64,20 +79,22 @@ export default class Student extends Component {
                     </div>
                     <div style={studentLeftPicture}></div>
                     <div className="student-left-details">
-                        {
-                            projects.map((project, index) => {
-                                let type = project.projectType === 1 ? 'Personal' : 'Group'
-                                return (
-                                    <div key={index}>
-                                        <p>{type}: {project.projectName}</p>
-                                        <p>Url: {project.url}</p>
-                                    </div>
-                                )
-                            })
-                        }
+                        {about}
                     </div>
                 </div>
-                <div className="student-right-main-container"></div>
+                <div className="student-right-main-container">
+                    {
+                        projects.map((project, index) => {
+                            let type = project.projectType === 1 ? 'Personal' : 'Group'
+                            return (
+                                <div key={index} className="student-right-project-container">
+                                    <p>{type}: {project.projectName}</p>
+                                    <div style={studentRightPicture} className="project-url-link"onClick={() => this.openWindow(project.url)}></div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
 
             </div>
             :
