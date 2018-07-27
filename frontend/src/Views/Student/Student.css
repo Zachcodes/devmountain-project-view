@@ -1,0 +1,28 @@
+.student-main-container {
+    display: flex;
+}
+
+.student-left-main-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.student-left-title {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.student-left-details {
+    display: flex;
+    justify-content: flex-start;
+    height: 50%;
+}
+
+.student-right-main-container {
+    width: 50%;
+}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import default_picture from '../../images/live_long_and_prosper.jpg';
+import placeholder from '../../images/thumbnail_placeholder.png';
+import './Student.css'
 
 export default class Student extends Component {
     constructor() {
@@ -9,7 +10,8 @@ export default class Student extends Component {
             first: '',
             last: '',
             projects: [],
-            image: ''
+            image: '',
+            doneLoading: false
         }
     }
     componentDidMount() {
@@ -33,32 +35,55 @@ export default class Student extends Component {
                 first, 
                 last,
                 projects,
-                image
+                image,
+                doneLoading: true
             })
 
         })
     }
 
     render() {
+        let {doneLoading, first, last, projects} = this.state
+
+        //styles 
+        let studentLeftPicture = {
+            width: '100%',
+            height: '40%',
+            background: `url(${placeholder}) no-repeat`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'center top'
+        }
         return (
-            this.state.first.length > 0 ?
-            <div>
-                <p>{this.state.first} {this.state.last}</p>
-                <img src={default_picture}/>
-                {
-                    this.state.projects.map((project, index) => {
-                        let type = project.projectType === 1 ? 'Personal' : 'Group'
-                        return (
-                            <div key={index}>
-                                <p>{type}: {project.projectName}</p>
-                                <p>Url: {project.url}</p>
-                            </div>
-                        )
-                    })
-                }
+            doneLoading 
+            ?
+            <div className="student-main-container">
+
+                <div className="student-left-main-container">
+                    <div className="student-left-title">
+                        {first} {last}
+                    </div>
+                    <div style={studentLeftPicture}></div>
+                    <div className="student-left-details">
+                        {
+                            projects.map((project, index) => {
+                                let type = project.projectType === 1 ? 'Personal' : 'Group'
+                                return (
+                                    <div key={index}>
+                                        <p>{type}: {project.projectName}</p>
+                                        <p>Url: {project.url}</p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+                <div className="student-right-main-container"></div>
+
             </div>
             :
-            null
+            <div>
+                Loading!
+            </div>
         )
     }
 }
