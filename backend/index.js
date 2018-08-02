@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Massive = require('massive');
+const bcrypt = require('bcrypt')
 const connectionString = process.env.CONNECTION_STRING;
 const sc = require('./Controllers/studentController');
 const cc = require('./Controllers/cohortController');
@@ -9,8 +10,12 @@ const ctc = require('./Controllers/cohortTypesController');
 const lc = require('./Controllers/loginController');
 const pc = require('./Controllers/projectsController');
 require('dotenv').config();
+const saltRounds = 10;
 
 const app = express()
+
+app.set('saltRounds', saltRounds)
+app.set('bcrypt', bcrypt)
 
 app.use(bodyParser.json())
 

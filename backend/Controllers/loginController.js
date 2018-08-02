@@ -1,15 +1,24 @@
 module.exports = {
     login: (req, res) => {
-        const bcrypt = require('bcrypt')
-        const saltRounds = 10;
-
-        let {username, password} = req.body;
+        const bcrypt = req.app.get('bcrypt')
+        const saltRounds = req.app.get('saltRounds');
+        const db = req.app.get('db')
+        const {username, password} = req.body;
+        //get username 
+        db.get_username({username}).then(response => {
+            if(response.length) {
+                let user = response[0]
+                bcrypt.compare(password, user.password, (err, res) => {
+                    console.log('res in bcrypt', res)
+                })
+            }
+        })
     },
     createUser: (req, res) => {
-        const bcrypt = require('bcrypt')
-        let {username, password} = req.body
-        let db = req.app.get('db')
-        const saltRounds = 10;
+        const bcrypt = req.app.get('bcrypt')
+        const saltRounds = req.app.get('saltRounds');
+        const db = req.app.get('db')
+        const {username, password} = req.body
 
         bcrypt.genSalt(saltRounds, (err, salt) => {
             bcrypt.hash(password, salt, function(err, hash) {
