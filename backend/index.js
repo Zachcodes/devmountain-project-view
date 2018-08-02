@@ -13,9 +13,7 @@ const app = express()
 
 //massive setup 
 Massive(process.env.CONNECTION_STRING).then(dbInstance => app.set('db', dbInstance))
-// const massiveInstance = Massive.connectSync({connectionString})
 
-// app.set('db', massiveInstance)
 
 //routes 
 
