@@ -39,6 +39,9 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => app.set('db', dbInstan
 
 //routes 
 
+//session routes 
+app.get('/api/loginCheck', lc.loginCheck)
+
 //** Cohort Program Routes routes **
 app.get('/api/programs', ctc.getAllPrograms)
 app.get('/api/programs/:programtype', ctc.getProgramByType)

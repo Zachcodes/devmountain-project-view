@@ -8,6 +8,7 @@ import CohortDetails from './Views/CohortDetails/CohortDetails';
 import Student from './Views/Student/Student';
 import Projects from './Views/Projects/Projects';
 import ProjectDetails from './Views/ProjectDetails/ProjectDetails';
+import Login from './Views/Login/Login';
 
 
 export default (
@@ -18,5 +19,6 @@ export default (
     <Route path="/students/:studentid" component={Student}/>
     <Route exact path="/projects" component={Projects}/>
     <Route path="/projects/:projectid" component={ProjectDetails}/>
+    <Route path="/login" component={Login} />
 </Switch>
 )

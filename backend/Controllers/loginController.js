@@ -4,7 +4,7 @@ module.exports = {
         const saltRounds = req.app.get('saltRounds');
         const db = req.app.get('db')
         const {username, password} = req.body;
-        //get username 
+        
         db.get_username({username}).then(response => {
             if(response.length) {
                 let user = response[0]
@@ -15,20 +15,24 @@ module.exports = {
                         if(user.role_id === 2) req.session.isStaff = true
                         if(user.role_id === 3) req.session.isStudent = true
 
-                        res.status(200).send('Logged in')
+                        res.status(200).send({redirectUrl: '/'})
                     }
                     else {
-                        res.status(403).send('Username password do not match')
+                        res.status(400).send('Username password do not match')
                     }
                 })
             }
             else {
-                res.status(200).send('Could not find a matching username')
+                res.status(400).send('Could not find a matching username')
             }
         })
     },
     logout: (req, res) => {
         req.session.destroy()
         res.status(200).send('Logged out')
+    },
+    loginCheck: (req, res) => {
+        if(req.session.loggedIn) return res.status(200).send({loggedIn: true})
+        res.status(200).send({loggedIn: false})
     }
 }
