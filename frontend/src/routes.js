@@ -9,6 +9,7 @@ import Student from './Views/Student/Student';
 import Projects from './Views/Projects/Projects';
 import ProjectDetails from './Views/ProjectDetails/ProjectDetails';
 import Login from './Views/Login/Login';
+import LoggedIn from './Views/LoggedIn/LoggedIn';
 
 
 export default (
@@ -20,5 +21,6 @@ export default (
     <Route exact path="/projects" component={Projects}/>
     <Route path="/projects/:projectid" component={ProjectDetails}/>
     <Route path="/login" component={Login} />
+    <Route path="/dashboard" component={LoggedIn} />
 </Switch>
 )

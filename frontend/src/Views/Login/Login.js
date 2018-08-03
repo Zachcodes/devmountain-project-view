@@ -51,7 +51,7 @@ export default class Login extends Component {
             ?
             redirect 
             ?
-            <Redirect to="/"/>
+            <Redirect to="/dashboard"/>
             :
             <div>
                 Username: <input value={this.state.username} onChange={(e) => this.handleChange(e.target.value, 'username')}/>
