@@ -15,6 +15,7 @@ const rc = require('./Controllers/ratingsController')
 const uc = require('./Controllers/userController')
 //require middleware 
 const adminCheck = require('./Middleware/adminCheck')
+const staffCheck = require('./Middleware/staffCheck')
 
 require('dotenv').config();
 const saltRounds = 10;
@@ -49,12 +50,12 @@ app.get('/api/students/:id', sc.getStudent)
 
 //login routes 
 app.post('/api/login', lc.login)
-app.post('/api/createUser', lc.createUser)
+app.delete('/api/logout', lc.logout)
 
 //rating routes 
-app.post('/api/ratings/:projectId/:staffId', rc.addRating)
-app.put('/api/ratings/:ratingId', rc.updateRating)
-app.delete('/api/ratings/:ratingId', rc.deleteRating)
+app.post('/api/ratings/:projectId/:staffId', staffCheck, rc.addRating)
+app.put('/api/ratings/:ratingId', staffCheck, rc.updateRating)
+app.delete('/api/ratings/:ratingId', staffCheck, rc.deleteRating)
 
 //add user routes 
 //TODO: need to make it so that there are admin add user routes and user add user
