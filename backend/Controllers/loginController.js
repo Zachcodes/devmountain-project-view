@@ -8,9 +8,18 @@ module.exports = {
         db.get_username({username}).then(response => {
             if(response.length) {
                 let user = response[0]
-                bcrypt.compare(password, user.password, (err, res) => {
-                    console.log('res in bcrypt', res)
+                bcrypt.compare(password, user.password, (err, result) => {
+                    if(result) {
+                        req.session.loggedIn = true
+                        res.status(200).send('Logged in')
+                    }
+                    else {
+                        res.status(403).send('Username password do not match')
+                    }
                 })
+            }
+            else {
+                res.status(200).send('Could not find a matching username')
             }
         })
     },
