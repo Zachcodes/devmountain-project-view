@@ -2,6 +2,11 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 
+//components 
+import Student from '../../Components/Student'
+import Staff from '../../Components/Staff'
+import Admin from '../../Components/Admin'
+
 export default class LoggedIn extends Component {
     constructor() {
         super()
@@ -18,6 +23,10 @@ export default class LoggedIn extends Component {
     }
     render() {
         let {role, initialAuth, redirect} = this.state
+        let typeToRender = ''
+        if(role == 'student') typeToRender = <Student />
+        if(role == 'staff') typeToRender = <Staff />
+        if(role == 'admin') typeToRender = <Admin />
         return (
             initialAuth
             ?
@@ -26,7 +35,7 @@ export default class LoggedIn extends Component {
             <Redirect to="/login" />
             :
             <div>
-                {this.state.role}
+                {typeToRender}
             </div>
             :
             null

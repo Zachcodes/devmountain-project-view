@@ -70,6 +70,9 @@ app.post('/api/users/add/student', validEmailCheck, uc.addUserStudent)
 
 //dashboard routes 
 app.get('/api/loadDashboard', sessionCheck, dc.loadDashboard)
+app.get('/api/loadDashboard/admin/:adminId', sessionCheck, adminCheck, dc.loadAdminDashboard)
+app.get('/api/loadDashboard/staff/:staffId', sessionCheck, staffCheck, dc.loadStaffDashboard)
+app.get('/api/loadDashboard/student/:studentId', sessionCheck, dc.loadStudentDashboard)
 
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
