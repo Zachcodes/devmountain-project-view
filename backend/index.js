@@ -5,12 +5,17 @@ const Massive = require('massive');
 const bcrypt = require('bcrypt')
 const connectionString = process.env.CONNECTION_STRING;
 const session = require('express-session')
+//require controllers
 const sc = require('./Controllers/studentController');
 const cc = require('./Controllers/cohortController');
 const ctc = require('./Controllers/cohortTypesController');
 const lc = require('./Controllers/loginController');
 const pc = require('./Controllers/projectsController');
 const rc = require('./Controllers/ratingsController')
+const uc = require('./Controllers/userController')
+//require middleware 
+const adminCheck = require('./Middleware/adminCheck')
+
 require('dotenv').config();
 const saltRounds = 10;
 
@@ -50,6 +55,11 @@ app.post('/api/createUser', lc.createUser)
 app.post('/api/ratings/:projectId/:staffId', rc.addRating)
 app.put('/api/ratings/:ratingId', rc.updateRating)
 app.delete('/api/ratings/:ratingId', rc.deleteRating)
+
+//add user routes 
+//TODO: need to make it so that there are admin add user routes and user add user
+app.post('/api/users/add/admin', adminCheck, uc.addUserAdmin)
+app.post('/api/users/add/student', uc.addUserStudent)
 
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)

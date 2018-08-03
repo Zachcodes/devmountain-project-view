@@ -1,2 +1,4 @@
-select * from user_login_info
+select * from user_login_info ul
+join users u
+on ul.user_id = u.id
 where username = ${username}

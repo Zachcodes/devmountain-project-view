@@ -11,6 +11,10 @@ module.exports = {
                 bcrypt.compare(password, user.password, (err, result) => {
                     if(result) {
                         req.session.loggedIn = true
+                        if(user.role_id === 1) req.session.isAdmin = true
+                        if(user.role_id === 2) req.session.isStaff = true
+                        if(user.role_id === 3) req.session.isStudent = true
+
                         res.status(200).send('Logged in')
                     }
                     else {
