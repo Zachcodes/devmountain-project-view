@@ -3,9 +3,9 @@ module.exports = {
         const db = req.app.get('db')
         const bcrypt = req.app.get('bcrypt')
         const saltRounds = req.app.get('saltRounds');
-        const {username, password, name, roleId} = req.body
+        const {username, password, name, roleId, email} = req.body
         
-        db.add_user({name, roleId}).then(response => {
+        db.add_user({name, roleId, email}).then(response => {
             let userId = response[0].id
             bcrypt.genSalt(saltRounds, (err, salt) => {
                 bcrypt.hash(password, salt, function(err, hash) {
@@ -21,9 +21,9 @@ module.exports = {
     },
     addUserStudent: (req, res) => {
         const db = req.app.get('db');
-        let {name, username, password} = req.body;
+        let {name, username, password, email} = req.body;
         let roleId = 3;
-        db.add_user({name, roleId}).then(response => {
+        db.add_user({name, roleId, email}).then(response => {
             let userId = response[0].id
             bcrypt.genSalt(saltRounds, (err, salt) => {
                 bcrypt.hash(password, salt, function(err, hash) {

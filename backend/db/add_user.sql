@@ -1,4 +1,4 @@
-insert into users (name, role_id)
-values (${name}, ${roleId})
+insert into users (name, role_id, email)
+values (${name}, ${roleId}, ${email})
 
 returning *;

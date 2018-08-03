@@ -16,6 +16,7 @@ const uc = require('./Controllers/userController')
 //require middleware 
 const adminCheck = require('./Middleware/adminCheck')
 const staffCheck = require('./Middleware/staffCheck')
+const validEmailCheck = require('./Middleware/validEmailCheck')
 
 require('dotenv').config();
 const saltRounds = 10;
@@ -59,8 +60,8 @@ app.delete('/api/ratings/:ratingId', staffCheck, rc.deleteRating)
 
 //add user routes 
 //TODO: need to make it so that there are admin add user routes and user add user
-app.post('/api/users/add/admin', adminCheck, uc.addUserAdmin)
-app.post('/api/users/add/student', uc.addUserStudent)
+app.post('/api/users/add/admin', validEmailCheck, adminCheck, uc.addUserAdmin)
+app.post('/api/users/add/student', validEmailCheck, uc.addUserStudent)
 
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
