@@ -12,6 +12,7 @@ module.exports = {
     loadAdminDashboard: (req, res) => {
         const db = req.app.get('db')
         let {userId} = req.session
+        //TODO: Concatenate groups together before serving them to the frontend
         db.get_staff_ratings({userId}).then(ratedProjects => {
             let response = {
                 userRatedProjects: ratedProjects,
@@ -27,6 +28,7 @@ module.exports = {
     loadStaffDashboard: (req, res) => {
         const db = req.app.get('db')
         let {userId} = req.session
+        //TODO: Concatenate groups together before serving them to the frontend
         db.get_staff_ratings({userId}).then(dbRes => {
             res.status(200).send(response)
         })

@@ -15,12 +15,19 @@ export default class Admin extends Component {
     }
     componentDidMount() {
         axios.get('/api/loadDashboard/admin').then(response => {
-            console.log(response.data)
             let {userRatedProjects, unratedProjects} = response.data
             this.setState({
                 ratedProjects: userRatedProjects,
                 unratedProjects: unratedProjects
             })
+        })
+    }
+
+    updateProjects = (projectsArr) => {
+        let {userRatedProjects, unratedProjects} = projectsArr
+        this.setState({
+            ratedProjects: userRatedProjects,
+            unratedProjects: unratedProjects
         })
     }
     render() {
@@ -30,14 +37,17 @@ export default class Admin extends Component {
                {
                    ratedProjects.map((project, index) => {
                         return (
-                            <RatedProject project={project} key={index}/>
+                            <RatedProject project={project} key={project.project_name}/>
                         )
                    })
                }
                {
                    unratedProjects.map((project, index) => {
                         return (
-                            <UnratedProject project={project} key={index}/>
+                            <UnratedProject 
+                            project={project} 
+                            key={project.project_name}
+                            updateProjects={this.updateProjects}/>
                         )
                    })
                } 

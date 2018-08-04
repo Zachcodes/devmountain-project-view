@@ -5,7 +5,16 @@ module.exports = {
         let {userId} = req.session         
         let {rating} = req.query
         db.add_rating({userId, projectId, rating}).then( response => {
-            res.status(200).send('Added a rating')
+            db.get_staff_ratings({userId}).then(ratedProjects => {
+                let response = {
+                    userRatedProjects: ratedProjects,
+                    unratedProjects: []
+                }
+                db.get_unrated_projects({userId}).then(unratedProjects => {
+                    response.unratedProjects = unratedProjects;
+                    res.status(200).send(response)
+                })
+            })
         }).catch(err => res.status(500).send('Could not add rating'))
     },
     updateRating: (req, res) => {
@@ -13,7 +22,7 @@ module.exports = {
         let {userId} = req.session 
         let {rating} = req.query
         db.update_rating({ratingId, rating, userId}).then( response => {
-            res.status(200).send('Updated rating')
+            res.status(200).send(responses)
         }).catch(err => res.status(500).send('Could not update rating'))
     }, 
     deleteRating: (req, res) => {
@@ -21,7 +30,16 @@ module.exports = {
         let {ratingId} = req.params 
         let {userId} = req.session 
         db.delete_rating({ratingId, userId}).then( response => {
-            res.status(200).send('Deleted rating')
+            db.get_staff_ratings({userId}).then(ratedProjects => {
+                let response = {
+                    userRatedProjects: ratedProjects,
+                    unratedProjects: []
+                }
+                db.get_unrated_projects({userId}).then(unratedProjects => {
+                    response.unratedProjects = unratedProjects;
+                    res.status(200).send(response)
+                })
+            })
         }).catch(err => res.status(500).send('Could not delete rating'))
     }
 }
