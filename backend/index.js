@@ -59,7 +59,7 @@ app.post('/api/login', lc.login)
 app.delete('/api/logout', lc.logout)
 
 //rating routes 
-app.post('/api/ratings/:projectId/:staffId', staffCheck, rc.addRating)
+app.post('/api/ratings/:projectId', staffCheck, rc.addRating)
 app.put('/api/ratings/:ratingId', staffCheck, rc.updateRating)
 app.delete('/api/ratings/:ratingId', staffCheck, rc.deleteRating)
 
@@ -70,9 +70,9 @@ app.post('/api/users/add/student', validEmailCheck, uc.addUserStudent)
 
 //dashboard routes 
 app.get('/api/loadDashboard', sessionCheck, dc.loadDashboard)
-app.get('/api/loadDashboard/admin/:adminId', sessionCheck, adminCheck, dc.loadAdminDashboard)
-app.get('/api/loadDashboard/staff/:staffId', sessionCheck, staffCheck, dc.loadStaffDashboard)
-app.get('/api/loadDashboard/student/:studentId', sessionCheck, dc.loadStudentDashboard)
+app.get('/api/loadDashboard/admin', sessionCheck, adminCheck, dc.loadAdminDashboard)
+app.get('/api/loadDashboard/staff', sessionCheck, staffCheck, dc.loadStaffDashboard)
+app.get('/api/loadDashboard/student', sessionCheck, dc.loadStudentDashboard)
 
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)

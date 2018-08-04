@@ -14,6 +14,7 @@ module.exports = {
                         if(user.role_id === 1) req.session.isAdmin = true
                         if(user.role_id === 2) req.session.isStaff = true
                         if(user.role_id === 3) req.session.isStudent = true
+                        req.session.userId = user.user_id
 
                         res.status(200).send({redirectUrl: '/'})
                     }

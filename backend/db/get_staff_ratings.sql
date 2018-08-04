@@ -3,4 +3,5 @@ join projects p
 on p.id = pr.project_id 
 join users u 
 on u.id = pr.user_id
-where pr.user_id = ${userId};
+where pr.user_id = ${userId}
+and pr.rating is not null;

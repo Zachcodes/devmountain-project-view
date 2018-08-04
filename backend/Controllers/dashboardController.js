@@ -1,5 +1,6 @@
 module.exports = {
     loadDashboard: (req, res) => {
+        const db = req.app.get('db')
         let response = {
             role: ''
         }
@@ -9,17 +10,29 @@ module.exports = {
         res.status(200).send(response)
     },
     loadAdminDashboard: (req, res) => {
-        //TODO: grab all projects and their ratings for this admin
-        let {adminId} = req.params 
-        db.get_staff_ratings({adminId}).then(response => {
-            res.status(200).send(response)
+        const db = req.app.get('db')
+        let {userId} = req.session
+        db.get_staff_ratings({userId}).then(ratedProjects => {
+            let response = {
+                userRatedProjects: ratedProjects,
+                unratedProjects: []
+            }
+            db.get_unrated_projects({userId}).then(unratedProjects => {
+                response.unratedProjects = unratedProjects;
+                res.status(200).send(response)
+            })
         })
 
     },
     loadStaffDashboard: (req, res) => {
-
+        const db = req.app.get('db')
+        let {userId} = req.session
+        db.get_staff_ratings({userId}).then(dbRes => {
+            res.status(200).send(response)
+        })
     },
     loadStudentDashboard: (req, res) => {
-
+        const db = req.app.get('db')
+        res.status(200).send('Student Dashboard')
     }
 }
