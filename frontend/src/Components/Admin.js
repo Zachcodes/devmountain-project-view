@@ -37,7 +37,10 @@ export default class Admin extends Component {
                {
                    ratedProjects.map((project, index) => {
                         return (
-                            <RatedProject project={project} key={project.project_name}/>
+                            <RatedProject 
+                            project={project} 
+                            key={project.project_name}
+                            updateProjects={this.updateProjects}/>
                         )
                    })
                }

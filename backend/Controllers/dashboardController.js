@@ -1,3 +1,5 @@
+const {splitPersonalAndGroup} = require('../Utilities/jsUtilities');
+
 module.exports = {
     loadDashboard: (req, res) => {
         const db = req.app.get('db')
@@ -13,14 +15,28 @@ module.exports = {
         const db = req.app.get('db')
         let {userId} = req.session
         //TODO: Concatenate groups together before serving them to the frontend
+        //TODO: Add a way to average all of the ratings per project either in here or somewhere else where it makes more sense
         db.get_staff_ratings({userId}).then(ratedProjects => {
-            let response = {
-                userRatedProjects: ratedProjects,
-                unratedProjects: []
-            }
+            let splitRatedProjects = splitPersonalAndGroup(ratedProjects)
+            let personalRated = splitRatedProjects.personalProjects
+            let groupRated = splitRatedProjects.groups
+
             db.get_unrated_projects({userId}).then(unratedProjects => {
-                response.unratedProjects = unratedProjects;
-                res.status(200).send(response)
+                let splitUnratedProjects = splitPersonalAndGroup(unratedProjects)
+                let personalUnrated = splitUnratedProjects.personalProjects
+                let groupUnrated = splitUnratedProjects.groups
+
+                let returnGroups = {
+                    rated: {
+                        personal: personalRated,
+                        group: groupRated
+                    },
+                    unrated: {
+                        personal: personalUnrated,
+                        group: groupUnrated
+                    }
+                }
+                res.status(200).send(returnGroups)
             })
         })
 
