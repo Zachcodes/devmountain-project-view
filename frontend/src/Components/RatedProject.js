@@ -4,10 +4,10 @@ import axios from 'axios'
 export default class RatedPersonal extends Component {
     constructor(props) {
         super(props) 
-        let {rating, project_rating_id} = props.project
+        let {rating, projectRatingId} = props.project
         this.state = {
             newRating: rating,
-            projectRatingId: project_rating_id
+            projectRatingId: projectRatingId
         }
     }
 
@@ -28,13 +28,25 @@ export default class RatedPersonal extends Component {
     }
 
     render() {
-        let {project} = this.props;
-        let {project_name, rating, student_first, student_last} = project;
+        let {project, type, updateProjects} = this.props;
+        let {projectName, rating, studentName, studentLast, studentFirst, groupMembers} = project;
         let {newRating} = this.state
+        if(studentLast) studentName = `${studentFirst} ${studentLast}`
         return (
+            type === 'personal'
+            ?
             <div>
-                Project name: {project_name}
-                Student name: {`${student_first} ${student_last}`}
+                Project name: {projectName}
+                Student name: {studentName}
+                Current rating: <input value={newRating} onChange={(e) => this.handleChange(e.target.value, 'newRating')} />
+                <button onClick={this.submitNewRating}>Submit new rating</button>
+            </div>
+            :
+            <div>
+                Project name: {projectName}
+                {
+                    groupMembers.map(member => <p key={member.studentId}>{member.studentName}</p>)
+                }
                 Current rating: <input value={newRating} onChange={(e) => this.handleChange(e.target.value, 'newRating')} />
                 <button onClick={this.submitNewRating}>Submit new rating</button>
             </div>

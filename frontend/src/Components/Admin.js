@@ -3,10 +3,8 @@ import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
 
 //components 
-import RatedGroup from './RatedGroup'
-import RatedPersonal from './RatedPersonal'
-import UnratedGroup from './UnratedGroup'
-// import UnratedPersonal from './UnratedPersonal'
+import RatedProject from './RatedProject'
+import UnratedProject from './UnratedProject'
 
 export default class Admin extends Component {
     constructor() {
@@ -55,44 +53,48 @@ export default class Admin extends Component {
                {
                     ratedPersonal.map((project, index) => {
                             return (
-                                <RatedPersonal 
+                                <RatedProject 
                                 project={project} 
-                                key={project.project_id}
+                                key={project.projectId}
                                 updateProjects={this.updateProjects}
                                 index={index}
-                                updateRatingOnProject={this.updateRatingOnProject}/>
+                                updateRatingOnProject={this.updateRatingOnProject}
+                                type="personal"/>
                             )
                     })
                 }
                 {
                     ratedGroup.map((project, index) => {
                             return (
-                                <RatedGroup 
+                                <RatedProject 
                                 project={project} 
                                 key={project.projectId}
                                 updateProjects={this.updateProjects}
                                 index={index}
-                                updateRatingOnProject={this.updateRatingOnProject}/>
+                                updateRatingOnProject={this.updateRatingOnProject}
+                                type="group"/>
                             )
                     })
                 } 
-                {/* {
+                {
                     unratedPersonal.map((project, index) => {
                             return (
-                                <UnratedPersonal 
+                                <UnratedProject 
                                 project={project} 
-                                key={project.project_id}
-                                updateProjects={this.updateProjects}/>
+                                key={project.projectId}
+                                updateProjects={this.updateProjects}
+                                type="personal"/>
                             )
                     })
-                }  */}
+                } 
                 {
                     unratedGroup.map((project, index) => {
                             return (
-                                <UnratedGroup 
+                                <UnratedProject 
                                 project={project} 
                                 key={project.projectId}
-                                updateProjects={this.updateProjects}/>
+                                updateProjects={this.updateProjects}
+                                type="group"/>
                             )
                     })
                 } 

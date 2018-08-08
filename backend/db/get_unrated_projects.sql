@@ -3,6 +3,7 @@ s.last as studentLast,
 p.project_name as projectName, 
 p.id as projectId, 
 s.id as studentId, 
+p.url,
 p.project_type as projectType from projects p 
 join projects_students_link pl 
 on pl.project_id = p.id
