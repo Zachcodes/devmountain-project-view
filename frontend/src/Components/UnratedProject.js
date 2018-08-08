@@ -15,14 +15,14 @@ export default class UnratedPersonal extends Component {
     }
     submitRating = () => {
         let {rating} = this.state 
-        let {projectId, updateProjects} = this.props 
+        let {project, updateProjects} = this.props 
+        let {projectId} = project;
         axios.post(`/api/ratings/${projectId}?rating=${rating}`).then( response => {
             updateProjects(response.data)
         })
     }
     render() {
         let {project, type} = this.props;
-        // TODO: Come back and make it so these are all the same props names
         let {rating} = this.state;
         let {projectName, studentFirst, studentLast, url, groupMembers, studentName} = project;
         if(studentFirst) studentName = `${studentFirst} ${studentLast}`
@@ -32,6 +32,7 @@ export default class UnratedPersonal extends Component {
             <div>
                 Project name: {projectName}
                 Student name: {studentName}
+                Url: {url}
                 Enter rating: <input value={rating} onChange={(e) => this.handleChange(e.target.value, 'rating')}></input>
                 <button onClick={this.submitRating}>Submit Rating</button>
             </div>
@@ -41,6 +42,7 @@ export default class UnratedPersonal extends Component {
                 {
                     groupMembers.map(member => <p key={member.studentId}>{member.studentName}</p>)
                 }
+                Url: {url}
                 Enter rating: <input value={rating} onChange={(e) => this.handleChange(e.target.value, 'rating')}></input>
                 <button onClick={this.submitRating}>Submit Rating</button>
             </div>

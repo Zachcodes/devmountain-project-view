@@ -45,8 +45,6 @@ export default class Admin extends Component {
     }
 
     render() {
-        //TODO: Match the frontend up with the backend after all the changes you made to the return object and splitting up the groups
-        //TODO: Condense ratedpersonal and ratedgroup to be one component
         let {ratedGroup, ratedPersonal, unratedPersonal, unratedGroup} = this.state
         return (
             <div>

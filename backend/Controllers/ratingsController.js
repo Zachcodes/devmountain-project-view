@@ -1,25 +1,39 @@
+const {splitPersonalAndGroup} = require('../Utilities/jsUtilities');
+
 module.exports = {
+    //TODO: If you have time, add this to the session so you don't have to rerun this function so much
     addRating: (req, res) => {
         const db = req.app.get('db')
         let {projectId} = req.params 
         let {userId} = req.session         
         let {rating} = req.query
         db.add_rating({userId, projectId, rating}).then( response => {
-            //TODO: Concatenate groups together before serving to fronte neds on all the functions in this file
             db.get_staff_ratings({userId}).then(ratedProjects => {
-                let response = {
-                    userRatedProjects: ratedProjects,
-                    unratedProjects: []
-                }
+                let splitRatedProjects = splitPersonalAndGroup(ratedProjects)
+                let personalRated = splitRatedProjects.personalProjects
+                let groupRated = splitRatedProjects.groupArr
+    
                 db.get_unrated_projects({userId}).then(unratedProjects => {
-                    response.unratedProjects = unratedProjects;
-                    res.status(200).send(response)
+                    let splitUnratedProjects = splitPersonalAndGroup(unratedProjects)
+                    let personalUnrated = splitUnratedProjects.personalProjects
+                    let groupUnrated = splitUnratedProjects.groupArr
+    
+                    let returnGroups = {
+                        rated: {
+                            personal: personalRated,
+                            group: groupRated
+                        },
+                        unrated: {
+                            personal: personalUnrated,
+                            group: groupUnrated
+                        }
+                    }
+                    res.status(200).send(returnGroups)
                 })
             })
         }).catch(err => res.status(500).send('Could not add rating'))
     },
     updateRating: (req, res) => {
-        console.log(111111)
         const db = req.app.get('db')
         let {userId} = req.session 
         let {rating} = req.query
@@ -34,13 +48,26 @@ module.exports = {
         let {userId} = req.session 
         db.delete_rating({ratingId, userId}).then( response => {
             db.get_staff_ratings({userId}).then(ratedProjects => {
-                let response = {
-                    userRatedProjects: ratedProjects,
-                    unratedProjects: []
-                }
+                let splitRatedProjects = splitPersonalAndGroup(ratedProjects)
+                let personalRated = splitRatedProjects.personalProjects
+                let groupRated = splitRatedProjects.groupArr
+    
                 db.get_unrated_projects({userId}).then(unratedProjects => {
-                    response.unratedProjects = unratedProjects;
-                    res.status(200).send(response)
+                    let splitUnratedProjects = splitPersonalAndGroup(unratedProjects)
+                    let personalUnrated = splitUnratedProjects.personalProjects
+                    let groupUnrated = splitUnratedProjects.groupArr
+    
+                    let returnGroups = {
+                        rated: {
+                            personal: personalRated,
+                            group: groupRated
+                        },
+                        unrated: {
+                            personal: personalUnrated,
+                            group: groupUnrated
+                        }
+                    }
+                    res.status(200).send(returnGroups)
                 })
             })
         }).catch(err => res.status(500).send('Could not delete rating'))

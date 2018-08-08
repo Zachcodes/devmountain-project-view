@@ -14,7 +14,6 @@ module.exports = {
     loadAdminDashboard: (req, res) => {
         const db = req.app.get('db')
         let {userId} = req.session
-        //TODO: Add a way to average all of the ratings per project either in here or somewhere else where it makes more sense
         db.get_staff_ratings({userId}).then(ratedProjects => {
             let splitRatedProjects = splitPersonalAndGroup(ratedProjects)
             let personalRated = splitRatedProjects.personalProjects
