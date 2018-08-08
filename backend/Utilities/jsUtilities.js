@@ -1,12 +1,12 @@
 module.exports = {
-    splitPersonalAndGroup: (projectsArr) => {
-        let personalProjects = projectsArr.filter( project => project.project_type === 1)
+    splitPersonalAndGroup: function(projectsArr) {
+        let personalProjects = formatCamelCase(projectsArr.filter( project => project.project_type === 1))
+
         let groupProjects = projectsArr.filter( project => project.project_type === 2)
         let groups = {}
         for(let i = 0; i < groupProjects.length; i++) {
             if(!groups[groupProjects[i].project_name]) {
                 let newGroupObject = {}
-                console.log(groupProjects[i])
                 newGroupObject['projectName'] = groupProjects[i].project_name
                 newGroupObject['projectId'] = groupProjects[i].project_id
                 if(groupProjects[i].rating) newGroupObject['rating'] = groupProjects[i].rating

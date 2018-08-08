@@ -6,7 +6,7 @@ import {ToastContainer, toast} from 'react-toastify'
 import RatedGroup from './RatedGroup'
 import RatedPersonal from './RatedPersonal'
 import UnratedGroup from './UnratedGroup'
-import UnratedPersonal from './UnratedPersonal'
+// import UnratedPersonal from './UnratedPersonal'
 
 export default class Admin extends Component {
     constructor() {
@@ -76,7 +76,7 @@ export default class Admin extends Component {
                             )
                     })
                 } 
-                {
+                {/* {
                     unratedPersonal.map((project, index) => {
                             return (
                                 <UnratedPersonal 
@@ -85,7 +85,7 @@ export default class Admin extends Component {
                                 updateProjects={this.updateProjects}/>
                             )
                     })
-                } 
+                }  */}
                 {
                     unratedGroup.map((project, index) => {
                             return (

@@ -24,6 +24,7 @@ export default class UnratedGroup extends Component {
         let {project, updateProjects} = this.props 
         let {projectName, groupMembers} = project
         let {rating} = this.state
+        console.log('unrated', project)
         return (
         <div>
             Project name: {projectName}

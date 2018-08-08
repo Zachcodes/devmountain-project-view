@@ -16,13 +16,13 @@ export default class UnratedPersonal extends Component {
     submitRating = () => {
         let {rating} = this.state 
         let {project_id, updateProjects} = this.props 
-        axios.post(`/api/ratings/${project_id}`).then( response => {
+        axios.post(`/api/ratings/${project_id}?rating=${rating}`).then( response => {
             updateProjects(response.data)
         })
     }
     render() {
-        let {project, updateProjects} = this.props;
-        let {project_name, student_first, student_last} = project;
+        let {project} = this.props;
+        // TODO: Come back and make it so these are all the same props names
         let {rating} = this.state;
         return (
             <div>
