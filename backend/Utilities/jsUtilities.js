@@ -1,15 +1,16 @@
 module.exports = {
     splitPersonalAndGroup: (projectsArr) => {
-        //TODO: Change this back to solely splitting into personal and group and adding a type if there is need for one
         let personalProjects = projectsArr.filter( project => project.project_type === 1)
         let groupProjects = projectsArr.filter( project => project.project_type === 2)
         let groups = {}
         for(let i = 0; i < groupProjects.length; i++) {
             if(!groups[groupProjects[i].project_name]) {
                 let newGroupObject = {}
+                console.log(groupProjects[i])
                 newGroupObject['projectName'] = groupProjects[i].project_name
                 newGroupObject['projectId'] = groupProjects[i].project_id
                 if(groupProjects[i].rating) newGroupObject['rating'] = groupProjects[i].rating
+                if(groupProjects[i].project_rating_id) newGroupObject['projectRatingId'] = groupProjects[i].project_rating_id
                 newGroupObject['groupMembers'] = []
                 groups[groupProjects[i].project_name] = newGroupObject
                 let studentName = { 
@@ -26,9 +27,12 @@ module.exports = {
                 groups[groupProjects[i].project_name].groupMembers.push(studentName) 
             } 
         }
-
+        let groupArr = []
+        for(let key in groups) {
+            groupArr.push(groups[key])
+        }
         let returnObj = {
-            groups,
+            groupArr,
             personalProjects
         }
         return returnObj;
