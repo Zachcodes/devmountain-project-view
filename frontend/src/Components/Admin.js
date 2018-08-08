@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {ToastContainer, toast} from 'react-toastify'
 
 //components 
 import RatedGroup from './RatedGroup'
@@ -40,12 +41,14 @@ export default class Admin extends Component {
         copiedArr[index].rating = newRating
         let tempObj = {}
         tempObj[key] = copiedArr
-        console.log(111111, tempObj)
-        this.setState(tempObj)
+        this.setState(tempObj, () => {
+            toast.success('Successfully updated project')
+        })
     }
 
     render() {
         //TODO: Match the frontend up with the backend after all the changes you made to the return object and splitting up the groups
+        //TODO: Condense ratedpersonal and ratedgroup to be one component
         let {ratedGroup, ratedPersonal, unratedPersonal, unratedGroup} = this.state
         return (
             <div>
@@ -56,6 +59,7 @@ export default class Admin extends Component {
                                 project={project} 
                                 key={project.project_id}
                                 updateProjects={this.updateProjects}
+                                index={index}
                                 updateRatingOnProject={this.updateRatingOnProject}/>
                             )
                     })
@@ -92,6 +96,7 @@ export default class Admin extends Component {
                             )
                     })
                 } 
+                <ToastContainer/>
             </div>
         )
     }
