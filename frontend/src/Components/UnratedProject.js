@@ -13,14 +13,23 @@ export default class UnratedPersonal extends Component {
         obj[key] = val 
         this.setState(obj)
     }
+
     submitRating = () => {
         let {rating} = this.state 
-        let {project, updateProjects} = this.props 
-        let {projectId} = project;
-        axios.post(`/api/ratings/${projectId}?rating=${rating}`).then( response => {
-            updateProjects(response.data)
-        })
+        if(rating < 0 || rating > 5) {
+            this.setState({
+                rating: 0
+            }, () => alert('Rating must be between 0 and 5'))
+        }
+        else {
+            let {project, updateProjects} = this.props 
+            let {projectId} = project;
+            axios.post(`/api/ratings/${projectId}?rating=${rating}`).then( response => {
+                updateProjects(response.data, 'Successfully submitted rating')
+            })
+        }
     }
+
     render() {
         let {project, type} = this.props;
         let {rating} = this.state;

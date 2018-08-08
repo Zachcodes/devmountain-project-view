@@ -20,10 +20,25 @@ export default class RatedPersonal extends Component {
     submitNewRating = () => {
         let {newRating, projectRatingId} = this.state
         let {updateRatingOnProject, index} = this.props
-        axios.put(`/api/ratings/${projectRatingId}?rating=${newRating}`).then(response => {
-            if(response.data[0].rating === +newRating) {
-                updateRatingOnProject(index, 'ratedPersonal', +newRating)
-            }
+        if(newRating < 0 || newRating > 5) {
+            this.setState({
+                newRating: this.props.project.rating
+            }, () => alert('Rating must be between 0 and 5'))
+        } 
+        else {
+            axios.put(`/api/ratings/${projectRatingId}?rating=${newRating}`).then(response => {
+                if(response.data[0].rating === +newRating) {
+                    updateRatingOnProject(index, 'ratedPersonal', +newRating)
+                }
+            })
+        }
+    }
+
+    deleteRating = () => {
+        let {projectRatingId} = this.state;
+        let {updateProjects} = this.props;
+        axios.delete(`/api/ratings/${projectRatingId}`).then(response => {
+            updateProjects(response.data, 'Successfully deleted rating')
         })
     }
 
@@ -39,7 +54,8 @@ export default class RatedPersonal extends Component {
                 Project name: {projectName}
                 Student name: {studentName}
                 Current rating: <input value={newRating} onChange={(e) => this.handleChange(e.target.value, 'newRating')} />
-                <button onClick={this.submitNewRating}>Submit new rating</button>
+                <button onClick={this.submitNewRating}>Update Rating</button>
+                <button onClick={this.deleteRating}>Delete Rating</button>
             </div>
             :
             <div>
@@ -48,7 +64,8 @@ export default class RatedPersonal extends Component {
                     groupMembers.map(member => <p key={member.studentId}>{member.studentName}</p>)
                 }
                 Current rating: <input value={newRating} onChange={(e) => this.handleChange(e.target.value, 'newRating')} />
-                <button onClick={this.submitNewRating}>Submit new rating</button>
+                <button onClick={this.submitNewRating}>Update Rating</button>
+                <button onClick={this.deleteRating}>Delete Rating</button>
             </div>
         )
     }

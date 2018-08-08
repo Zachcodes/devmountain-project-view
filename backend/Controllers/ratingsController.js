@@ -7,6 +7,9 @@ module.exports = {
         let {projectId} = req.params 
         let {userId} = req.session         
         let {rating} = req.query
+        if (+rating < 0 || +rating > 5) {
+            return res.status(500).send('Rating must be between 0 and 5')
+        }
         db.add_rating({userId, projectId, rating}).then( response => {
             db.get_staff_ratings({userId}).then(ratedProjects => {
                 let splitRatedProjects = splitPersonalAndGroup(ratedProjects)
@@ -37,6 +40,9 @@ module.exports = {
         const db = req.app.get('db')
         let {userId} = req.session 
         let {rating} = req.query
+        if (+rating < 0 || +rating > 5) {
+            return res.status(500).send('Rating must be between 0 and 5')
+        }
         let {ratingId} = req.params
         db.update_rating({ratingId, rating, userId}).then( response => {
             res.status(200).send(response)

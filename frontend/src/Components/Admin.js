@@ -22,7 +22,7 @@ export default class Admin extends Component {
         })
     }
 
-    updateProjects = (projectsArr) => {
+    updateProjects = (projectsArr, toastMessage) => {
         let {rated, unrated} = projectsArr
         let {group: groupUnrated, personal: personalUnrated} = unrated; 
         let {group: groupRated, personal: personalRated} = rated;
@@ -31,6 +31,8 @@ export default class Admin extends Component {
             ratedGroup: groupRated,
             unratedPersonal: personalUnrated,
             unratedGroup: groupUnrated
+        }, () => {
+            toast.success(toastMessage)
         })
     }
 
