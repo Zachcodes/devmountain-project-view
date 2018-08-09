@@ -35,5 +35,20 @@ module.exports = {
     loginCheck: (req, res) => {
         if(req.session.loggedIn) return res.status(200).send({loggedIn: true})
         res.status(200).send({loggedIn: false})
+    },
+    resetPassword: (req, res) => {
+        let {userId} = req.params; 
+        let {newPassword} = req.body;
+        const bcrypt = req.app.get('bcrypt')
+        const saltRounds = req.app.get('saltRounds');
+        const db = req.app.get('db') 
+        
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash(newPassword, salt, function(err, hash) {
+                db.reset_password({userId, hash}).then(response => {
+                    res.sendStatus(200)
+                }).catch(err => res.status(500).send('Could not reset password'))
+            })
+        })
     }
 }

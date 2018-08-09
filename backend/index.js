@@ -44,7 +44,7 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => app.set('db', dbInstan
 //session routes 
 app.get('/api/loginCheck', lc.loginCheck)
 
-//** Cohort Program Routes routes **
+//Cohort Program Routes routes
 app.get('/api/programs', ctc.getAllPrograms)
 app.get('/api/programs/:programtype', ctc.getProgramByType)
 
@@ -57,6 +57,7 @@ app.get('/api/students/:id', sc.getStudent)
 //login routes 
 app.post('/api/login', lc.login)
 app.delete('/api/logout', lc.logout)
+app.post('/api/login/reset/:userId', adminCheck, lc.resetPassword)
 
 //rating routes 
 app.post('/api/ratings/:projectId', staffCheck, rc.addRating)
@@ -64,7 +65,6 @@ app.put('/api/ratings/:ratingId', staffCheck, rc.updateRating)
 app.delete('/api/ratings/:ratingId', staffCheck, rc.deleteRating)
 
 //add user routes 
-//TODO: need to make it so that there are admin add user routes and user add user
 app.post('/api/users/add/admin', validEmailCheck, adminCheck, uc.addUserAdmin)
 app.post('/api/users/add/student', validEmailCheck, uc.addUserStudent)
 
