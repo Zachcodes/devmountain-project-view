@@ -8,6 +8,7 @@ export default class Home extends Component {
         super()
         this.state = {
             programs: [],
+            featuredProject: {},
             grabbedData: false,
             doneLoading: false
         }
@@ -15,7 +16,8 @@ export default class Home extends Component {
     componentDidMount() {
             axios.get('/api/programs').then(programs => {
                 this.setState({
-                    programs: programs.data,
+                    programs: programs.data.types,
+                    featuredProject: programs.data.dailyProject[0],
                     doneLoading: true
                 })
             }).catch(err => {
@@ -25,15 +27,20 @@ export default class Home extends Component {
             })
     }
     render() {
-        let {doneLoading, programs} = this.state
+        let {doneLoading, programs, featuredProject} = this.state
+        console.log(featuredProject)
         return (
             doneLoading
             ?
             <div className="program-container">
                 <div className="program-left-container">
-                    <span>
+                    <div>
                         Welcome to DevMountain's Project Browser! This project was inspired by all the excellent projects that DevMountain students have produced. These projects are seen by their mentors, instructors and fellow classmates but not many students going forward will see them. There's a lot of creativity that has gone into these projects and hopefully they can help inspire you and showcase all the hard work that has made them possible! 
-                    </span>
+                    </div>
+                    <div>
+                        Featured Project Name: {featuredProject.project_name}
+                        Featured Project URL: {featuredProject.url}
+                    </div>
                 </div>
                 <div className="program-right-container">
                     <div className="program-right-title">
