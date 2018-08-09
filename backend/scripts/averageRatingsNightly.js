@@ -10,13 +10,19 @@ Massive(process.env.CONNECTION_STRING).then(db => {
         if(prjIdAvg.length) {
             db.average_project_ratings.insert(prjIdAvg).then( response => {
                 db.get_avg_prj_with_avg().then(prjIdAvg => {
-                    
+                    prjIdAvg.forEach(prj => {
+                        let {average_rating, id} = prjIdAvg;
+                        db.update_project_average_rating({id, average_rating})
+                    })
                 })
             })
         }
         else {
             db.get_avg_prj_with_avg().then(prjIdAvg => {
-                
+                prjIdAvg.forEach(prj => {
+                    let {average_rating, id} = prj;
+                    db.update_project_average_rating({id, average_rating})
+                })
             })
         }
 
