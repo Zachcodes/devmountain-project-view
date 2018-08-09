@@ -24,6 +24,7 @@ require('dotenv').config();
 const saltRounds = 10;
 
 const app = express()
+module.exports = app;
 
 app.set('saltRounds', saltRounds)
 app.set('bcrypt', bcrypt)

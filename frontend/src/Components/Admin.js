@@ -5,6 +5,7 @@ import {ToastContainer, toast} from 'react-toastify'
 //components 
 import RatedProject from './RatedProject'
 import UnratedProject from './UnratedProject'
+import UserReset from './UserReset'
 
 export default class Admin extends Component {
     constructor() {
@@ -13,7 +14,8 @@ export default class Admin extends Component {
             ratedPersonal: [],
             ratedGroup: [],
             unratedPersonal: [],
-            unratedGroup: []
+            unratedGroup: [],
+            users: []
         }
     }
     componentDidMount() {
@@ -23,14 +25,15 @@ export default class Admin extends Component {
     }
 
     updateProjects = (projectsArr, toastMessage) => {
-        let {rated, unrated} = projectsArr
+        let {rated, unrated, users} = projectsArr
         let {group: groupUnrated, personal: personalUnrated} = unrated; 
         let {group: groupRated, personal: personalRated} = rated;
         this.setState({
             ratedPersonal: personalRated,
             ratedGroup: groupRated,
             unratedPersonal: personalUnrated,
-            unratedGroup: groupUnrated
+            unratedGroup: groupUnrated,
+            users
         }, () => {
             toast.success(toastMessage)
         })
@@ -47,7 +50,7 @@ export default class Admin extends Component {
     }
 
     render() {
-        let {ratedGroup, ratedPersonal, unratedPersonal, unratedGroup} = this.state
+        let {ratedGroup, ratedPersonal, unratedPersonal, unratedGroup, users} = this.state
         return (
             <div>
                {
@@ -98,6 +101,16 @@ export default class Admin extends Component {
                             )
                     })
                 } 
+                {
+                    users.map( user => {
+                        return (
+                            <UserReset 
+                            user={user}
+                            key={user.userloginid}
+                            />
+                        )
+                    })   
+                }
                 <ToastContainer/>
             </div>
         )

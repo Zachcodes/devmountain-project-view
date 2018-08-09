@@ -23,18 +23,20 @@ module.exports = {
                 let splitUnratedProjects = splitPersonalAndGroup(unratedProjects)
                 let personalUnrated = splitUnratedProjects.personalProjects
                 let groupUnrated = splitUnratedProjects.groupArr
-
-                let returnGroups = {
-                    rated: {
-                        personal: personalRated,
-                        group: groupRated
-                    },
-                    unrated: {
-                        personal: personalUnrated,
-                        group: groupUnrated
+                db.get_all_users().then( users => {
+                    let returnData = {
+                        rated: {
+                            personal: personalRated,
+                            group: groupRated
+                        },
+                        unrated: {
+                            personal: personalUnrated,
+                            group: groupUnrated
+                        },
+                        users
                     }
-                }
-                res.status(200).send(returnGroups)
+                    res.status(200).send(returnData)
+                })
             })
         })
 

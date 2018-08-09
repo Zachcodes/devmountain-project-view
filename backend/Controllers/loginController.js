@@ -42,7 +42,6 @@ module.exports = {
         const bcrypt = req.app.get('bcrypt')
         const saltRounds = req.app.get('saltRounds');
         const db = req.app.get('db') 
-        
         bcrypt.genSalt(saltRounds, (err, salt) => {
             bcrypt.hash(newPassword, salt, function(err, hash) {
                 db.reset_password({userId, hash}).then(response => {
