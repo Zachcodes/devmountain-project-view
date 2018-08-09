@@ -5,9 +5,20 @@ const _ = require('lodash')
 
 Massive(process.env.CONNECTION_STRING).then(db => {
 
-    //This will get all projects with no average rating so we can create and also filters out those that have no rating at all
-    db.get_projects_with_no_average().then(projectIdArray => {
-        console.log(projectIdArray)
+    //This gets the average ratings for every project that doesn't have an average record in the db already
+    db.get_avg_prj_no_avg().then(prjIdAvg => {
+        if(prjIdAvg.length) {
+            db.average_project_ratings.insert(prjIdAvg).then( response => {
+                db.get_avg_prj_with_avg().then(prjIdAvg => {
+                    
+                })
+            })
+        }
+        else {
+            db.get_avg_prj_with_avg().then(prjIdAvg => {
+                
+            })
+        }
+
     })
 })
-

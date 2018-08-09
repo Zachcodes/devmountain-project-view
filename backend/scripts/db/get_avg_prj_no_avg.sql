@@ -1,4 +1,4 @@
-select p.id, round(avg(pr.rating), 2)
+select p.id project_id, round(avg(pr.rating), 2) as average_rating
 from average_project_ratings ar 
 right join projects p
 on p.id = ar.project_id
