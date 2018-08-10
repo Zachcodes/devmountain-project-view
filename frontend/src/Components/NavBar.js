@@ -41,7 +41,7 @@ export default class NavBar extends Component {
                     <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
                     <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
                     <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
-            
+        
                     </div>
                 </div>
             </div>
