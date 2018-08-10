@@ -22,13 +22,12 @@ export default class Home extends Component {
                 })
             }).catch(err => {
                 if(err) {
-                    alert('Could no get programs')
+                    alert('Could not get programs')
                 }
             })
     }
     render() {
         let {doneLoading, programs, featuredProject} = this.state
-        console.log(featuredProject)
         return (
             doneLoading
             ?

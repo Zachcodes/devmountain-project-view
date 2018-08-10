@@ -5,6 +5,7 @@ const Massive = require('massive');
 const bcrypt = require('bcrypt')
 const connectionString = process.env.CONNECTION_STRING;
 const session = require('express-session')
+const CronJob = require('cron').CronJob
 //require controllers
 const sc = require('./Controllers/studentController');
 const cc = require('./Controllers/cohortController');
@@ -19,6 +20,8 @@ const adminCheck = require('./Middleware/adminCheck')
 const staffCheck = require('./Middleware/staffCheck')
 const validEmailCheck = require('./Middleware/validEmailCheck')
 const sessionCheck = require('./Middleware/sessionCheck')
+//cron
+const cronJobs = require('./Cron/Cron')
 
 require('dotenv').config();
 const saltRounds = 10;
@@ -36,9 +39,25 @@ app.use(session({
     secret: process.env.SESSION_SECRET
 }))
 
-//massive setup 
-Massive(process.env.CONNECTION_STRING).then(dbInstance => app.set('db', dbInstance))
 
+//massive setup 
+Massive(process.env.CONNECTION_STRING).then(dbInstance => {
+    app.set('db', dbInstance)
+    averageRatingCron.start()
+    checkLinkCron.start()
+})
+
+//Cron jobs 
+const averageRatingCron = new CronJob('0 0 2 * * 0-6', () => {
+    const db = app.get('db')
+    if(db) cronJobs.averageRatingExecution(db)
+})
+
+
+const checkLinkCron = new CronJob('0 0 1 * * 0-6', () => {
+    const db = app.get('db')
+    if(db) cronJobs.checkLinkStatusExecution(db)
+})
 
 //routes 
 

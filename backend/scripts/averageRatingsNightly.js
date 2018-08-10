@@ -38,6 +38,7 @@ Massive(process.env.CONNECTION_STRING).then(db => {
 
 
 function chooseDailyFeatured(db) {
+    //TODO: There is a bug if there is not a project that passes criteria it won't create a new daily featured project
     let oneWeek = new Date(new Date().getTime() - (60*60*24*7*1000))
     let oneWeekDay = oneWeek.getDate()
     let oneWeekYear = oneWeek.getFullYear()
