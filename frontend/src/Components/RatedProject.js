@@ -43,6 +43,12 @@ export default class RatedPersonal extends Component {
     }
 
     render() {
+        let styles = {
+            ratedMainContainer: {
+                display: 'flex',
+                flexDirection: 'column',
+            }
+        }
         let {project, type, updateProjects} = this.props;
         let {projectName, rating, studentName, studentLast, studentFirst, groupMembers} = project;
         let {newRating} = this.state
@@ -50,7 +56,7 @@ export default class RatedPersonal extends Component {
         return (
             type === 'personal'
             ?
-            <div>
+            <div style={styles.ratedMainContainer}>
                 Project name: {projectName}
                 Student name: {studentName}
                 Current rating: <input value={newRating} onChange={(e) => this.handleChange(e.target.value, 'newRating')} />
@@ -58,7 +64,7 @@ export default class RatedPersonal extends Component {
                 <button onClick={this.deleteRating}>Delete Rating</button>
             </div>
             :
-            <div>
+            <div style={styles.ratedMainContainer}>
                 Project name: {projectName}
                 {
                     groupMembers.map(member => <p key={member.studentId}>{member.studentName}</p>)

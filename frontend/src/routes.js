@@ -2,7 +2,8 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
 //Components
-import Program from './Views/Program/Program';
+import Landing from './Views/Landing/Landing';
+import ProgramLanding from './Views/ProgramLanding/ProgramLanding';
 import CohortOverview from './Views/CohortOverview/CohortOverview';
 import CohortDetails from './Views/CohortDetails/CohortDetails';
 import Student from './Views/Student/Student';
@@ -14,7 +15,8 @@ import LoggedIn from './Views/LoggedIn/LoggedIn';
 
 export default (
 <Switch>
-    <Route exact path="/" component={Program}/>
+    <Route exact path="/" component={Landing}/>
+    <Route exact path="/programs" component={ProgramLanding} />
     <Route exact path="/programs/cohorts/:programtype" component={CohortOverview}/>
     <Route exact path="/programs/cohorts/:programtype/:cohortid" component={CohortDetails}/>
     <Route path="/students/:studentid" component={Student}/>

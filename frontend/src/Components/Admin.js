@@ -50,9 +50,28 @@ export default class Admin extends Component {
     }
 
     render() {
+        let styles = {
+            adminMainContainer: {
+                display: 'flex',
+                flexDirection: 'row',
+                padding: '10px'
+            },
+            ratedContainer: {
+                display: 'flex',
+                flexDirection: 'column',
+                width: '90%'
+            }, 
+            unratedContainer: {
+                display: 'flex',
+                flexDirection: 'column',
+                width: '90%'
+            }
+        }
         let {ratedGroup, ratedPersonal, unratedPersonal, unratedGroup, users} = this.state
         return (
-            <div>
+            <div style={styles.adminMainContainer}>
+                <div style={styles.ratedContainer}>  
+                <div>Rated Projects</div> 
                {
                     ratedPersonal.map((project, index) => {
                             return (
@@ -79,38 +98,46 @@ export default class Admin extends Component {
                             )
                     })
                 } 
-                {
-                    unratedPersonal.map((project, index) => {
+                </div>
+                <div style={styles.unratedContainer}>
+                    <div>Unrated Projects</div>
+                    {
+                        unratedPersonal.length === 0 ? unratedGroup.length === 0 ? <p>No Unrated Projects</p> : null : null
+                    }
+                    {
+                        unratedPersonal.map((project, index) => {
+                                return (
+                                    <UnratedProject 
+                                    project={project} 
+                                    key={project.projectId}
+                                    updateProjects={this.updateProjects}
+                                    type="personal"/>
+                                )
+                        })
+                    } 
+                    {
+                        unratedGroup.map((project, index) => {
+                                return (
+                                    <UnratedProject 
+                                    project={project} 
+                                    key={project.projectId}
+                                    updateProjects={this.updateProjects}
+                                    type="group"/>
+                                )
+                        })
+                    } 
+                    <div>Reset Passwords</div>
+                    {
+                        users.map( user => {
                             return (
-                                <UnratedProject 
-                                project={project} 
-                                key={project.projectId}
-                                updateProjects={this.updateProjects}
-                                type="personal"/>
+                                <UserReset 
+                                user={user}
+                                key={user.userloginid}
+                                />
                             )
-                    })
-                } 
-                {
-                    unratedGroup.map((project, index) => {
-                            return (
-                                <UnratedProject 
-                                project={project} 
-                                key={project.projectId}
-                                updateProjects={this.updateProjects}
-                                type="group"/>
-                            )
-                    })
-                } 
-                {
-                    users.map( user => {
-                        return (
-                            <UserReset 
-                            user={user}
-                            key={user.userloginid}
-                            />
-                        )
-                    })   
-                }
+                        })   
+                    }
+                </div>
                 <ToastContainer/>
             </div>
         )

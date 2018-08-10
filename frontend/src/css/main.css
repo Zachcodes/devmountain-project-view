@@ -26,18 +26,58 @@
 }
 
 .navbar-left span {
-    font-size:10px;
+    font-size:12px;
     color: white;
 }
 .navbar-left a {
     text-decoration: none;
 }
+
+.navbar-right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-decoration: none;
+}
+
+.navbar-right a {
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
 .devmountain-logo {
     height: 30px;
     width: 30px;
     margin-right: 5px;
 }
 
+.navbar-dropdown {
+    height: 100px;
+    width: 200px;
+    background-color: blue;
+    position: absolute;
+    right: 0;
+    top: 35px;
+    z-index: 1000;
+}
+
+.navbar-dropdown-hidden {
+    display: none;
+}
+
+.navbar-dropdown-show {
+    display: flex;
+}
+.navbar-right-link {
+    height: 100%;
+    position: relative;
+}
+/* .login {
+    z-index: 10000;
+} */
 
 /* General */
 .project-url-link:hover {
