@@ -3,8 +3,12 @@ import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
 
-export default class Login extends Component {
+//redux 
+import {login} from '../../Redux/actionCreators'
+
+class Login extends Component {
     constructor() {
         super()
         this.state = {
@@ -23,18 +27,20 @@ export default class Login extends Component {
 
     login = () => {
         let {username, password} = this.state
-        let data = {username, password}
-        axios.post('/api/login', data).then(response => {
-                this.setState({
-                    redirect: true
-                })
-        }).catch(err => {
-            toast.error('No user found')
-            this.setState({
-                username: '',
-                password: ''
-            })
-        })
+        let body = {username, password}
+        let {login} = this.props 
+        login(body)
+        // axios.post('/api/login', data).then(response => {
+        //         this.setState({
+        //             redirect: true
+        //         })
+        // }).catch(err => {
+        //     toast.error('No user found')
+        //     this.setState({
+        //         username: '',
+        //         password: ''
+        //     })
+        // })
     }
 
     componentDidMount() {
@@ -42,6 +48,17 @@ export default class Login extends Component {
             if(response.data.loggedIn) this.setState({redirect: true, initialAuth: true})
             else this.setState({initialAuth: true})
         })
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.errorLoggingIn) {
+            this.setState({
+                username: '',
+                password: ''
+            }, () => {
+                toast.error('No user found')
+            })
+        }
     }
 
     render() {
@@ -64,3 +81,12 @@ export default class Login extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        loggedIn: state.loggedIn,
+        errorLoggingIn: state.errorLoggingIn
+    }
+}
+
+export default connect(mapStateToProps, {login})(Login)
