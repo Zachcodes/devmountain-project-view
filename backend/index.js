@@ -45,6 +45,7 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     app.set('db', dbInstance)
     averageRatingCron.start()
     checkLinkCron.start()
+    cleanUpLogCron.start()
 })
 
 //Cron jobs 
@@ -57,6 +58,10 @@ const averageRatingCron = new CronJob('0 0 2 * * 0-6', () => {
 const checkLinkCron = new CronJob('0 0 1 * * 0-6', () => {
     const db = app.get('db')
     if(db) cronJobs.checkLinkStatusExecution(db)
+})
+
+const cleanUpLogCron = new CronJob('0 30 12 * * 6', () => {
+    cronJobs.cleanUpLogging()
 })
 
 //routes 

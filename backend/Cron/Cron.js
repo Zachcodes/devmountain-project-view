@@ -1,7 +1,8 @@
 require('dotenv').config({ path: __dirname + '/../.env'})
 const axios = require('axios')
 const fs = require('fs')
-const errorFile = __dirname + '../logging/deadLinks.txt'
+const errorFile = __dirname + '/../logging/deadLinks.txt'
+const loggingFolder = __dirname + '/../logging'
 
 module.exports = {
 
@@ -62,6 +63,7 @@ module.exports = {
         }
 
     },
+
     checkLinkStatusExecution: (db) => {
         let completed = {}
         let changedProjectsActiveIds = []
@@ -120,6 +122,21 @@ module.exports = {
         })
         .catch(err => writeErrorToFile('\n Could not connect to database'))
         
+    },
+
+    cleanUpLogging: () => {
+        
+        fs.readdir(loggingFolder, (err, files) => {
+            if(err) return;
+            if(!files.length) return;
+            files.forEach(file => {
+                let filePath = __dirname + `/../logging/${file}`;
+                fs.unlink(filePath, (err) => {
+                    fs.openSync(filePath, 'w')
+                })
+            })
+        })
+
     }
 
 }
