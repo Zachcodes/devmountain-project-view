@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 import '../css/main.css'
 import logo from '../images/devmountain.png'
 
-export default class NavBar extends Component {
+class NavBar extends Component {
     constructor() {
         super()
         this.state = {
@@ -31,6 +32,7 @@ export default class NavBar extends Component {
         }
     }
     render() {
+        console.log(this.props)
         return (
             <div className="navbar-container">
                 <div className="navbar-left">
@@ -48,3 +50,8 @@ export default class NavBar extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return state;
+}
+export default connect(mapStateToProps)(NavBar)
