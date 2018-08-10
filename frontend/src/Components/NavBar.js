@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
+
 import '../css/main.css'
 import logo from '../images/devmountain.png'
+
+//redux stuff 
+import {getPrograms} from '../Redux/actionCreators'
 
 class NavBar extends Component {
     constructor() {
@@ -12,6 +16,11 @@ class NavBar extends Component {
 
         }
         this.dropDownRef = React.createRef()
+    }
+
+    componentDidMount() {
+        let {getPrograms, programs} = this.props 
+        if(!programs.length) getPrograms()
     }
 
     setClassDropdown = () => {
@@ -32,7 +41,7 @@ class NavBar extends Component {
         }
     }
     render() {
-        console.log(this.props)
+        let {programs} = this.props
         return (
             <div className="navbar-container">
                 <div className="navbar-left">
@@ -43,7 +52,9 @@ class NavBar extends Component {
                     <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
                     <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
                     <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
-        
+                        {
+                            programs.map(program => <span>{program.type}</span>)
+                        }
                     </div>
                 </div>
             </div>
@@ -54,4 +65,4 @@ class NavBar extends Component {
 function mapStateToProps(state) {
     return state;
 }
-export default connect(mapStateToProps)(NavBar)
+export default connect(mapStateToProps, {getPrograms})(NavBar)
