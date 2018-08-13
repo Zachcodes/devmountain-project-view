@@ -1,4 +1,4 @@
-import {GET_PROGRAMS, LOGIN} from './actions'
+import {GET_PROGRAMS, LOGIN, LOGIN_CHECK} from './actions'
 import axios from 'axios'
 
 export function getPrograms() {
@@ -12,5 +12,12 @@ export function login(body) {
     return {
         type: LOGIN,
         payload: axios.post('/api/login', body)
+    }
+}
+
+export function checkLogin() {
+    return {
+        type: LOGIN_CHECK,
+        payload: axios.get('/api/loginCheck')
     }
 }

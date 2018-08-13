@@ -30,17 +30,6 @@ class Login extends Component {
         let body = {username, password}
         let {login} = this.props 
         login(body)
-        // axios.post('/api/login', data).then(response => {
-        //         this.setState({
-        //             redirect: true
-        //         })
-        // }).catch(err => {
-        //     toast.error('No user found')
-        //     this.setState({
-        //         username: '',
-        //         password: ''
-        //     })
-        // })
     }
 
     componentDidMount() {
@@ -51,12 +40,17 @@ class Login extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.errorLoggingIn) {
+        if(this.props.errorLoggingIn != prevProps.errorLoggingIn) {
             this.setState({
                 username: '',
                 password: ''
             }, () => {
                 toast.error('No user found')
+            })
+        } 
+        else if (this.props.loggedIn != prevProps.loggedIn) {
+            this.setState({
+                redirect: true
             })
         }
     }

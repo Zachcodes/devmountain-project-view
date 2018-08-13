@@ -3,31 +3,28 @@ import {Link} from 'react-router-dom'
 import axios from 'axios'
 import './ProgramLanding.css'
 
-export default class ProgramLanding extends Component {
-    constructor() {
-        super()
+import {connect} from 'react-redux'
+
+class ProgramLanding extends Component {
+    constructor(props) {
+        super(props)
         this.state = {
-            programs: [],
             grabbedData: false,
-            doneLoading: false
+            doneLoading: props.programs.length ? true : false
         }
     }
 
-    componentDidMount() {
-        axios.get('/api/programs').then(programs => {
+    componentDidUpdate(prevProps) {
+        if(this.props.programs.length !== prevProps.programs.length && !this.state.doneLoading) {
             this.setState({
-                programs: programs.data.types,
                 doneLoading: true
             })
-        }).catch(err => {
-            if(err) {
-                alert('Could not get programs')
-            }
-        })
+        }
     }
 
     render() {
-        let {doneLoading, programs} = this.state
+        let {doneLoading} = this.state
+        let {programs} = this.props
         return (
             doneLoading 
             ?
@@ -54,3 +51,12 @@ export default class ProgramLanding extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    let {programs} = state;
+    return {
+        programs
+    }
+}
+
+export default connect(mapStateToProps)(ProgramLanding)

@@ -8,6 +8,7 @@ import logo from '../images/devmountain.png'
 
 //redux stuff 
 import {getPrograms} from '../Redux/actionCreators'
+import {checkLogin} from '../Redux/actionCreators'
 
 class NavBar extends Component {
     constructor() {
@@ -19,8 +20,9 @@ class NavBar extends Component {
     }
 
     componentDidMount() {
-        let {getPrograms, programs} = this.props 
+        let {getPrograms, programs, loggedIn, checkLogin} = this.props 
         if(!programs.length) getPrograms()
+        if(!loggedIn) checkLogin()
     }
 
     setClassDropdown = () => {
@@ -41,7 +43,7 @@ class NavBar extends Component {
         }
     }
     render() {
-        let {programs} = this.props
+        let {programs, loggedIn} = this.props
         return (
             <div className="navbar-container">
                 <div className="navbar-left">
@@ -50,7 +52,13 @@ class NavBar extends Component {
                 </div>
                 <div className="navbar-right">
                     <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
-                    <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
+                    {
+                        loggedIn
+                        ?
+                        <div className="navbar-right-link dashboard"><Link to="/dashboard">Dashboard</Link></div>
+                        :
+                        <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
+                    }
                     <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
                         {
                             programs.map(program => <span>{program.type}</span>)
@@ -65,4 +73,4 @@ class NavBar extends Component {
 function mapStateToProps(state) {
     return state;
 }
-export default connect(mapStateToProps, {getPrograms})(NavBar)
+export default connect(mapStateToProps, {getPrograms, checkLogin})(NavBar)
