@@ -57,11 +57,13 @@
 .navbar-dropdown {
     height: 100px;
     width: 200px;
-    background-color: blue;
+    background-color: black;
     position: absolute;
     right: 0;
     top: 35px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar-dropdown-hidden {
@@ -75,6 +77,23 @@
     height: 100%;
     position: relative;
 }
+
+.navbar-dropdown-link {
+    color: white;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: white .5px solid;
+    border-left: white .5px solid;
+    border-right: white .5px solid;
+}
+
+.navbar-dropdown-link:hover {
+    cursor: pointer;
+}
+
 /* .login {
     z-index: 10000;
 } */

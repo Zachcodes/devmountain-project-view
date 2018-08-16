@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
 
 //components
 import Cohort from '../../Components/Cohort';
 
-export default class CohortOverview extends Component {
+class CohortOverview extends Component {
     constructor() {
         super()
         this.state = {
@@ -13,23 +14,35 @@ export default class CohortOverview extends Component {
             grabbedData: false
         }
     }
+    
     componentDidMount() {
-        if(this.props.match.params.programtype && !this.state.grabbedData) {
-            let programtype = this.props.match.params.programtype;
-            axios.get(`/api/programs/${programtype}`).then(response => {
-                this.setState({
-                    grabbedData: true,
-                    cohorts: response.data
-                })
-            }).catch(err => {
-                this.setState({
-                    grabbedData: true
-                }, () => {
-                    alert('Failed to grab cohorts');
-                })
-            }) 
+        if(this.props.match.params.programtype) {
+            this.refreshCohorts()
         } 
     }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.match.params.programtype !== this.props.match.params.programtype) {
+            this.refreshCohorts()
+        }
+    }
+
+    refreshCohorts = () => {
+        let programtype = this.props.match.params.programtype;
+        axios.get(`/api/programs/${programtype}`).then(response => {
+            this.setState({
+                grabbedData: true,
+                cohorts: response.data
+            })
+        }).catch(err => {
+            this.setState({
+                grabbedData: true
+            }, () => {
+                alert('Failed to grab cohorts');
+            })
+        }) 
+    }
+
     render() {
         return (
             <div>
@@ -40,3 +53,11 @@ export default class CohortOverview extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        programs: state.programs
+    }
+}
+
+export default connect(mapStateToProps)(CohortOverview)

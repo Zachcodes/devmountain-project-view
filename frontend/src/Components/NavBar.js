@@ -29,19 +29,24 @@ class NavBar extends Component {
         if(!this.dropDownRef.current.classList.contains('navbar-dropdown-show')) {
             this.dropDownRef.current.classList.add('navbar-dropdown-show')
         }
-        // this.dropDownRef.current.classList.remove('navbar-dropdown-show')
-        
     }
 
     checkDropdownStatus = (e) => {
         let x = e.clientX, y = e.clientY 
         let elementMouseIsOver = document.elementFromPoint(x, y)
         if(elementMouseIsOver) {
-            if(!elementMouseIsOver.classList.contains('navbar-dropdown-show') && !elementMouseIsOver.classList.contains('programs')) {
+            if(!elementMouseIsOver.classList.contains('navbar-dropdown-show') &&                  !elementMouseIsOver.classList.contains('programs') && 
+               !elementMouseIsOver.classList.contains('navbar-dropdown-link')
+              ) {
                 this.dropDownRef.current.classList.remove('navbar-dropdown-show')
             }
         }
     }
+
+    hideDropdown = () => {
+        this.dropDownRef.current.classList.remove('navbar-dropdown-show')
+    }
+
     render() {
         let {programs, loggedIn} = this.props
         return (
@@ -61,7 +66,16 @@ class NavBar extends Component {
                     }
                     <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
                         {
-                            programs.map(program => <span>{program.type}</span>)
+                            programs.map(program => {
+                                return (
+                                    <span className="navbar-dropdown-link" key={program.id} onClick={this.hideDropdown}>
+                                        <Link to={`/programs/cohorts/${program.id}`}
+                                        replace={true}>
+                                            {program.type}
+                                        </Link>
+                                    </span>
+                                )
+                             })
                         }
                     </div>
                 </div>
@@ -73,4 +87,5 @@ class NavBar extends Component {
 function mapStateToProps(state) {
     return state;
 }
+
 export default connect(mapStateToProps, {getPrograms, checkLogin})(NavBar)
