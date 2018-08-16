@@ -15,6 +15,7 @@ const pc = require('./Controllers/projectsController');
 const rc = require('./Controllers/ratingsController')
 const uc = require('./Controllers/userController')
 const dc = require('./Controllers/dashboardController')
+const fc = require('./Controllers/filterController')
 //require middleware 
 const adminCheck = require('./Middleware/adminCheck')
 const staffCheck = require('./Middleware/staffCheck')
@@ -98,6 +99,9 @@ app.get('/api/loadDashboard', sessionCheck, dc.loadDashboard)
 app.get('/api/loadDashboard/admin', sessionCheck, adminCheck, dc.loadAdminDashboard)
 app.get('/api/loadDashboard/staff', sessionCheck, staffCheck, dc.loadStaffDashboard)
 app.get('/api/loadDashboard/student', sessionCheck, dc.loadStudentDashboard)
+
+//filter routes 
+app.get('/api/filter/:cohortId', fc.filterProjects)
 
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
