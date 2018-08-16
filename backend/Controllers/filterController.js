@@ -3,7 +3,6 @@ module.exports = {
         let db = req.app.get('db')
         let {cohortId} = req.params;
         let {projectType, filter} = req.query;
-
         if(filter) {
             let filtered = filter.split("")
             filtered.push('%')

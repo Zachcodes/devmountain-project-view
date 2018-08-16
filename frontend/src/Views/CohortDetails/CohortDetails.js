@@ -16,9 +16,12 @@ export default class CohortDetails extends Component {
             groupProjects: [],
             personalProjects: [],
             students: [],
-            loaded: false  
+            loaded: false,
+            filterVal: '',
+            projectTypeFilter: 0
         }
     }
+
     componentDidMount() {
         let {cohortid} = this.props.match.params;
         axios.get(`/api/cohorts/${cohortid}/projects`).then(res => {
@@ -37,9 +40,25 @@ export default class CohortDetails extends Component {
             })
         })
     }
+
+    handleChange = (val, key) => {
+        let obj = {}
+        obj[key] = val;
+        this.setState(obj)
+    }
+
+    submitFilter = () => {
+        let {cohortid} = this.props.match.params;
+        let {filterVal, projectTypeFilter} = this.state
+        axios.get(`/api/filter/${cohortid}?projectType=${projectTypeFilter}&filter=${filterVal}`).then( response => {
+            console.log(response)
+        })
+    }
+
     render() {
         let {search} = this.props.location 
         let queryValues = queryString.parse(search) 
+        let {filterVal} = this.state
         return (
             this.state.loaded 
             ?
@@ -79,6 +98,24 @@ export default class CohortDetails extends Component {
                                     })
                                 }
                             </div>
+                        </div>
+                    </div>
+                    <div className="cohort-details-filter-container">
+                        <div className="cohort-details-filter-type">
+                                <select onChange={(e) => this.handleChange(e.target.value, 'projectTypeFilter')}>
+                                    <option value=""></option>
+                                    <option value="1">Personal</option>
+                                    <option value="2">group</option>
+                                </select>
+                        </div>
+                        <div className="cohort-details-filter-input">
+                                Filter by tag: <input value={filterVal} onChange={ (e) => {this.handleChange(e.target.value, 'filterVal')} }></input>
+                        </div>
+                        <div className="cohort-details-filter-tags">
+                                Tags
+                        </div>
+                        <div className="cohort-details-filter-submit">
+                            <button onClick={this.submitFilter}>Submit</button>
                         </div>
                     </div>
                 </div>
