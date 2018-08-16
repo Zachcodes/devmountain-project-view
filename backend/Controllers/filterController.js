@@ -1,3 +1,5 @@
+const {splitPersonalAndGroup} = require('../Utilities/jsUtilities');
+
 module.exports = {
     filterProjects: (req, res) => {
         let db = req.app.get('db')
@@ -13,18 +15,39 @@ module.exports = {
         if(projectType) {
             if(filter) {
                 db.get_projects_by_filter_and_type({filter, projectType, cohortId}).then(projects => {
-                    res.status(200).send(projects)
+                    let splitProjects = splitPersonalAndGroup(projects)
+                    let personalProjects = splitProjects.personalProjects
+                    let groupProjects = splitProjects.groupArr
+                    let returnObj = {
+                        personalProjects,
+                        groupProjects
+                    }
+                    res.status(200).send(returnObj)
                 })
             }
             else {
                 db.get_projects_by_type({projectType, cohortId}).then(projects => {
-                    res.status(200).send(projects)
+                    let splitProjects = splitPersonalAndGroup(projects)
+                    let personalProjects = splitProjects.personalProjects
+                    let groupProjects = splitProjects.groupArr
+                    let returnObj = {
+                        personalProjects,
+                        groupProjects
+                    }
+                    res.status(200).send(returnObj)
                 })
             }
         }
         else {
             db.get_projects_by_filter({filter, cohortId}).then(projects => {
-                res.status(200).send(projects)                
+                let splitProjects = splitPersonalAndGroup(projects)
+                let personalProjects = splitProjects.personalProjects
+                let groupProjects = splitProjects.groupArr
+                let returnObj = {
+                    personalProjects,
+                    groupProjects
+                }
+                res.status(200).send(returnObj)               
             })
         }
     }

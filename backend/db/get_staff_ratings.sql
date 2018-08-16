@@ -1,13 +1,13 @@
 select pr.rating, 
-p.id as projectId, 
+p.id as project_id, 
 p.url, 
-p.project_name as projectName, 
-p.project_type as projectType, 
-u.name as staffName,
-s.first as studentFirst, 
-s.last as studentLast, 
-s.id as studentId, 
-pr.id as projectRatingId from project_ratings pr 
+p.project_name as project_name, 
+p.project_type as project_type, 
+u.name as staff_name,
+s.first as student_first, 
+s.last as student_last, 
+s.id as student_id, 
+pr.id as project_rating_id from project_ratings pr 
 join projects p 
 on p.id = pr.project_id 
 join users u 

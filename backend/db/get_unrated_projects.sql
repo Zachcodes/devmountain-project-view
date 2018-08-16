@@ -1,10 +1,10 @@
-select s.first as studentFirst, 
-s.last as studentLast, 
-p.project_name as projectName, 
-p.id as projectId, 
-s.id as studentId, 
+select s.first as student_first, 
+s.last as student_last, 
+p.project_name as project_name, 
+p.id as project_id, 
+s.id as student_id, 
 p.url,
-p.project_type as projectType from projects p 
+p.project_type as project_type from projects p 
 join projects_students_link pl 
 on pl.project_id = p.id
 join students s 

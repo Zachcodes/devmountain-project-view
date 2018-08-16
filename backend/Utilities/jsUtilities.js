@@ -2,7 +2,6 @@ module.exports = {
     splitPersonalAndGroup: function(projectsArr) {
         let formatted = projectsArr.map(formatCamelCase)
         let personalProjects = formatted.filter( project => project.projectType === 1)
-
         let groupProjects = formatted.filter( project => project.projectType === 2)
         let groups = {}
         for(let i = 0; i < groupProjects.length; i++) {
@@ -39,18 +38,18 @@ module.exports = {
         return returnObj;
         function formatCamelCase(project) {
             let formattedObj = {}
-            formattedObj['projectId'] = project.projectid
+            formattedObj['projectId'] = project.project_id
             formattedObj['url'] = project.url
-            formattedObj['projectName'] = project.projectname
-            formattedObj['projectType'] = project.projecttype
-            formattedObj['studentFirst'] = project.studentfirst
-            formattedObj['studentLast'] = project.studentlast
-            formattedObj['studentLast'] = project.studentlast
-            formattedObj['studentId'] = project.studentid
+            formattedObj['projectName'] = project.project_name
+            formattedObj['projectType'] = project.project_type
+            formattedObj['studentFirst'] = project.student_first
+            formattedObj['studentLast'] = project.student_last
+            formattedObj['studentLast'] = project.student_last
+            formattedObj['studentId'] = project.student_id
             if(project.rating) {
                 formattedObj['rating'] = project.rating
-                formattedObj['staffName'] = project.staffname
-                formattedObj['projectRatingId'] = project.projectratingid 
+                formattedObj['staffName'] = project.staff_name
+                formattedObj['projectRatingId'] = project.project_rating_id 
              }
             return formattedObj;
         }
