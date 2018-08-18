@@ -9,6 +9,7 @@ module.exports = {
                 let newGroupObject = {}
                 newGroupObject['projectName'] = groupProjects[i].projectName
                 newGroupObject['projectId'] = groupProjects[i].projectId
+                newGroupObject['url'] = groupProjects[i].url
                 if(groupProjects[i].rating) newGroupObject['rating'] = groupProjects[i].rating
                 if(groupProjects[i].projectRatingId) newGroupObject['projectRatingId'] = groupProjects[i].projectRatingId
                 newGroupObject['groupMembers'] = []

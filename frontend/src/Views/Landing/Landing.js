@@ -10,14 +10,12 @@ export default class Home extends Component {
         this.state = {
             programs: [],
             featuredProject: {},
-            grabbedData: false,
             doneLoading: false
         }
     }
     componentDidMount() {
             axios.get('/api/programs').then(programs => {
                 this.setState({
-                    programs: programs.data.types,
                     featuredProject: programs.data.dailyProject[0],
                     doneLoading: true
                 })
@@ -36,7 +34,7 @@ export default class Home extends Component {
             backgroundPosition: 'center top'
         }
 
-        let {doneLoading, programs, featuredProject} = this.state
+        let {doneLoading, featuredProject} = this.state
         let {first, last} = featuredProject;
         let studentName = `${first} ${last}`
         return (

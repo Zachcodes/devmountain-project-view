@@ -23,22 +23,7 @@ export default class CohortDetails extends Component {
     }
 
     componentDidMount() {
-        let {cohortid} = this.props.match.params;
-        axios.get(`/api/cohorts/${cohortid}/projects`).then(res => {
-            let personal = res.data.personalProjects;
-            let group = res.data.splitGroups;
-            let students = res.data.students
-            let tempGroup = []
-            for(let groupid in group) {
-                tempGroup.push(group[groupid])
-            }
-            this.setState({
-                groupProjects: tempGroup,
-                personalProjects: personal,
-                students: students, 
-                loaded: true
-            })
-        })
+        this.loadDefault()
     }
 
     handleChange = (val, key) => {
@@ -51,7 +36,33 @@ export default class CohortDetails extends Component {
         let {cohortid} = this.props.match.params;
         let {filterVal, projectTypeFilter} = this.state
         axios.get(`/api/filter/${cohortid}?projectType=${projectTypeFilter}&filter=${filterVal}`).then( response => {
-            console.log(response)
+            let {groupProjects, personalProjects} = response.data;
+            let tempGroup = []
+            for(let groupid in groupProjects) {
+                tempGroup.push(groupProjects[groupid])
+            }
+            console.log('submitFilter', tempGroup)
+
+            this.setState({
+                personalProjects,
+                groupProjects: tempGroup
+            })
+        })
+    }
+
+    loadDefault = () => {
+        let {cohortid} = this.props.match.params;
+        axios.get(`/api/cohorts/${cohortid}/projects`).then(res => {
+            let personal = res.data.personalProjects;
+            let group = res.data.groupProjects;
+            let students = res.data.students
+
+            this.setState({
+                groupProjects: group,
+                personalProjects: personal,
+                students: students, 
+                loaded: true
+            })
         })
     }
 
@@ -73,7 +84,15 @@ export default class CohortDetails extends Component {
                         </div>
                         <div className="cohort-details-left-student-container">
                             {
-                                this.state.students.map(student => <Link to={`/students/${student.id}`}><StudentContainer student={student}/></Link>)
+                                this.state.students.map(student => {
+                                    return (
+                                        <Link 
+                                        to={`/students/${student.id}`}
+                                        key={student.id}>
+                                            <StudentContainer student={student}/>
+                                        </Link>
+                                    )
+                                })
                             }
                         </div>
                     </div>
@@ -83,7 +102,11 @@ export default class CohortDetails extends Component {
                             <div className="cohort-details-project-container">
                                 {
                                     this.state.personalProjects.map( (project, index) => {
-                                        return <PersonalProject key={index} projectDetails={project} />
+                                        return (
+                                            <PersonalProject 
+                                            key={project.projectId} 
+                                            projectDetails={project} />
+                                        )
                                     })
                                     
                                 }
@@ -94,7 +117,13 @@ export default class CohortDetails extends Component {
                             <div className="cohort-details-project-container">
                                 {
                                     this.state.groupProjects.map( (project, index) => {
-                                        return <GroupProject key={index} projectDetails={project.projectInfo} members={project.members} />
+                                        return (
+                                            <GroupProject key={project.projectId}
+                                            projectName={project.projectName} 
+                                            members={project.groupMembers} 
+                                            url={project.url}
+                                            />
+                                        )
                                     })
                                 }
                             </div>
@@ -116,6 +145,7 @@ export default class CohortDetails extends Component {
                         </div>
                         <div className="cohort-details-filter-submit">
                             <button onClick={this.submitFilter}>Submit</button>
+                            <button onClick={this.loadDefault}>Reset</button>
                         </div>
                     </div>
                 </div>

@@ -5,8 +5,7 @@ import '../css/main.css'
 
 
 export default function GroupProject(props) {
-    let {projectDetails, members} = props
-    let {projectName, url} = projectDetails[0];
+    let {projectName, members, url} = props
     function openWindow(url) {
         window.open(url)
     }

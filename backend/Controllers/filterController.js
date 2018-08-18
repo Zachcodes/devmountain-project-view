@@ -11,8 +11,9 @@ module.exports = {
             filtered.unshift('%')
             filter = filtered.join("")
         }
-
+        cohortId = parseInt(cohortId);
         if(projectType) {
+            projectType = parseInt(projectType);
             if(filter) {
                 db.get_projects_by_filter_and_type({filter, projectType, cohortId}).then(projects => {
                     let splitProjects = splitPersonalAndGroup(projects)
