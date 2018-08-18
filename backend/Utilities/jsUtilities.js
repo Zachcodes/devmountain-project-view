@@ -45,7 +45,6 @@ module.exports = {
             formattedObj['projectType'] = project.project_type
             formattedObj['studentFirst'] = project.student_first
             formattedObj['studentLast'] = project.student_last
-            formattedObj['studentLast'] = project.student_last
             formattedObj['studentId'] = project.student_id
             if(project.rating) {
                 formattedObj['rating'] = project.rating

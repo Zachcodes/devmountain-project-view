@@ -37,13 +37,26 @@ export default function GroupProject(props) {
 
     return (
         <div style={personalProjectContainer}> 
-            <div style={personalProjectPicture} class="project-url-link" onClick={() => openWindow(url)}></div>
+            <div style={personalProjectPicture} className="project-url-link" onClick={() => openWindow(url)}></div>
             <div style={personalProjectInformation}>
                 <div>Project name: {projectName}</div>
                 <div>Group Members: {
                     members.map((member, index) => {
-                        if(index == members.length -1) return <Link to={`/students/${member.id}`}>{member.first} {member.last}</Link>
-                        else return <Link to={`/students/${member.id}`}>{member.first} {member.last}, </Link>
+                        if(index == members.length -1) {
+                            return (
+                                <Link to={`/students/${member.id}`}
+                                key={member.studentId}>
+                                    {member.studentName}
+                                </Link>
+                            )
+                        }
+                        else {
+                            return (
+                                <Link to={`/students/${member.id}`}
+                                key={member.studentId}>
+                                {member.studentName}, </Link>
+                            )
+                        }
                     })
                 }</div>
                 <div>Url: {url}</div>

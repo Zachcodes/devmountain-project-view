@@ -3,7 +3,7 @@ import placeholder from '../images/thumbnail_placeholder.png'
 
 
 export default function PersonalProject(props) {
-    let {projectDetails} = props
+    let {projectName, studentFirst, studentLast, url} = props.projectDetails
     function openWindow(url) {
         window.open(url)
     }
@@ -34,13 +34,12 @@ export default function PersonalProject(props) {
         fontSize: '10px'
     }
 
-    let {project_name: projectName, first, last, url} = props.projectDetails
     return (
         <div style={personalProjectContainer}> 
-            <div style={personalProjectPicture} class="project-url-link" onClick={() => openWindow(url)}></div>  
+            <div style={personalProjectPicture} className="project-url-link" onClick={() => openWindow(url)}></div>  
             <div style={personalProjectInformation}>
                 <div>Project name: {projectName}</div>
-                <div>Student: {first} {last}</div>
+                <div>Student: {studentFirst} {studentLast}</div>
                 <div>Url: {url}</div>
             </div>
         </div>
