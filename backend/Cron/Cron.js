@@ -18,7 +18,6 @@ module.exports = {
                             promiseArr.push(db.update_project_average_rating({id, average_rating}))
                         })
                         Promise.all(promiseArr).then( values => {
-                        console.log('finished in 1')
                             chooseDailyFeatured(db)
                         })
                     })
@@ -32,7 +31,6 @@ module.exports = {
                         promiseArr.push(db.update_project_average_rating({id, average_rating}))
                     })
                     Promise.all(promiseArr).then( values => {
-                        console.log('finished in 1')
                         chooseDailyFeatured(db)
                     })
                 })

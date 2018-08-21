@@ -3,7 +3,9 @@ module.exports = {
         const bcrypt = req.app.get('bcrypt')
         const saltRounds = req.app.get('saltRounds');
         const db = req.app.get('db')
-        const {username, password} = req.body;
+        let {username, password} = req.body;
+
+        username = username.toLowerCase()
         
         db.get_username({username}).then(response => {
             if(response.length) {

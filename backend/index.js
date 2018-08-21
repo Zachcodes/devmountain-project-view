@@ -70,6 +70,9 @@ const cleanUpLogCron = new CronJob('0 30 12 * * 6', () => {
 //session routes 
 app.get('/api/loginCheck', lc.loginCheck)
 
+//Project routes 
+app.post('/api/projects', pc.addProject)
+
 //Cohort Program Routes routes
 app.get('/api/programs', ctc.getAllPrograms)
 app.get('/api/programs/:programtype', ctc.getProgramByType)
