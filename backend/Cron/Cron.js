@@ -41,7 +41,6 @@ module.exports = {
         })
 
         function chooseDailyFeatured(db) {
-            //TODO: There is a bug if there is not a project that passes criteria it won't create a new daily featured project
             let oneWeek = new Date(new Date().getTime() - (60*60*24*7*1000))
             let oneWeekDay = oneWeek.getDate()
             let oneWeekYear = oneWeek.getFullYear()
@@ -49,16 +48,28 @@ module.exports = {
             let oneWeekString = `${oneWeekYear}-${oneWeekMonth}-${oneWeekDay}`
             //This will get a project that has not been featured or has been featured over a week ago
             db.get_daily_project_random({oneWeekString}).then(featuredProject => {
-                let {id} = featuredProject[0]
-                let todaysDate = new Date()
-                let Day = todaysDate.getDate()
-                let Year = todaysDate.getFullYear()
-                let Month = todaysDate.getMonth() + 1;
-                let dateString = `${Year}-${Month}-${Day}`
+                if(featuredProject.length) {
+                    let {id} = featuredProject[0]
+                    createDaily(id)
+                }
+                else {
+                    db.get_daily_project_featured_previous({oneWeekString}).then(featuredProject => {
+                        let {id} = featuredProject[0]
+                        createDaily(id)
+                    })
+                }
+
+                function createDaily(id) {
+                    let todaysDate = new Date()
+                    let Day = todaysDate.getDate()
+                    let Year = todaysDate.getFullYear()
+                    let Month = todaysDate.getMonth() + 1;
+                    let dateString = `${Year}-${Month}-${Day}`
+                    db.create_daily_featured_project({id, dateString}).then(res => {
+                        db.set_project_last_featured_date({id, dateString})
+                    })
+                }
         
-                db.create_daily_featured_project({id, dateString}).then(res => {
-                    db.set_project_last_featured_date({id, dateString})
-                })
             })
         }
 
