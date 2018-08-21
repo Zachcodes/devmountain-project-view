@@ -3,11 +3,15 @@ module.exports = {
         const db = req.app.get('db')
         db.get_program_types().then( types => {
             db.get_daily_featured_project().then(project => {
-                let returnObj = {
-                    dailyProject: project,
-                    types: types
-                }
-                res.status(200).send(returnObj)
+                let {id} = project[0]
+                db.get_students_for_daily({id}).then( students => {
+                    project.students = students;
+                    let returnObj = {
+                        dailyProject: project,
+                        types: types
+                    }
+                    res.status(200).send(returnObj)
+                })
             })
         }).catch(err => {
             res.status(500).send(err)

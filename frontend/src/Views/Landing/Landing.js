@@ -15,6 +15,7 @@ export default class Home extends Component {
     }
     componentDidMount() {
             axios.get('/api/programs').then(programs => {
+                console.log(programs)
                 this.setState({
                     featuredProject: programs.data.dailyProject[0],
                     doneLoading: true
@@ -35,7 +36,8 @@ export default class Home extends Component {
         }
 
         let {doneLoading, featuredProject} = this.state
-        let {first, last} = featuredProject;
+        console.log(featuredProject)
+        let {first, last, project_type} = featuredProject;
         let studentName = `${first} ${last}`
         return (
             doneLoading
@@ -44,9 +46,15 @@ export default class Home extends Component {
                 <div className="program-left-container">
                     <div className="landing-featured-container">
                         <div>Today's Featured Project</div>
-                        <div>{studentName}</div>
                         Featured Project Name: {featuredProject.project_name}
                         <div style={featuredImage}></div>
+                        {
+                            project_type === 1 
+                            ?
+                            <div>{studentName}</div>
+                            :
+                            <div>Group Projects</div>
+                        }
                     </div>
                 </div>
                 <div className="program-right-container">
