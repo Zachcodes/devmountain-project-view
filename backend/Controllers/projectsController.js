@@ -18,7 +18,8 @@ module.exports = {
             let promises = studentIds.map(studentId => db.create_project_student_link({projectId, studentId}))
 
             Promise.all(promises).then( values => {
-                console.log(111111)
+                //tag names are forced lower case in the db so we need to pass lower case here
+                projectTags = projectTags.map(tag => tag.toLowerCase())
                 db.project_tags.find({tag_name: projectTags}).then(tags => {
                     let tagIds = tags.map(tag => {
                         let indexProjectTags = projectTags.indexOf(tag.tag_name)
