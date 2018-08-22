@@ -1,10 +1,10 @@
 module.exports = {
     getAllPrograms: (req, res, next) => {
         const db = req.app.get('db')
-        db.get_program_types().then( types => {
-            db.get_daily_featured_project().then(project => {
+        db.programs.get_program_types().then( types => {
+            db.projects.get_daily_featured_project().then(project => {
                 let {id} = project[0]
-                db.get_students_for_daily({id}).then( students => {
+                db.students.get_students_for_daily({id}).then( students => {
                     project[0].students = students;
                     let returnObj = {
                         dailyProject: project,
@@ -23,7 +23,7 @@ module.exports = {
         let { programtype } = req.params;
         programtype = Number(programtype)
  
-        db.get_cohorts_by_type({programtype}).then( cohorts => {
+        db.cohorts.get_cohorts_by_type({programtype}).then( cohorts => {
             res.status(200).send(cohorts)
         })
     }

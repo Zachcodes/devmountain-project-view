@@ -14,16 +14,16 @@ module.exports = {
     loadAdminDashboard: (req, res) => {
         const db = req.app.get('db')
         let {userId} = req.session
-        db.get_staff_ratings({userId}).then(ratedProjects => {
+        db.ratings.get_staff_ratings({userId}).then(ratedProjects => {
             let splitRatedProjects = splitPersonalAndGroup(ratedProjects)
             let personalRated = splitRatedProjects.personalProjects
             let groupRated = splitRatedProjects.groupArr
 
-            db.get_unrated_projects({userId}).then(unratedProjects => {
+            db.projects.get_unrated_projects({userId}).then(unratedProjects => {
                 let splitUnratedProjects = splitPersonalAndGroup(unratedProjects)
                 let personalUnrated = splitUnratedProjects.personalProjects
                 let groupUnrated = splitUnratedProjects.groupArr
-                db.get_all_users().then( users => {
+                db.users.get_all_users().then( users => {
                     let returnData = {
                         rated: {
                             personal: personalRated,
@@ -44,12 +44,12 @@ module.exports = {
     loadStaffDashboard: (req, res) => {
         const db = req.app.get('db')
         let {userId} = req.session
-        db.get_staff_ratings({userId}).then(ratedProjects => {
+        db.ratings.get_staff_ratings({userId}).then(ratedProjects => {
             let splitRatedProjects = splitPersonalAndGroup(ratedProjects)
             let personalRated = splitRatedProjects.personalProjects
             let groupRated = splitRatedProjects.groupArr
 
-            db.get_unrated_projects({userId}).then(unratedProjects => {
+            db.projects.get_unrated_projects({userId}).then(unratedProjects => {
                 let splitUnratedProjects = splitPersonalAndGroup(unratedProjects)
                 let personalUnrated = splitUnratedProjects.personalProjects
                 let groupUnrated = splitUnratedProjects.groupArr

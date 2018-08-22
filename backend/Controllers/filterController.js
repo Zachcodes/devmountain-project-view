@@ -16,7 +16,7 @@ module.exports = {
         if(projectType) {
             projectType = parseInt(projectType);
             if(filter) {
-                db.get_projects_by_filter_and_type({filter, projectType, cohortId}).then(projects => {
+                db.projects.get_projects_by_filter_and_type({filter, projectType, cohortId}).then(projects => {
                     let splitProjects = splitPersonalAndGroup(projects)
                     let personalProjects = splitProjects.personalProjects
                     let groupProjects = splitProjects.groupArr
@@ -28,7 +28,7 @@ module.exports = {
                 })
             }
             else {
-                db.get_projects_by_type({projectType, cohortId}).then(projects => {
+                db.projects.get_projects_by_type({projectType, cohortId}).then(projects => {
                     let splitProjects = splitPersonalAndGroup(projects)
                     let personalProjects = splitProjects.personalProjects
                     let groupProjects = splitProjects.groupArr
@@ -41,7 +41,7 @@ module.exports = {
             }
         }
         else {
-            db.get_projects_by_filter({filter, cohortId}).then(projects => {
+            db.projects.get_projects_by_filter({filter, cohortId}).then(projects => {
                 let splitProjects = splitPersonalAndGroup(projects)
                 let personalProjects = splitProjects.personalProjects
                 let groupProjects = splitProjects.groupArr

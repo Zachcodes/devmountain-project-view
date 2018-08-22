@@ -4,8 +4,8 @@ module.exports = {
     getProjectsByCohort: (req, res) => {
         let db = req.app.get('db')
         let {id} = req.params
-        db.get_projects_by_cohort({id}).then( projects => {
-                db.get_students_by_cohort({id}).then( students => {
+        db.projects.get_projects_by_cohort({id}).then( projects => {
+                db.students.get_students_by_cohort({id}).then( students => {
 
                     let splitProjects = splitPersonalAndGroup(projects)
                     let personalProjects = splitProjects.personalProjects

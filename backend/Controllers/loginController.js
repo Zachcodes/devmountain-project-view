@@ -7,7 +7,7 @@ module.exports = {
 
         username = username.toLowerCase()
         
-        db.get_username({username}).then(response => {
+        db.login.get_username({username}).then(response => {
             if(response.length) {
                 let user = response[0]
                 bcrypt.compare(password, user.password, (err, result) => {
@@ -46,7 +46,7 @@ module.exports = {
         const db = req.app.get('db') 
         bcrypt.genSalt(saltRounds, (err, salt) => {
             bcrypt.hash(newPassword, salt, function(err, hash) {
-                db.reset_password({userId, hash}).then(response => {
+                db.login.reset_password({userId, hash}).then(response => {
                     res.sendStatus(200)
                 }).catch(err => res.status(500).send('Could not reset password'))
             })

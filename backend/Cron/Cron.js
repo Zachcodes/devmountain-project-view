@@ -8,10 +8,10 @@ module.exports = {
 
     averageRatingExecution: (db) => {
         //This gets the average ratings for every project that doesn't have an average record in the db already
-        db.get_avg_prj_no_avg().then(prjIdAvg => {
+        db.projects.get_avg_prj_no_avg().then(prjIdAvg => {
             if(prjIdAvg.length) {
                 db.average_project_ratings.insert(prjIdAvg).then( response => {
-                    db.get_avg_prj_with_avg().then(prjIdAvg => {
+                    db.projects.get_avg_prj_with_avg().then(prjIdAvg => {
                         let promiseArr = []
                         prjIdAvg.forEach(prj => {
                             let {average_rating, id} = prjIdAvg;
@@ -24,7 +24,7 @@ module.exports = {
                 })
             }
             else {
-                db.get_avg_prj_with_avg().then(prjIdAvg => {
+                db.projects.get_avg_prj_with_avg().then(prjIdAvg => {
                     let promiseArr = []
                     prjIdAvg.forEach(prj => {
                         let {average_rating, id} = prj;
@@ -45,13 +45,13 @@ module.exports = {
             let oneWeekMonth = oneWeek.getMonth() + 1;
             let oneWeekString = `${oneWeekYear}-${oneWeekMonth}-${oneWeekDay}`
             //This will get a project that has not been featured or has been featured over a week ago
-            db.get_daily_project_random({oneWeekString}).then(featuredProject => {
+            db.projects.get_daily_project_random({oneWeekString}).then(featuredProject => {
                 if(featuredProject.length) {
                     let {id} = featuredProject[0]
                     createDaily(id)
                 }
                 else {
-                    db.get_daily_project_featured_previous({oneWeekString}).then(featuredProject => {
+                    db.projects.get_daily_project_featured_previous({oneWeekString}).then(featuredProject => {
                         let {id} = featuredProject[0]
                         createDaily(id)
                     })
@@ -63,8 +63,8 @@ module.exports = {
                     let Year = todaysDate.getFullYear()
                     let Month = todaysDate.getMonth() + 1;
                     let dateString = `${Year}-${Month}-${Day}`
-                    db.create_daily_featured_project({id, dateString}).then(res => {
-                        db.set_project_last_featured_date({id, dateString})
+                    db.projects.create_daily_featured_project({id, dateString}).then(res => {
+                        db.projects.set_project_last_featured_date({id, dateString})
                     })
                 }
         
@@ -100,7 +100,7 @@ module.exports = {
             }
         }
     
-        db.get_project_links().then( links => {
+        db.projects.get_project_links().then( links => {
             for(let i = 0; i < links.length; i++) {
                 completed[i] = false;
                 if(links[i].url) {

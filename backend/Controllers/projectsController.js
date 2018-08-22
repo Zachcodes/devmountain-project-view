@@ -12,10 +12,10 @@ module.exports = {
             projectTags
         } = req.body
         projectType = +projectType
-        db.create_project({url, projectName, projectType, cohortId, description, walkthroughLink}).then(project => {
+        db.projects.create_project({url, projectName, projectType, cohortId, description, walkthroughLink}).then(project => {
             let {id: projectId} = project[0]
 
-            let promises = studentIds.map(studentId => db.create_project_student_link({projectId, studentId}))
+            let promises = studentIds.map(studentId => db.projects.create_project_student_link({projectId, studentId}))
 
             Promise.all(promises).then( values => {
                 //tag names are forced lower case in the db so we need to pass lower case here
