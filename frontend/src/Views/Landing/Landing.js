@@ -15,7 +15,6 @@ export default class Home extends Component {
     }
     componentDidMount() {
             axios.get('/api/programs').then(programs => {
-                console.log(programs)
                 this.setState({
                     featuredProject: programs.data.dailyProject[0],
                     doneLoading: true
@@ -37,8 +36,7 @@ export default class Home extends Component {
 
         let {doneLoading, featuredProject} = this.state
         console.log(featuredProject)
-        let {first, last, project_type} = featuredProject;
-        let studentName = `${first} ${last}`
+        let {project_type, students} = featuredProject;
         return (
             doneLoading
             ?
@@ -47,13 +45,30 @@ export default class Home extends Component {
                     <div className="landing-featured-container">
                         <div>Today's Featured Project</div>
                         Featured Project Name: {featuredProject.project_name}
+                        {
+                            project_type === 1 
+                            ?
+                            <div>Project Type: Personal</div>
+                            :
+                            <div>Project Type: Group</div>
+                        }
                         <div style={featuredImage}></div>
                         {
                             project_type === 1 
                             ?
-                            <div>{studentName}</div>
+                            <div>
+                                Developer
+                                {
+                                    students.map((student, index) => <p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p>)
+                                }
+                            </div>
                             :
-                            <div>Group Projects</div>
+                            <div>
+                                Group Members
+                                {
+                                    students.map((student, index) => <p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p>)
+                                }
+                            </div>
                         }
                     </div>
                 </div>

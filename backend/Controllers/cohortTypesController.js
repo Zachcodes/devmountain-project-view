@@ -5,7 +5,7 @@ module.exports = {
             db.get_daily_featured_project().then(project => {
                 let {id} = project[0]
                 db.get_students_for_daily({id}).then( students => {
-                    project.students = students;
+                    project[0].students = students;
                     let returnObj = {
                         dailyProject: project,
                         types: types
