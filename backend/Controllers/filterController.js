@@ -6,6 +6,7 @@ module.exports = {
         let {cohortId} = req.params;
         let {projectType, filter} = req.query;
         if(filter) {
+            filter = filter.toLowerCase()
             let filtered = filter.split("")
             filtered.push('%')
             filtered.unshift('%')

@@ -35,7 +35,7 @@ class NavBar extends Component {
         let x = e.clientX, y = e.clientY 
         let elementMouseIsOver = document.elementFromPoint(x, y)
         if(elementMouseIsOver) {
-            if(!elementMouseIsOver.classList.contains('navbar-dropdown-show') &&                  !elementMouseIsOver.classList.contains('programs') && 
+            if(!elementMouseIsOver.classList.contains('navbar-dropdown-show') &&                                              !elementMouseIsOver.classList.contains('programs') && 
                !elementMouseIsOver.classList.contains('navbar-dropdown-link')
               ) {
                 this.dropDownRef.current.classList.remove('navbar-dropdown-show')
@@ -64,6 +64,7 @@ class NavBar extends Component {
                         :
                         <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
                     }
+                    <i class="fas fa-bars hamburger-nav"></i>
                     <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
                         {
                             programs.map(program => {

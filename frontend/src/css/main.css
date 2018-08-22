@@ -94,6 +94,20 @@
     cursor: pointer;
 }
 
+.hamburger-nav {
+    display: none;
+    color: white;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .navbar-right-link {
+        display: none;
+    }
+    .hamburger-nav {
+        display: block;
+    }
+}
 /* .login {
     z-index: 10000;
 } */

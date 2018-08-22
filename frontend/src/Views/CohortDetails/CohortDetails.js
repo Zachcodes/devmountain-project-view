@@ -41,7 +41,6 @@ export default class CohortDetails extends Component {
             for(let groupid in groupProjects) {
                 tempGroup.push(groupProjects[groupid])
             }
-            console.log('submitFilter', tempGroup)
 
             this.setState({
                 personalProjects,
@@ -61,7 +60,9 @@ export default class CohortDetails extends Component {
                 groupProjects: group,
                 personalProjects: personal,
                 students: students, 
-                loaded: true
+                loaded: true,
+                filterVal: '',
+                projectTypeFilter: 0
             })
         })
     }
