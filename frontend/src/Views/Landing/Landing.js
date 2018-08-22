@@ -93,18 +93,18 @@ export default class Home extends Component {
                                         </div>
                                         <div>  
                                             {
-                                                students.map((student, index) => <p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p>)
+                                                students.map((student, index) => <Link to={`/students/${student.id}`}><p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p></Link>)
                                             }
                                         </div>
                                     </div>
                                     :
                                     <div className="landing-featured-students">
                                         <div>
-                                            Group Members
+                                            <u>Group Members</u>
                                         </div>
                                         <div>
                                             {
-                                                students.map((student, index) => <p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p>)
+                                                students.map((student, index) => <Link to={`/students/${student.id}`}><p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p></Link>)
                                             }
                                         </div>
                                     </div>
