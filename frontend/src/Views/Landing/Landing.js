@@ -35,7 +35,6 @@ export default class Home extends Component {
         }
 
         let {doneLoading, featuredProject} = this.state
-        console.log(featuredProject)
         let {project_type, students} = featuredProject;
         return (
             doneLoading
