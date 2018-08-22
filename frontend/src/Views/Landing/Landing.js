@@ -31,7 +31,8 @@ export default class Home extends Component {
             height: '40%',
             background: `url(${placeholder}) no-repeat`,
             backgroundSize: 'contain',
-            backgroundPosition: 'center top'
+            backgroundPosition: 'center top',
+            marginBottom: '10px'
         }
 
         let {doneLoading, featuredProject} = this.state
@@ -42,33 +43,65 @@ export default class Home extends Component {
             <div className="program-container">
                 <div className="program-left-container">
                     <div className="landing-featured-container">
-                        <div>Today's Featured Project</div>
-                        Featured Project Name: {featuredProject.project_name}
-                        {
-                            project_type === 1 
-                            ?
-                            <div>Project Type: Personal</div>
-                            :
-                            <div>Project Type: Group</div>
-                        }
+                        <div className="landing-featured-title">Today's Featured Project</div>
                         <div style={featuredImage}></div>
-                        {
-                            project_type === 1 
-                            ?
-                            <div>
-                                Developer
-                                {
-                                    students.map((student, index) => <p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p>)
-                                }
+                        <div className="landing-featured-information-container">
+                            <div className="landing-featured-name">
+                                <div>
+                                     <u>Featured Project Name</u> 
+                                </div>
+                                <div>
+                                    {featuredProject.project_name}
+                                </div>
                             </div>
-                            :
-                            <div>
-                                Group Members
                                 {
-                                    students.map((student, index) => <p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p>)
+                                    project_type === 1 
+                                    ?
+                                    <div className="landing-featured-type">
+                                        <div>
+                                            <u>Project Type</u>
+                                        </div>
+                                        <div>
+                                            Personal
+                                        </div>
+                                    </div>  
+                                    :
+                                    <div className="landing-featured-type">
+                                        <div>
+                                            <u>Project Type</u>
+                                        </div>
+                                        <div>
+                                            Group
+                                        </div>
+                                    </div> 
                                 }
-                            </div>
-                        }
+                                {
+                                    project_type === 1 
+                                    ?
+                                    <div className="landing-featured-students">
+                                        <div>
+                                            <u>Developer</u>
+                                        </div>
+                                        <div>  
+                                            {
+                                                students.map((student, index) => <p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p>)
+                                            }
+                                        </div>
+                                    </div>
+                                    :
+                                    <div className="landing-featured-students">
+                                        <div>
+                                            Group Members
+                                        </div>
+                                        <div>
+                                            {
+                                                students.map((student, index) => <p key={`${index}_${student.first}`}>{`${student.first} ${student.last}`}</p>)
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                           
+                        </div>
                     </div>
                 </div>
                 <div className="program-right-container">
