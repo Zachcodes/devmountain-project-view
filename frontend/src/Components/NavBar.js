@@ -64,7 +64,7 @@ class NavBar extends Component {
                         :
                         <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
                     }
-                    <i class="fas fa-bars hamburger-nav"></i>
+                    <i className="fas fa-bars hamburger-nav"></i>
                     <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
                         {
                             programs.map(program => {

@@ -1,0 +1,23 @@
+.program-cohorts-container {
+    display: flex;
+    padding: 10px;
+}
+
+.program-cohorts-cohort-container {
+    border: .5px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    height: 150px;
+    width: 100px;
+    box-shadow: 1px 1px 1px;
+}
+
+.program-cohorts-cohort-container:hover {
+    background-color: lightgray;
+    width: 125px;
+    height: 175px;
+    transition: height 1s, width 1s;
+    cursor: pointer;
+}

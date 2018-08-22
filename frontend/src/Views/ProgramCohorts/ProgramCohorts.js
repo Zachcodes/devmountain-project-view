@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
+import './ProgramCohorts.css'
 
 //components
 import Cohort from '../../Components/Cohort';
@@ -44,11 +45,28 @@ class CohortOverview extends Component {
     }
 
     render() {
+        let {cohorts, grabbedData} = this.state;
         return (
-            <div>
+            grabbedData 
+            ?
+            <div className="program-cohorts-container">
                 {
-                    this.state.cohorts.map((cohort, index) => <Cohort type={this.props.match.params.programtype} name={cohort.name} id={cohort.id} key={index}/>)
+                    cohorts.length 
+                    ?
+                    <div>
+                        {
+                            cohorts.map((cohort, index) => <Cohort type={this.props.match.params.programtype} name={cohort.name} id={cohort.id} key={index}/>)
+                        }
+                    </div>
+                    :
+                    <div>
+                        No cohorts for this program yet!
+                    </div>
                 }
+            </div>
+            :
+            <div className="program-cohorts-container">
+                Loading!
             </div>
         )
     }

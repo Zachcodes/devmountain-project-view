@@ -13,6 +13,7 @@ export default class Home extends Component {
             doneLoading: false
         }
     }
+
     componentDidMount() {
             axios.get('/api/programs').then(programs => {
                 this.setState({
@@ -25,6 +26,11 @@ export default class Home extends Component {
                 }
             })
     }
+
+    openWindow = (url) => {
+        window.open(url)
+    }
+
     render() {
         let featuredImage = {
             width: '100%',
@@ -44,7 +50,10 @@ export default class Home extends Component {
                 <div className="program-left-container">
                     <div className="landing-featured-container">
                         <div className="landing-featured-title">Today's Featured Project</div>
-                        <div style={featuredImage}></div>
+                        <div 
+                        className="landing-featured-image"
+                        style={featuredImage} 
+                        onClick={() => this.openWindow(featuredProject.url)}></div>
                         <div className="landing-featured-information-container">
                             <div className="landing-featured-name">
                                 <div>

@@ -4,7 +4,7 @@ import {Switch, Route} from 'react-router-dom';
 //Components
 import Landing from './Views/Landing/Landing';
 import ProgramLanding from './Views/ProgramLanding/ProgramLanding';
-import CohortOverview from './Views/CohortOverview/CohortOverview';
+import ProgramCohorts from './Views/ProgramCohorts/ProgramCohorts';
 import CohortDetails from './Views/CohortDetails/CohortDetails';
 import Student from './Views/Student/Student';
 import Projects from './Views/Projects/Projects';
@@ -17,7 +17,7 @@ export default (
 <Switch>
     <Route exact path="/" component={Landing}/>
     <Route exact path="/programs" component={ProgramLanding} />
-    <Route exact path="/programs/cohorts/:programtype" component={CohortOverview}/>
+    <Route exact path="/programs/cohorts/:programtype" component={ProgramCohorts}/>
     <Route exact path="/programs/cohorts/:programtype/:cohortid" component={CohortDetails}/>
     <Route path="/students/:studentid" component={Student}/>
     <Route exact path="/projects" component={Projects}/>
