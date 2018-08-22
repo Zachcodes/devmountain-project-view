@@ -70,7 +70,7 @@ export default class CohortDetails extends Component {
     render() {
         let {search} = this.props.location 
         let queryValues = queryString.parse(search) 
-        let {filterVal} = this.state
+        let {filterVal, projectTypeFilter} = this.state
         return (
             this.state.loaded 
             ?
@@ -132,7 +132,9 @@ export default class CohortDetails extends Component {
                     </div>
                     <div className="cohort-details-filter-container">
                         <div className="cohort-details-filter-type">
-                                <select onChange={(e) => this.handleChange(e.target.value, 'projectTypeFilter')}>
+                                <select 
+                                value={projectTypeFilter}
+                                onChange={(e) => this.handleChange(e.target.value, 'projectTypeFilter')}>
                                     <option value=""></option>
                                     <option value="1">Personal</option>
                                     <option value="2">group</option>
