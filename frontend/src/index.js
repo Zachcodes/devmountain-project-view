@@ -28,7 +28,7 @@ ReactDOM.render(
         <Route path="/" render={(props) => {
             return (
                 <App {...props}>
-                    <NavBar/>
+                    <NavBar {...props}/>
                     <Switch>
                         <Route exact path="/" component={Landing}/>
                         <Route exact path="/programs" component={ProgramLanding} />

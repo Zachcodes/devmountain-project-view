@@ -10,8 +10,8 @@ import logo from '../images/devmountain.png'
 import {getPrograms, checkLogin, logout} from '../Redux/actionCreators'
 
 class NavBar extends Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.dropDownRef = React.createRef()
     }
 
@@ -48,7 +48,8 @@ class NavBar extends Component {
         logout().then(res => {
             let {action} = res;
             if(action.type === 'LOGOUT_FULFILLED') {
-                console.log(this.props)
+                let {location, history} = this.props
+                if(location.pathname === '/dashboard') history.push('/')
             }
         })
     }
