@@ -11,22 +11,21 @@ export default function GroupProject(props) {
     }
 
     //styles 
-    const personalProjectContainer = {
+    const groupProjectContainer = {
         display: 'flex',
         flexDirection: 'column',
-        height: '150px',
         width: '45%'
     }
     // TODO Come back and make it so students can upload images
-    const personalProjectPicture = {
+    const groupProjectPicture = {
         width: '100%',
-        height: '50%',
+        height: '150px',
         background: `url(${placeholder}) no-repeat`,
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         backgroundPosition: 'center top'
 
     }
-    const personalProjectInformation = {
+    const groupProjectInformation = {
         width: '100%',
         height: '50%',
         padding: '10px',
@@ -36,9 +35,9 @@ export default function GroupProject(props) {
     }
 
     return (
-        <div style={personalProjectContainer}> 
-            <div style={personalProjectPicture} className="project-url-link" onClick={() => openWindow(url)}></div>
-            <div style={personalProjectInformation}>
+        <div style={groupProjectContainer}> 
+            <div style={groupProjectPicture} className="project-url-link" onClick={() => openWindow(url)}></div>
+            <div style={groupProjectInformation}>
                 <div>Project name: {projectName}</div>
                 <div>Group Members: {
                     members.map((member, index) => {

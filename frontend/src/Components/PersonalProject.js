@@ -12,16 +12,14 @@ export default function PersonalProject(props) {
     const personalProjectContainer = {
         display: 'flex',
         flexDirection: 'column',
-        padding: '10px',
-        height: '150px',
         width: '45%'
     }
     // TODO Come back and make it so students can upload images
     const personalProjectPicture = {
         width: '100%',
-        height: '50%',
+        height: '150px',
         background: `url(${placeholder}) no-repeat`,
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         backgroundPosition: 'center top'
 
     }

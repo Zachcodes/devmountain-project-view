@@ -32,7 +32,8 @@ export default class CohortDetails extends Component {
         this.setState(obj)
     }
 
-    submitFilter = () => {
+    submitFilter = (e) => {
+        e.preventDefault()
         let {cohortid} = this.props.match.params;
         let {filterVal, projectTypeFilter} = this.state
         axios.get(`/api/filter/${cohortid}?projectType=${projectTypeFilter}&filter=${filterVal}`).then( response => {
@@ -80,7 +81,7 @@ export default class CohortDetails extends Component {
                 </div>
                 <div className="cohort-details-body-div">
                     <div className="cohort-details-left-container">
-                        <div className="cohort-details-title">
+                        <div className="left-container-title">
                             <h2>Students</h2>
                         </div>
                         <div className="cohort-details-left-student-container">
@@ -99,7 +100,8 @@ export default class CohortDetails extends Component {
                     </div>
                     <div className="cohort-details-right-container">
                         <div className="cohort-details-project-main-container">
-                            <div className="cohort-details-title">Personal Projects</div>
+                            <div className="right-container-title">Projects</div>
+                            <div className="cohort-details-title">Personal</div>
                             <div className="cohort-details-project-container">
                                 {
                                     this.state.personalProjects.map( (project, index) => {
@@ -114,7 +116,7 @@ export default class CohortDetails extends Component {
                             </div>
                         </div>
                         <div className="cohort-details-project-main-container">
-                            <div className="cohort-details-title">Group Projects</div>
+                            <div className="cohort-details-title">Group</div>
                             <div className="cohort-details-project-container">
                                 {
                                     this.state.groupProjects.map( (project, index) => {
@@ -130,8 +132,12 @@ export default class CohortDetails extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="cohort-details-filter-container">
+                    <form className="cohort-details-filter-container"
+                    onSubmit={this.submitFilter}>
+                        <div>Filter Projects</div>
                         <div className="cohort-details-filter-type">
+                            <label>
+                            <span>Type:</span>
                                 <select 
                                 value={projectTypeFilter}
                                 onChange={(e) => this.handleChange(e.target.value, 'projectTypeFilter')}>
@@ -139,18 +145,21 @@ export default class CohortDetails extends Component {
                                     <option value="1">Personal</option>
                                     <option value="2">group</option>
                                 </select>
+                            </label>
                         </div>
                         <div className="cohort-details-filter-input">
-                                Filter by tag: <input value={filterVal} onChange={ (e) => {this.handleChange(e.target.value, 'filterVal')} }></input>
-                        </div>
-                        <div className="cohort-details-filter-tags">
-                                Tags
+                                <label>
+                                     Filter by tag: <input value={filterVal} onChange={ (e) => {this.handleChange(e.target.value, 'filterVal')} }></input>   
+                                </label>
                         </div>
                         <div className="cohort-details-filter-submit">
-                            <button onClick={this.submitFilter}>Submit</button>
+                            <input 
+                            type="submit"
+                            value="Submit"
+                            />
                             <button onClick={this.loadDefault}>Reset</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             :
