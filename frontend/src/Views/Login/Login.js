@@ -26,7 +26,8 @@ class Login extends Component {
         this.setState(obj)
     }
 
-    login = () => {
+    login = (e) => {
+        e.preventDefault()
         let {username, password} = this.state
         if(!username || !password) return alert('You must supply both a username and password')
         let body = {username, password}
@@ -67,9 +68,16 @@ class Login extends Component {
             <Redirect to="/dashboard"/>
             :
             <div className="login-main-container">
-                Username: <input value={this.state.username} onChange={(e) => this.handleChange(e.target.value, 'username')}/>
-                Password: <input value={this.state.password} onChange={(e) => this.handleChange(e.target.value, 'password')}/>
-                <button onClick={this.login}>Login</button>
+                <form onSubmit={this.login} className="login-form">
+                    <div className="login-form-title">Login</div>
+                    <label className="login-label">
+                         <span>Username:</span> <input value={this.state.username} onChange={(e) => this.handleChange(e.target.value, 'username')}/>
+                    </label>
+                    <label className="login-label">
+                        Password: <input value={this.state.password} onChange={(e) => this.handleChange(e.target.value, 'password')}/>
+                    </label>
+                    <input type="submit" value="Submit" className="login-button"/>
+                </form>
                 <ToastContainer/>
             </div>
             :
