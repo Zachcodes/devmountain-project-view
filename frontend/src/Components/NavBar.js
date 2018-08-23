@@ -7,15 +7,11 @@ import '../css/main.css'
 import logo from '../images/devmountain.png'
 
 //redux stuff 
-import {getPrograms} from '../Redux/actionCreators'
-import {checkLogin} from '../Redux/actionCreators'
+import {getPrograms, checkLogin, logout} from '../Redux/actionCreators'
 
 class NavBar extends Component {
-    constructor() {
-        super()
-        this.state = {
-
-        }
+    constructor(props) {
+        super(props)
         this.dropDownRef = React.createRef()
     }
 
@@ -47,6 +43,16 @@ class NavBar extends Component {
         this.dropDownRef.current.classList.remove('navbar-dropdown-show')
     }
 
+    logout = () => {
+        let {logout} = this.props
+        logout().then(res => {
+            let {action} = res;
+            if(action.type === 'LOGOUT_FULFILLED') {
+                console.log(this.props)
+            }
+        })
+    }
+
     render() {
         let {programs, loggedIn} = this.props
         return (
@@ -56,13 +62,19 @@ class NavBar extends Component {
                     <Link to='/'><span>DevMountain Project Browser</span></Link>
                 </div>
                 <div className="navbar-right">
-                    <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
                     {
                         loggedIn
                         ?
-                        <div className="navbar-right-link dashboard"><Link to="/dashboard">Dashboard</Link></div>
+                        <span className="navbar-right-span">
+                            <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
+                            <div className="navbar-right-link dashboard"><Link to="/dashboard">Dashboard</Link></div>
+                            <div className="navbar-right-link navbar-right-logout" onClick={this.logout}>Logout</div>
+                        </span>
                         :
-                        <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
+                        <span className="navbar-right-span">
+                            <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
+                            <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
+                        </span>
                     }
                     <i className="fas fa-bars hamburger-nav"></i>
                     <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
@@ -89,4 +101,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, {getPrograms, checkLogin})(NavBar)
+export default connect(mapStateToProps, {getPrograms, checkLogin, logout})(NavBar)

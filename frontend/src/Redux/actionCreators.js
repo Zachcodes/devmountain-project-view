@@ -1,4 +1,4 @@
-import {GET_PROGRAMS, LOGIN, LOGIN_CHECK} from './actions'
+import {GET_PROGRAMS, LOGIN, LOGIN_CHECK, LOGOUT} from './actions'
 import axios from 'axios'
 
 export function getPrograms() {
@@ -19,5 +19,12 @@ export function checkLogin() {
     return {
         type: LOGIN_CHECK,
         payload: axios.get('/api/loginCheck')
+    }
+}
+
+export function logout() {
+    return {
+        type: LOGOUT,
+        payload: axios.delete('/api/logout')
     }
 }

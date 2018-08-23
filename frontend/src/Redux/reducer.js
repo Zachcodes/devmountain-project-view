@@ -2,7 +2,8 @@ import {GET_PROGRAMS_FULFILLED,
         LOGIN_FULFILLED, 
         LOGIN_REJECTED,
         LOGIN_CHECK_FULFILLED,
-        LOGIN_CHECK_REJECTED} from './actions'
+        LOGIN_CHECK_REJECTED,
+        LOGOUT_FULFILLED} from './actions'
 
 const initialState = {
     programs: [],
@@ -31,6 +32,11 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 loggedIn: action.payload.data.loggedIn ? true : false
+            }
+        case LOGOUT_FULFILLED:
+            return {
+                ...state,
+                loggedIn: false
             }
         default: 
             return state;

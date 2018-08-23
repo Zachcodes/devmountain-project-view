@@ -32,7 +32,7 @@ module.exports = {
     },
     logout: (req, res) => {
         req.session.destroy()
-        res.status(200).send('Logged out')
+        res.status(200).send({loggedIn: false})
     },
     loginCheck: (req, res) => {
         if(req.session.loggedIn) return res.status(200).send({loggedIn: true})
