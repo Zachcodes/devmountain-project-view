@@ -41,7 +41,6 @@
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
     justify-content: flex-end;
     text-decoration: none;
 }
@@ -88,10 +87,12 @@
 .navbar-right-link {
     position: relative;
     color: white;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .navbar-dropdown-link {
-    color: white;
     width: 100%;
     height: 30px;
     display: flex;
@@ -102,6 +103,9 @@
     border-right: white .5px solid;
 }
 
+.navbar-dropdown-link a {
+    color: white;
+}
 .navbar-dropdown-link:hover {
     cursor: pointer;
 }
@@ -117,12 +121,11 @@
         display: none;
     }
     .hamburger-nav {
-        display: block;
+        height: 100%;
+        display: flex;
+        align-items: center;
     }
 }
-/* .login {
-    z-index: 10000;
-} */
 
 /* General */
 .project-url-link:hover {

@@ -35,8 +35,8 @@ class ProgramLanding extends Component {
                 <div className="program-right-body">
                     {programs.map(program => {
                     return (
-                        <div className="program-right-styled-program">
-                            <Link to={`programs/cohorts/${program.id}`} key={program.id} className="program-right-link">
+                        <div className="program-right-styled-program" key={program.id}>
+                            <Link to={`programs/cohorts/${program.id}`} className="program-right-link">
                                 <button className="program-right-button">{program.type}</button>
                             </Link>
                         </div>

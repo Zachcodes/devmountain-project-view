@@ -4,6 +4,7 @@ import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+import './Login.css'
 
 //redux 
 import {login} from '../../Redux/actionCreators'
@@ -27,6 +28,7 @@ class Login extends Component {
 
     login = () => {
         let {username, password} = this.state
+        if(!username || !password) return alert('You must supply both a username and password')
         let body = {username, password}
         let {login} = this.props 
         login(body)
@@ -64,7 +66,7 @@ class Login extends Component {
             ?
             <Redirect to="/dashboard"/>
             :
-            <div>
+            <div className="login-main-container">
                 Username: <input value={this.state.username} onChange={(e) => this.handleChange(e.target.value, 'username')}/>
                 Password: <input value={this.state.password} onChange={(e) => this.handleChange(e.target.value, 'password')}/>
                 <button onClick={this.login}>Login</button>
