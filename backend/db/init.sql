@@ -38,20 +38,21 @@ CREATE TABLE projects (
     last_featured DATE
 );
 
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    role_id INT REFERENCES user_roles(id),
+    email TEXT NOT NULL
+);
+
 CREATE TABLE students (
     id SERIAL PRIMARY KEY,
     first TEXT,
     last TEXT,
     cohort INT REFERENCES cohorts(id),
     image TEXT,
-    about TEXT
-);
-
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    name TEXT,
-    role_id INT REFERENCES user_roles(id),
-    email TEXT NOT NULL
+    about TEXT,
+    user_id INT REFERENCES users(id)
 );
 
 CREATE TABLE user_login_info (

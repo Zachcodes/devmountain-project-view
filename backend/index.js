@@ -21,6 +21,7 @@ const adminCheck = require('./Middleware/adminCheck')
 const staffCheck = require('./Middleware/staffCheck')
 const validEmailCheck = require('./Middleware/validEmailCheck')
 const sessionCheck = require('./Middleware/sessionCheck')
+const validLogin = require('./Middleware/validLogin')
 //cron
 const cronJobs = require('./Cron/Cron')
 
@@ -84,7 +85,7 @@ app.get('/api/cohorts/:id/projects', cc.getProjectsByCohort)
 app.get('/api/students/:id', sc.getStudent)
 
 //login routes 
-app.post('/api/login', lc.login)
+app.post('/api/login', validLogin, lc.login)
 app.delete('/api/logout', lc.logout)
 app.post('/api/login/reset/:userId', adminCheck, lc.resetPassword)
 

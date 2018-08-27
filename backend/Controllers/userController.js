@@ -28,6 +28,8 @@ module.exports = {
     },
     addUserStudent: (req, res) => {
         const db = req.app.get('db');
+        const bcrypt = req.app.get('bcrypt')
+        const saltRounds = req.app.get('saltRounds');
         let {name, username, password, email} = req.body;
         let roleId = 3;
         db.login.check_for_existing_username({username}).then(response => {
@@ -43,7 +45,9 @@ module.exports = {
                             })
                         })
                     })
-                }).catch(err => res.status(500).send('Could not add user'))
+                }).catch(err => {
+                    res.status(500).send(err)
+                })
             }
             else {
                 res.status(400).send('Username exists already')
