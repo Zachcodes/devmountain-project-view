@@ -12,11 +12,14 @@ export default class Student extends Component {
             student: {},
             cohortStudents: [],
             retrievedDashboard: false,
+            tags: [],
             personalFormValues: {
                 pName: '',
                 pUrl: '',
                 pDescription: '',
-                pWalkthroughLink: ''
+                pWalkthroughLink: '',
+                availableTags: [],
+                selectedTags: []
             },
             groupFormValues: {
                 gName: '',
@@ -24,14 +27,16 @@ export default class Student extends Component {
                 gDescription: '',
                 gWalkthroughLink: '',
                 gGroupMembers: [],
-                gAvailableGroupMembers: []
+                gAvailableGroupMembers: [],
+                availableTags: [],
+                selectedTags: []
             }
         }
     }
 
     componentDidMount() {
         axios.get('/api/loadDashboard/student').then(response => {
-            let {hasGroup, hasPersonal, group, personal, student, cohortStudents} = response.data
+            let {hasGroup, hasPersonal, group, personal, student, cohortStudents, tags} = response.data
             this.setState({
                 hasGroup,
                 hasPersonal,
@@ -39,10 +44,16 @@ export default class Student extends Component {
                 personal,
                 student,
                 cohortStudents,
+                tags,
                 retrievedDashboard: true,
                 groupFormValues: {
                     ...this.state.groupFormValues,
-                    gAvailableGroupMembers: cohortStudents
+                    gAvailableGroupMembers: cohortStudents,
+                    availableTags: tags
+                },
+                personalFormValues: {
+                    ...this.state.personalFormValues,
+                    availableTags: tags
                 }
             })
         })
@@ -61,10 +72,29 @@ export default class Student extends Component {
         if(type === 'personal') {
             let { pName, pUrl, pDescription, pWalkthroughLink } = this.state.personalFormValues;
             if(!pName || !pUrl || !pDescription) return alert('A project name, url and description are required')
-            //submit at this point
+            let personalProject = {
+                name: pName,
+                url: pUrl,
+                description: pDescription,
+                walkthroughLink: pWalkthroughLink
+            }
+            axios.post('/api/projects', personalProject).then(res => {
+                console.log(res)
+            })
         }
         else {
-
+            let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers} = this.state.groupFormValues;
+            if(!gName || !gUrl || !gDescription || !gGroupMembers.length) return alert('A project name, url, description and group members are required')
+            let groupProject = {
+                name: gName,
+                url: gUrl,
+                description: gDescription,
+                walkthroughLink: gWalkthroughLink,
+                groupMembers: gGroupMembers
+            }
+            axios.post('/api/projects', groupProject).then(res => {
+                console.log(res)
+            })
         }
     }
 
@@ -102,10 +132,44 @@ export default class Student extends Component {
         })
     }
 
+    addTag = (stateKey, tagId) => {
+        tagId = +tagId;
+        let {availableTags} = this.state[stateKey];
+        let selectedTagsCopy = [...this.state[stateKey].selectedTags];
+        let newAvailableTags = availableTags.filter( tag => {
+            if(tag.id === tagId) selectedTagsCopy.push(tag)
+            return tag.id !== tagId
+        })
+        let newState = Object.assign({}, this.state)
+        newState[stateKey] = {
+            ...newState[stateKey],
+            availableTags: newAvailableTags, 
+            selectedTags: selectedTagsCopy
+        }
+        this.setState(newState)
+    }
+
+    removeTag = (stateKey, tagId) => {
+        tagId = +tagId;
+        let {selectedTags} = this.state[stateKey];
+        let availableTagsCopy = [...this.state[stateKey].availableTags];
+        let newSelectedTags = selectedTags.filter( tag => {
+            if(tag.id === tagId) availableTagsCopy.push(tag)
+            return tag.id !== tagId
+        })
+        let newState = Object.assign({}, this.state)
+        newState[stateKey] = {
+            ...newState[stateKey],
+            availableTags: availableTagsCopy, 
+            selectedTags: newSelectedTags
+        }
+        this.setState(newState)
+    }
+
     render() {
         let {retrievedDashboard, hasGroup, hasPersonal, group, personal, student, personalFormValues, groupFormValues} = this.state
-        let { pName, pUrl, pDescription, pWalkthroughLink} = personalFormValues;
-        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, gAvailableGroupMembers} = groupFormValues;
+        let { pName, pUrl, pDescription, pWalkthroughLink, availableTags: pAvailableTags, selectedTags: pSelectedTags} = personalFormValues;
+        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, gAvailableGroupMembers, availableTags: gAvailableTags, selectedTags: gSelectedTags} = groupFormValues;
         return (
             retrievedDashboard 
             ?
@@ -136,6 +200,29 @@ export default class Student extends Component {
                                 <label>Project Url:</label> <input value={pUrl} onChange={(e) => this.updateFormValue('personalFormValues', 'pUrl', e.target.value)}></input>
                                 <label>Project Description:</label> <input value={pDescription} onChange={(e) => this.updateFormValue('personalFormValues', 'pDescription', e.target.value)}></input>
                                 <label>Project Walkthrough Link:</label> <input value={pWalkthroughLink} onChange={(e) => this.updateFormValue('personalFormValues', 'pWalkthroughLink', e.target.value)}></input>
+                                <div>
+                                    <select onChange={(e) => this.addTag('personalFormValues', e.target.value)}>
+                                        <option value=""></option>
+                                        {
+                                            pAvailableTags.map( tag => {
+                                                return (
+                                                    <option key={tag.id} value={tag.id}>{tag.tag_name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                    {
+                                        pSelectedTags.map( tag => {
+                                            return (
+                                                <div key={tag.id}>
+                                                    <p>{tag.tag_name}</p>
+                                                    <button onClick={()=>this.removeTag('personalFormValues', tag.id)}>X</button>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    <label>Add Tag:</label> <input></input>
+                                </div>
                                 <button type="submit">Submit For Approval</button>
                             </form>
                         </div>
@@ -162,14 +249,14 @@ export default class Student extends Component {
                         :
                         <div className="student-dashboard-group-container">
                             <div className="project-container-title">Group Project</div>
-                            <form>
+                            <form onSubmit={(e) => this.submitProject(e, 'group')}>
                                 <label>Project Name:</label> <input value={gName} onChange={(e) => this.updateFormValue('groupFormValues', 'gName', e.target.value)}></input>
                                 <label>Project Url:</label> <input value={gUrl} onChange={(e) => this.updateFormValue('groupFormValues', 'gUrl', e.target.value)}></input>
                                 <label>Project Description:</label> <input value={gDescription} onChange={(e) => this.updateFormValue('groupFormValues', 'gDescription', e.target.value)}></input>
                                 <label>Project Walkthrough Link:</label> <input value={gWalkthroughLink} onChange={(e) => this.updateFormValue('groupFormValues', 'gWalkthroughLink', e.target.value)}></input>
                                 <div>
                                     <select onChange={(e) => this.addGroupMember(e.target.value)}>
-                                        <option></option>
+                                        <option value=""></option>
                                         {
                                             gAvailableGroupMembers.map( student => {
                                                 return (
@@ -191,6 +278,30 @@ export default class Student extends Component {
                                        }) 
                                     }
                                 </div>
+                                <div>
+                                    <select onChange={(e) => this.addTag('groupFormValues', e.target.value)}>
+                                        <option value=""></option>
+                                        {
+                                            gAvailableTags.map( tag => {
+                                                return (
+                                                    <option key={tag.id} value={tag.id}>{tag.tag_name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                    {
+                                        gSelectedTags.map( tag => {
+                                            return (
+                                                <div key={tag.id}>
+                                                    <p>{tag.tag_name}</p>
+                                                    <button onClick={()=>this.removeTag('groupFormValues', tag.id)}>X</button>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    <label>Add Tag:</label> <input></input>
+                                </div>
+                                <button type="submit">Submit For Approval</button>
                             </form>
                         </div>
                     }

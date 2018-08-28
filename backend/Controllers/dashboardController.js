@@ -96,15 +96,18 @@ module.exports = {
                             if(groupMembers.length) group[0].members = groupMembers
                         }
                         db.cohorts.get_students_by_cohort({cohort}).then(students => {
-                            let returnObj = {
-                                hasGroup,
-                                hasPersonal,
-                                group,
-                                personal,
-                                student,
-                                cohortStudents: students
-                            }
-                            res.status(200).send(returnObj)
+                            db.tags.get_all_tags().then(tags => {
+                                let returnObj = {
+                                    hasGroup,
+                                    hasPersonal,
+                                    group,
+                                    personal,
+                                    student,
+                                    cohortStudents: students,
+                                    tags
+                                }
+                                res.status(200).send(returnObj)
+                            })
                         })
                     })
                     
