@@ -28,7 +28,6 @@ export default class Student extends Component {
     }
     render() {
         let {retrievedDashboard, hasGroup, hasPersonal, group, personal, student} = this.state
-        console.log(student)
         return (
             retrievedDashboard 
             ?
@@ -41,10 +40,18 @@ export default class Student extends Component {
                         hasPersonal 
                         ?
                         personal.map(project => {
-                            console.log('personal', project)
+                            return (
+                                <div className="student-dashboard-personal-container" key={project.id}>
+                                    <div className="project-container-title">Personal Project</div>
+                                    <div className="personal-container-info">Project Name: {project.project_name}</div>
+                                    <div className="personal-container-info">Description: {project.description}</div>
+                                    <div className="personal-container-info">Project Url: {project.url}</div>
+                                    <div className="personal-container-info">Walkthrough Link: {project.walkthrough_link}</div>
+                                </div>
+                            )
                         })
                         :
-                        <div>
+                        <div className="student-dashboard-personal-container">
                             Need to add a personal project
                         </div>
                     }
@@ -52,10 +59,23 @@ export default class Student extends Component {
                         hasGroup 
                         ?
                         group.map(project => {
-                            console.log('group', project)
+                            return (
+                                <div className="student-dashboard-group-container" key={project.id}>
+                                    <div className="project-container-title">Group Project</div>
+                                    <div>Project Name: {project.project_name}</div>
+                                    <div>Description: {project.description}</div>
+                                    <div>Project Url: {project.url}</div>
+                                    <div>Walkthrough Link: {project.walkthrough_link}</div>
+                                    <div>
+                                        {
+                                            project.members.map(member => <p key={member.id}>{member.first} {member.last}</p>)
+                                        }
+                                    </div>
+                                </div>
+                            )
                         })
                         :
-                        <div>
+                        <div className="student-dashboard-group-container">
                             Need to add a group project
                         </div>
                     }

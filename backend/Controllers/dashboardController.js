@@ -80,18 +80,30 @@ module.exports = {
                 //go get all the projects associated with student 
                 db.students.get_projects_by_student_id({id}).then( projects => {
                     let hasGroup, hasPersonal;
+                    let promiseArr = [];
+                    //if has a group, get all the group members
                     let group = projects.filter( project => project.project_type === 2)
                     let personal = projects.filter( project => project.project_type === 1)
-                    if(group.length) hasGroup = true;
+                    if(group.length) {
+                        hasGroup = true;
+                        let {project_id} = group[0]
+                        promiseArr.push(db.projects.get_group_members({project_id}))
+                    } 
                     if(personal.length) hasPersonal = true;
-                    let returnObj = {
-                        hasGroup,
-                        hasPersonal,
-                        group,
-                        personal,
-                        student
-                    }
-                    res.status(200).send(returnObj)
+                    Promise.all(promiseArr).then( values => {
+                        if(values.length) {
+                            let groupMembers = values[0];
+                            if(groupMembers.length) group[0].members = groupMembers
+                        }
+                        let returnObj = {
+                            hasGroup,
+                            hasPersonal,
+                            group,
+                            personal,
+                            student
+                        }
+                        res.status(200).send(returnObj)
+                    })
                     
                 })
             }
