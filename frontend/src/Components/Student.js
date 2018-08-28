@@ -19,7 +19,9 @@ export default class Student extends Component {
                 pDescription: '',
                 pWalkthroughLink: '',
                 availableTags: [],
-                selectedTags: []
+                selectedTags: [],
+                newTags: [],
+                newTag: ''
             },
             groupFormValues: {
                 gName: '',
@@ -29,7 +31,9 @@ export default class Student extends Component {
                 gGroupMembers: [],
                 gAvailableGroupMembers: [],
                 availableTags: [],
-                selectedTags: []
+                selectedTags: [],
+                newTags: [],
+                newTag: ''
             }
         }
     }
@@ -69,28 +73,33 @@ export default class Student extends Component {
 
     submitProject = (e, type) => {
         e.preventDefault()
+        let {cohort} = this.state.student
         if(type === 'personal') {
-            let { pName, pUrl, pDescription, pWalkthroughLink } = this.state.personalFormValues;
+            let { pName, pUrl, pDescription, pWalkthroughLink, selectedTags } = this.state.personalFormValues;
             if(!pName || !pUrl || !pDescription) return alert('A project name, url and description are required')
             let personalProject = {
                 name: pName,
                 url: pUrl,
                 description: pDescription,
-                walkthroughLink: pWalkthroughLink
+                walkthroughLink: pWalkthroughLink,
+                selectedTags,
+                cohort
             }
             axios.post('/api/projects', personalProject).then(res => {
                 console.log(res)
             })
         }
         else {
-            let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers} = this.state.groupFormValues;
+            let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, selectedTags} = this.state.groupFormValues;
             if(!gName || !gUrl || !gDescription || !gGroupMembers.length) return alert('A project name, url, description and group members are required')
             let groupProject = {
                 name: gName,
                 url: gUrl,
                 description: gDescription,
                 walkthroughLink: gWalkthroughLink,
-                groupMembers: gGroupMembers
+                groupMembers: gGroupMembers, 
+                selectedTags,
+                cohort
             }
             axios.post('/api/projects', groupProject).then(res => {
                 console.log(res)
@@ -166,10 +175,19 @@ export default class Student extends Component {
         this.setState(newState)
     }
 
+    handleNewTag = (stateKey, value) => {
+        let newState = Object.assign({}, this.state)
+        newState[stateKey].newTag = value
+        this.setState(newState)
+    }
+
+    addNewTag = (stateKey) => {
+        
+    }
     render() {
         let {retrievedDashboard, hasGroup, hasPersonal, group, personal, student, personalFormValues, groupFormValues} = this.state
-        let { pName, pUrl, pDescription, pWalkthroughLink, availableTags: pAvailableTags, selectedTags: pSelectedTags} = personalFormValues;
-        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, gAvailableGroupMembers, availableTags: gAvailableTags, selectedTags: gSelectedTags} = groupFormValues;
+        let { pName, pUrl, pDescription, pWalkthroughLink, availableTags: pAvailableTags, selectedTags: pSelectedTags, newTag: pNewTag} = personalFormValues;
+        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, gAvailableGroupMembers, availableTags: gAvailableTags, selectedTags: gSelectedTags, newTag: gNewTag} = groupFormValues;
         return (
             retrievedDashboard 
             ?
@@ -221,7 +239,7 @@ export default class Student extends Component {
                                             )
                                         })
                                     }
-                                    <label>Add Tag:</label> <input></input>
+                                    <label>Add Tag:</label> <input value={pNewTag} onChange={e => this.handleNewTag('personalFormValues', e.target.value)}></input>
                                 </div>
                                 <button type="submit">Submit For Approval</button>
                             </form>
