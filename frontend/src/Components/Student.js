@@ -10,24 +10,68 @@ export default class Student extends Component {
             group: [],
             personal: [],
             student: {},
-            retrievedDashboard: false
+            cohortStudents: [],
+            retrievedDashboard: false,
+            personalFormValues: {
+                pName: '',
+                pUrl: '',
+                pDescription: '',
+                pWalkthroughLink: ''
+            },
+            groupFormValues: {
+                gName: '',
+                gUrl: '',
+                gDescription: '',
+                gWalkthroughLink: '',
+                gGroupMembers: [],
+                gAvailableGroupMembers: []
+            }
         }
     }
+
     componentDidMount() {
         axios.get('/api/loadDashboard/student').then(response => {
-            let {hasGroup, hasPersonal, group, personal, student} = response.data
+            let {hasGroup, hasPersonal, group, personal, student, cohortStudents} = response.data
             this.setState({
                 hasGroup,
                 hasPersonal,
                 group,
                 personal,
                 student,
-                retrievedDashboard: true
+                cohortStudents,
+                retrievedDashboard: true,
+                groupFormValues: {
+                    ...this.state.groupFormValues,
+                    gAvailableGroupMembers: cohortStudents
+                }
             })
         })
     }
+
+    updateFormValue = (stateKey, formKey, value) => {
+        let obj = Object.assign({}, this.state[stateKey])
+        obj[formKey] = value;
+        let newState = Object.assign({}, this.state)
+        newState[stateKey] = obj
+        this.setState(newState)
+    }
+
+    submitProject = (e, type) => {
+        e.preventDefault()
+        if(type === 'personal') {
+            let { pName, pUrl, pDescription, pWalkthroughLink } = this.state.personalFormValues;
+            if(!pName || !pUrl || !pDescription) return alert('A project name, url and description are required')
+            //submit at this point
+        }
+        else {
+
+        }
+    }
+
     render() {
-        let {retrievedDashboard, hasGroup, hasPersonal, group, personal, student} = this.state
+        let {retrievedDashboard, hasGroup, hasPersonal, group, personal, student, personalFormValues, groupFormValues} = this.state
+        let { pName, pUrl, pDescription, pWalkthroughLink} = personalFormValues;
+        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers} = groupFormValues;
         return (
             retrievedDashboard 
             ?
@@ -37,7 +81,7 @@ export default class Student extends Component {
                 </div>
                 <div className="student-dashboard-right-container">
                     {
-                        hasPersonal 
+                        !hasPersonal 
                         ?
                         personal.map(project => {
                             return (
@@ -52,7 +96,14 @@ export default class Student extends Component {
                         })
                         :
                         <div className="student-dashboard-personal-container">
-                            Need to add a personal project
+                            <div className="project-container-title">Personal Project</div>
+                            <form onSubmit={(e) => this.submitProject(e, 'personal')}>
+                                <label>Project Name:</label> <input value={pName} onChange={(e) => this.updateFormValue('personalFormValues', 'pName', e.target.value)}></input>
+                                <label>Project Url:</label> <input value={pUrl} onChange={(e) => this.updateFormValue('personalFormValues', 'pUrl', e.target.value)}></input>
+                                <label>Project Description:</label> <input value={pDescription} onChange={(e) => this.updateFormValue('personalFormValues', 'pDescription', e.target.value)}></input>
+                                <label>Project Walkthrough Link:</label> <input value={pWalkthroughLink} onChange={(e) => this.updateFormValue('personalFormValues', 'pWalkthroughLink', e.target.value)}></input>
+                                <button type="submit">Submit For Approval</button>
+                            </form>
                         </div>
                     }
                     {
@@ -76,7 +127,13 @@ export default class Student extends Component {
                         })
                         :
                         <div className="student-dashboard-group-container">
-                            Need to add a group project
+                            <div className="project-container-title">Group Project</div>
+                            <form>
+                                <label>Project Name:</label> <input value={gName}></input>
+                                <label>Project Url:</label> <input value={gUrl}></input>
+                                <label>Project Description:</label> <input value={gDescription}></input>
+                                <label>Project Walkthrough Link:</label> <input value={gWalkthroughLink}></input>
+                            </form>
                         </div>
                     }
                 </div>

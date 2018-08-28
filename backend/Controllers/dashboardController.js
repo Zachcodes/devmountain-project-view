@@ -75,7 +75,7 @@ module.exports = {
         db.students.get_student_by_user_id({userId}).then( studentArr => {
             if(studentArr.length) {
                 let student = studentArr[0]
-                let {id} = student
+                let {id, cohort} = student
                 
                 //go get all the projects associated with student 
                 db.students.get_projects_by_student_id({id}).then( projects => {
@@ -88,21 +88,24 @@ module.exports = {
                         hasGroup = true;
                         let {project_id} = group[0]
                         promiseArr.push(db.projects.get_group_members({project_id}))
-                    } 
+                    }
                     if(personal.length) hasPersonal = true;
                     Promise.all(promiseArr).then( values => {
                         if(values.length) {
                             let groupMembers = values[0];
                             if(groupMembers.length) group[0].members = groupMembers
                         }
-                        let returnObj = {
-                            hasGroup,
-                            hasPersonal,
-                            group,
-                            personal,
-                            student
-                        }
-                        res.status(200).send(returnObj)
+                        db.cohorts.get_students_by_cohort({cohort}).then(students => {
+                            let returnObj = {
+                                hasGroup,
+                                hasPersonal,
+                                group,
+                                personal,
+                                student,
+                                cohortStudents: students
+                            }
+                            res.status(200).send(returnObj)
+                        })
                     })
                     
                 })
