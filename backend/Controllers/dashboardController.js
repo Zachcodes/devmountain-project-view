@@ -70,6 +70,31 @@ module.exports = {
     },
     loadStudentDashboard: (req, res) => {
         const db = req.app.get('db')
-        res.status(200).send('Student Dashboard')
+        //get all projects linked to this student
+        let {userId} = req.session;
+        db.students.get_student_by_user_id({userId}).then( studentArr => {
+            if(studentArr.length) {
+                let student = studentArr[0]
+                let {id} = student
+                
+                //go get all the projects associated with student 
+                db.students.get_projects_by_student_id({id}).then( projects => {
+                    let hasGroup, hasPersonal;
+                    let group = projects.filter( project => project.project_type === 2)
+                    let personal = projects.filter( project => project.project_type === 1)
+                    if(group.length) hasGroup = true;
+                    if(personal.length) hasPersonal = true;
+                    let returnObj = {
+                        hasGroup,
+                        hasPersonal,
+                        group,
+                        personal,
+                        student
+                    }
+                    res.status(200).send(returnObj)
+                    
+                })
+            }
+        })
     }
 }
