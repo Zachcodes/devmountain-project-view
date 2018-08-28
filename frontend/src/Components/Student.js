@@ -68,10 +68,44 @@ export default class Student extends Component {
         }
     }
 
+    removeGroupMember = (studentId) => {
+        studentId = +studentId
+        let {gGroupMembers} = this.state.groupFormValues;
+        let gAvailableGroupMembersCopy = [...this.state.groupFormValues.gAvailableGroupMembers];
+        let newGroupMembers = gGroupMembers.filter( student => {
+            if(student.id === studentId) gAvailableGroupMembersCopy.push(student)
+            return student.id !== studentId
+        })
+        this.setState({
+            groupFormValues: {
+                ...this.state.groupFormValues,
+                gGroupMembers: newGroupMembers, 
+                gAvailableGroupMembers: gAvailableGroupMembersCopy
+            }
+        })
+    }
+
+    addGroupMember = (studentId) => {
+        studentId = +studentId
+        let {gAvailableGroupMembers} = this.state.groupFormValues;
+        let gGroupMembersCopy = [...this.state.groupFormValues.gGroupMembers];
+        let newAvailableMembers = gAvailableGroupMembers.filter( student => {
+            if(student.id === studentId) gGroupMembersCopy.push(student)
+            return student.id !== studentId
+        })
+        this.setState({
+            groupFormValues: {
+                ...this.state.groupFormValues,
+                gGroupMembers: gGroupMembersCopy, 
+                gAvailableGroupMembers: newAvailableMembers
+            }
+        })
+    }
+
     render() {
         let {retrievedDashboard, hasGroup, hasPersonal, group, personal, student, personalFormValues, groupFormValues} = this.state
         let { pName, pUrl, pDescription, pWalkthroughLink} = personalFormValues;
-        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers} = groupFormValues;
+        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, gAvailableGroupMembers} = groupFormValues;
         return (
             retrievedDashboard 
             ?
@@ -107,7 +141,7 @@ export default class Student extends Component {
                         </div>
                     }
                     {
-                        hasGroup 
+                        !hasGroup 
                         ?
                         group.map(project => {
                             return (
@@ -129,10 +163,34 @@ export default class Student extends Component {
                         <div className="student-dashboard-group-container">
                             <div className="project-container-title">Group Project</div>
                             <form>
-                                <label>Project Name:</label> <input value={gName}></input>
-                                <label>Project Url:</label> <input value={gUrl}></input>
-                                <label>Project Description:</label> <input value={gDescription}></input>
-                                <label>Project Walkthrough Link:</label> <input value={gWalkthroughLink}></input>
+                                <label>Project Name:</label> <input value={gName} onChange={(e) => this.updateFormValue('groupFormValues', 'gName', e.target.value)}></input>
+                                <label>Project Url:</label> <input value={gUrl} onChange={(e) => this.updateFormValue('groupFormValues', 'gUrl', e.target.value)}></input>
+                                <label>Project Description:</label> <input value={gDescription} onChange={(e) => this.updateFormValue('groupFormValues', 'gDescription', e.target.value)}></input>
+                                <label>Project Walkthrough Link:</label> <input value={gWalkthroughLink} onChange={(e) => this.updateFormValue('groupFormValues', 'gWalkthroughLink', e.target.value)}></input>
+                                <div>
+                                    <select onChange={(e) => this.addGroupMember(e.target.value)}>
+                                        <option></option>
+                                        {
+                                            gAvailableGroupMembers.map( student => {
+                                                return (
+                                                    <option key={student.id} value={student.id}>
+                                                        {student.first} {student.last}
+                                                    </option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                    {
+                                       gGroupMembers.map( student => {
+                                           return (
+                                               <div key={student.id}>
+                                                    <p>{student.first} {student.last}</p>
+                                                    <button onClick={()=>this.removeGroupMember(student.id)}>X</button>
+                                               </div>
+                                           )
+                                       }) 
+                                    }
+                                </div>
                             </form>
                         </div>
                     }
