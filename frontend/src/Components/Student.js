@@ -175,19 +175,48 @@ export default class Student extends Component {
         this.setState(newState)
     }
 
+    removeNewTag = (stateKey, tagName) => {
+        let newTags = this.state[stateKey].newTags.filter(tag => tag !== tagName)
+        this.setState(state => {
+            state[stateKey].newTags = newTags
+            return state;
+        })
+    }
+
     handleNewTag = (stateKey, value) => {
         let newState = Object.assign({}, this.state)
         newState[stateKey].newTag = value
         this.setState(newState)
     }
 
-    addNewTag = (stateKey) => {
-        
+    addNewTag = (e, stateKey) => {
+        e.preventDefault()
+        if(this.state[stateKey].newTag) {
+            let copies = this.state.tags.filter( tag => {
+                return tag.tag_name.toLowerCase() === this.state[stateKey].newTag.toLowerCase()
+            })
+            let newTagCopies = this.state[stateKey].newTags.filter( tag => {
+                return tag.toLowerCase() === this.state[stateKey].newTag.toLowerCase()
+            })
+            if(!copies.length && !newTagCopies.length) {
+                let newTagsCopy = [...this.state[stateKey].newTags]
+                newTagsCopy.push(this.state[stateKey].newTag.toLowerCase())
+                this.setState(state => {
+                    state[stateKey].newTags = newTagsCopy
+                    state[stateKey].newTag = ''
+                    return state;
+                })
+            }
+            else {
+                alert('Already a tag by that name')
+            }
+        }
     }
+
     render() {
         let {retrievedDashboard, hasGroup, hasPersonal, group, personal, student, personalFormValues, groupFormValues} = this.state
-        let { pName, pUrl, pDescription, pWalkthroughLink, availableTags: pAvailableTags, selectedTags: pSelectedTags, newTag: pNewTag} = personalFormValues;
-        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, gAvailableGroupMembers, availableTags: gAvailableTags, selectedTags: gSelectedTags, newTag: gNewTag} = groupFormValues;
+        let { pName, pUrl, pDescription, pWalkthroughLink, availableTags: pAvailableTags, selectedTags: pSelectedTags, newTag: pNewTag, newTags: pNewTags} = personalFormValues;
+        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, gAvailableGroupMembers, availableTags: gAvailableTags, selectedTags: gSelectedTags, newTag: gNewTag, newTags: gNewTags} = groupFormValues;
         return (
             retrievedDashboard 
             ?
@@ -239,7 +268,18 @@ export default class Student extends Component {
                                             )
                                         })
                                     }
-                                    <label>Add Tag:</label> <input value={pNewTag} onChange={e => this.handleNewTag('personalFormValues', e.target.value)}></input>
+                                    <label>New Tag:</label> <input value={pNewTag} onChange={e => this.handleNewTag('personalFormValues', e.target.value)}></input>
+                                    <button onClick={e => this.addNewTag(e, 'personalFormValues')}>Add Tag</button>
+                                    {
+                                        pNewTags.map( (tag, index) => {
+                                            return (
+                                                <div key={`${tag}_${index}`}>
+                                                    <p>{tag}</p>
+                                                    <button onClick={()=>this.removeNewTag('personalFormValues', tag)}>X</button>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                                 <button type="submit">Submit For Approval</button>
                             </form>
@@ -317,7 +357,18 @@ export default class Student extends Component {
                                             )
                                         })
                                     }
-                                    <label>Add Tag:</label> <input></input>
+                                    <label>New Tag:</label> <input value={gNewTag} onChange={e => this.handleNewTag('groupFormValues', e.target.value)}></input>
+                                    <button onClick={e => this.addNewTag(e, 'groupFormValues')}>Add Tag</button>
+                                    {
+                                        gNewTags.map( (tag, index) => {
+                                            return (
+                                                <div key={`${tag}_${index}`}>
+                                                    <p>{tag}</p>
+                                                    <button onClick={()=>this.removeNewTag('groupFormValues', tag)}>X</button>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                                 <button type="submit">Submit For Approval</button>
                             </form>
