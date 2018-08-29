@@ -302,7 +302,6 @@ export default class Student extends Component {
                         hasGroup 
                         ?
                         group.map(project => {
-                            console.log(project)
                             return (
                                 <div className="student-dashboard-group-container" key={project.id}>
                                     <div className="project-container-title">Group Project</div>

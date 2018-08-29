@@ -6,6 +6,10 @@ const bcrypt = require('bcrypt')
 const connectionString = process.env.CONNECTION_STRING;
 const session = require('express-session')
 const CronJob = require('cron').CronJob
+const passport = require('passport')
+const Devmtn = require('devmtn-auth')
+const DevmtnStrategy = Devmtn.Strategy;
+const devmtnAuthConfig = require('./AuthConfig')
 //require controllers
 const sc = require('./Controllers/studentController');
 const cc = require('./Controllers/cohortController');
@@ -50,6 +54,66 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     cleanUpLogCron.start()
 })
 
+app.use(passport.initialize())
+app.use(passport.session())
+
+//passport
+passport.serializeUser((user, done) => {
+    done(null, user)
+})
+passport.deserializeUser((user, done) => {
+    done(null, user)
+})
+
+passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, user, done) {
+    let {id: devmtn_id, first_name, last_name, email, cohortId} = user;
+    console.log(user)
+    
+    let db = app.get('db')
+    db.auth.get_user_by_devmtn_id({devmtn_id}).then( userArr => {
+        if(userArr.length) {
+
+        }
+        else {
+            let isStudent = Devmtn.checkRoles(user, 'student')
+            let isAlumni = Devmtn.checkRoles(user, 'alumni')
+            let isMentor = Devmtn.checkRoles(user, 'mentor')
+            let isLeadMentor = Devmtn.checkRoles(user, 'lead_mentor')
+            let isLeadInstructor = Devmtn.checkRoles(user, 'lead_instructor')
+            let isInstructor = Devmtn.checkRoles(user, 'instructor')
+            let isAdmin = Devmtn.checkRoles(user, 'admin')
+
+            let projectBrowserRole; 
+
+            if(isStudent || isAlumni) projectBrowserRole = 3
+            if(isMentor || isLeadMentor || isLeadInstructor || isInstructor) projectBrowserRole = 2
+            if(isAdmin) projectBrowserRole = 1
+            projectBrowserRole = 3
+            let newUser = {
+                name: `${first_name} ${last_name}`,
+                role_id: projectBrowserRole, 
+                email,
+                devmtn_id
+            }
+
+            db.auth.create_user(newUser).then( user => {
+                let userId;
+                if(user[0]) userId = user[0].id
+                if(projectBrowserRole === 3 && userId) {
+                    db.auth.create_student({first_name, last_name, cohortId, userId}).then( student => {
+                        done(null, user)
+                    })
+                }
+                else {
+                    done(null, user)
+                }
+            })
+        }
+    })
+
+
+}))
+
 //Cron jobs 
 const averageRatingCron = new CronJob('0 0 2 * * 0-6', () => {
     const db = app.get('db')
@@ -67,6 +131,17 @@ const cleanUpLogCron = new CronJob('0 30 12 * * 6', () => {
 })
 
 //routes 
+
+//devmountain auth
+app.get('/api/auth', passport.authenticate('devmtn'))
+
+app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
+    if(req.user.isAllowed) {
+        res.redirect('http://localhost:3005/#/dashboard')
+    } else {
+        res.redirect('http://localhost:3005/#/')
+    }
+})
 
 //session routes 
 app.get('/api/loginCheck', lc.loginCheck)
