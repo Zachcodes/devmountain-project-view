@@ -90,7 +90,10 @@ export default class Student extends Component {
                 cohortId: cohort
             }
             axios.post('/api/projects', personalProject).then(res => {
-                console.log(res)
+                this.setState({
+                    hasPersonal: true,
+                    personal: res.data
+                })
             })
         }
         else {
@@ -109,7 +112,10 @@ export default class Student extends Component {
                 cohortId: cohort
             }
             axios.post('/api/projects', groupProject).then(res => {
-                console.log(res)
+                this.setState({
+                    hasGroup: true,
+                    group: res.data
+                })
             })
         }
     }
@@ -233,7 +239,7 @@ export default class Student extends Component {
                 </div>
                 <div className="student-dashboard-right-container">
                     {
-                        !hasPersonal 
+                        hasPersonal 
                         ?
                         personal.map(project => {
                             return (
@@ -293,9 +299,10 @@ export default class Student extends Component {
                         </div>
                     }
                     {
-                        !hasGroup 
+                        hasGroup 
                         ?
                         group.map(project => {
+                            console.log(project)
                             return (
                                 <div className="student-dashboard-group-container" key={project.id}>
                                     <div className="project-container-title">Group Project</div>
