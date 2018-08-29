@@ -73,33 +73,40 @@ export default class Student extends Component {
 
     submitProject = (e, type) => {
         e.preventDefault()
-        let {cohort} = this.state.student
+        let {cohort, id} = this.state.student
+        let studentIds = [id]
         if(type === 'personal') {
-            let { pName, pUrl, pDescription, pWalkthroughLink, selectedTags } = this.state.personalFormValues;
+            let { pName, pUrl, pDescription, pWalkthroughLink, selectedTags, newTags } = this.state.personalFormValues;
             if(!pName || !pUrl || !pDescription) return alert('A project name, url and description are required')
             let personalProject = {
-                name: pName,
+                projectName: pName,
                 url: pUrl,
                 description: pDescription,
                 walkthroughLink: pWalkthroughLink,
-                selectedTags,
-                cohort
+                projectTags: selectedTags,
+                newTags, 
+                studentIds,
+                projectType: 1,
+                cohortId: cohort
             }
             axios.post('/api/projects', personalProject).then(res => {
                 console.log(res)
             })
         }
         else {
-            let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, selectedTags} = this.state.groupFormValues;
+            let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, selectedTags, newTags} = this.state.groupFormValues;
             if(!gName || !gUrl || !gDescription || !gGroupMembers.length) return alert('A project name, url, description and group members are required')
+            gGroupMembers = gGroupMembers.map(member => member.id)
             let groupProject = {
-                name: gName,
+                projectName: gName,
                 url: gUrl,
                 description: gDescription,
                 walkthroughLink: gWalkthroughLink,
-                groupMembers: gGroupMembers, 
-                selectedTags,
-                cohort
+                studentIds: gGroupMembers, 
+                projectTags: selectedTags,
+                newTags, 
+                projectType: 2,
+                cohortId: cohort
             }
             axios.post('/api/projects', groupProject).then(res => {
                 console.log(res)
