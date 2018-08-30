@@ -67,12 +67,11 @@ passport.deserializeUser((user, done) => {
 
 passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, user, done) {
     let {id: devmtn_id, first_name, last_name, email, cohortId} = user;
-    console.log(user)
     
     let db = app.get('db')
     db.auth.get_user_by_devmtn_id({devmtn_id}).then( userArr => {
         if(userArr.length) {
-
+            done(null, userArr[0])
         }
         else {
             let isStudent = Devmtn.checkRoles(user, 'student')
@@ -100,6 +99,8 @@ passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, us
                 let userId;
                 if(user[0]) userId = user[0].id
                 if(projectBrowserRole === 3 && userId) {
+                    //TODO: This is hardcoded right now until you get data dump from the devmountain api
+                    cohortId = 1
                     db.auth.create_student({first_name, last_name, cohortId, userId}).then( student => {
                         done(null, user)
                     })
