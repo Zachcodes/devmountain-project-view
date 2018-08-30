@@ -26,6 +26,7 @@ const staffCheck = require('./Middleware/staffCheck')
 const validEmailCheck = require('./Middleware/validEmailCheck')
 const sessionCheck = require('./Middleware/sessionCheck')
 const validLogin = require('./Middleware/validLogin')
+const setSessionOffPassport = require('./Middleware/setSessionOffPassport')
 //cron
 const cronJobs = require('./Cron/Cron')
 
@@ -115,6 +116,8 @@ passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, us
 
 }))
 
+app.use(setSessionOffPassport)
+
 //Cron jobs 
 const averageRatingCron = new CronJob('0 0 2 * * 0-6', () => {
     const db = app.get('db')
@@ -137,7 +140,7 @@ const cleanUpLogCron = new CronJob('0 30 12 * * 6', () => {
 app.get('/api/auth', passport.authenticate('devmtn'))
 
 app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
-    if(req.user.isAllowed) {
+    if(req.user) {
         res.redirect('http://localhost:3005/#/dashboard')
     } else {
         res.redirect('http://localhost:3005/#/')

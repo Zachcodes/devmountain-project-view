@@ -22,18 +22,25 @@ export default class LoggedIn extends Component {
             this.setState({initialAuth: true, role: response.data.role})
         }).catch(err => this.setState({initialAuth: true, redirect: true}))
     }
+
+    redirectToLogin = () => {
+        window.location = 'http://localhost:3200/api/auth'
+    }
+    
     render() {
         let {role, initialAuth, redirect} = this.state
+        let {redirectToLogin} = this
         let typeToRender = ''
         if(role == 'student') typeToRender = <Student />
         if(role == 'staff') typeToRender = <Staff />
         if(role == 'admin') typeToRender = <Admin />
+        if(initialAuth && redirect) redirectToLogin()
         return (
             initialAuth
             ?
             redirect
             ?
-            <Redirect to="/login" />
+            null
             :
             <div>
                 {typeToRender}

@@ -17,6 +17,7 @@ class NavBar extends Component {
 
     componentDidMount() {
         let {getPrograms, programs, loggedIn, checkLogin} = this.props 
+        console.log(loggedIn)
         if(!programs.length) getPrograms()
         if(!loggedIn) checkLogin()
     }
@@ -75,7 +76,7 @@ class NavBar extends Component {
                         :
                         <span className="navbar-right-span">
                             <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
-                            <div className="navbar-right-link login"><Link to="/login">Login</Link></div>
+                            <div className="navbar-right-link login"><a href="http://localhost:3200/api/auth">Login</a></div>
                             <i className="fas fa-bars hamburger-nav"></i>
                         </span>
                     }
