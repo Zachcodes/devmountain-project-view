@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import ReactS3Uploader from 'react-s3-uploader'
+import axios from 'axios'
 
 
 const config = {
@@ -14,6 +15,17 @@ export default class ImageUploader extends Component {
         super()
     }
 
+    onProgress = (percentage) => {
+        //TODO: Provide user feedback down the line notifying them of the current progress
+    }
+
+    onFinish = (fileDetails) => {
+        let {filename} = fileDetails 
+        axios.put('/api/students/updatePicture', {pictureUrl: filename}).then( res => {
+            console.log(res)
+        })
+    }
+
     render() {
         return (
             <div>
@@ -24,9 +36,9 @@ export default class ImageUploader extends Component {
                     s3path="/uploads/"
                     preprocess={this.onUploadStart}
                     onSignedUrl={this.onSignedUrl}
-                    onProgress={this.onUploadProgress}
+                    onProgress={this.onProgress}
                     onError={this.onUploadError}
-                    onFinish={this.onUploadFinish}
+                    onFinish={this.onFinish}
                     signingUrlWithCredentials={ true }      // in case when need to pass authentication credentials via CORS
                     uploadRequestHeaders={{ 'x-amz-acl': 'public-read' }}  // this is the default
                     contentDisposition="auto"
