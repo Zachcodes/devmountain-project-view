@@ -62,7 +62,7 @@ export default class Student extends Component {
                     availableTags: tags
                 }
             })
-        })
+        }).catch(err => console.log(err))
     }
 
     updateFormValue = (stateKey, formKey, value) => {
@@ -228,16 +228,44 @@ export default class Student extends Component {
         }
     }
 
+    resetStudentData = (student) => {
+        this.setState({student})
+    }
+
     render() {
-        let {retrievedDashboard, hasGroup, hasPersonal, group, personal, student, personalFormValues, groupFormValues} = this.state
-        let { pName, pUrl, pDescription, pWalkthroughLink, availableTags: pAvailableTags, selectedTags: pSelectedTags, newTag: pNewTag, newTags: pNewTags} = personalFormValues;
-        let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, gAvailableGroupMembers, availableTags: gAvailableTags, selectedTags: gSelectedTags, newTag: gNewTag, newTags: gNewTags} = groupFormValues;
+        let {retrievedDashboard, 
+            hasGroup, 
+            hasPersonal, 
+            group, 
+            personal, 
+            student, 
+            personalFormValues, 
+            groupFormValues} = this.state
+        let { pName, 
+            pUrl, 
+            pDescription, 
+            pWalkthroughLink, 
+            availableTags: pAvailableTags, 
+            selectedTags: pSelectedTags, 
+            newTag: pNewTag, 
+            newTags: pNewTags} = personalFormValues;
+        let { gName, 
+            gUrl, 
+            gDescription, 
+            gWalkthroughLink, 
+            gGroupMembers, 
+            gAvailableGroupMembers, 
+            availableTags: gAvailableTags, 
+            selectedTags: gSelectedTags, 
+            newTag: gNewTag, 
+            newTags: gNewTags} = groupFormValues;
         return (
             retrievedDashboard 
             ?
             <div className="student-dashboard-main">
                 <div className="student-dashboard-left-container">
                     {student.first} {student.last}
+                    <img src={student.image} className="student-image"/>
                 </div>
                 <div className="student-dashboard-right-container">
                     {
@@ -390,7 +418,7 @@ export default class Student extends Component {
                         </div>
                     }
                 </div>
-                <ImageUploader/>
+                <ImageUploader resetStudentData={this.resetStudentData}/>
             </div>
             :
             <div className="student-dashboard-main">

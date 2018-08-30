@@ -22,7 +22,7 @@ export default class ImageUploader extends Component {
     onFinish = (fileDetails) => {
         let {filename} = fileDetails 
         axios.put('/api/students/updatePicture', {pictureUrl: filename}).then( res => {
-            console.log(res)
+            this.props.resetStudentData(res.data)
         })
     }
 
@@ -33,7 +33,7 @@ export default class ImageUploader extends Component {
                     signingUrl="/s3/sign"
                     signingUrlMethod="GET"
                     accept="image/*"
-                    s3path="/uploads/"
+                    s3path="pictures/"
                     preprocess={this.onUploadStart}
                     onSignedUrl={this.onSignedUrl}
                     onProgress={this.onProgress}

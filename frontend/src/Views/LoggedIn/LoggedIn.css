@@ -36,3 +36,8 @@
     flex-direction: column;
     border: .5px solid black;
 }
+
+.student-image {
+    width: 200px;
+    height: 200px;
+}
