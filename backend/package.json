@@ -21,6 +21,7 @@
     "lodash": "^4.17.10",
     "massive": "^5.1.1",
     "node-cron": "^1.2.1",
-    "passport": "^0.4.0"
+    "passport": "^0.4.0",
+    "react-s3-uploader": "^4.8.0"
   }
 }

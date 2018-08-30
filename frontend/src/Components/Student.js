@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
+import ImageUploader from './ImageUploader'
+
 export default class Student extends Component {
     constructor() {
         super()
@@ -388,6 +390,7 @@ export default class Student extends Component {
                         </div>
                     }
                 </div>
+                <ImageUploader/>
             </div>
             :
             <div className="student-dashboard-main">
