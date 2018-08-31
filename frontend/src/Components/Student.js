@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
-import ImageUploader from './ImageUploader'
+import StudentInfoEdit from './StudentInfoEdit'
 
 export default class Student extends Component {
     constructor() {
@@ -418,7 +418,7 @@ export default class Student extends Component {
                         </div>
                     }
                 </div>
-                <ImageUploader resetStudentData={this.resetStudentData}/>
+                <StudentInfoEdit resetStudentData={this.resetStudentData}/>
             </div>
             :
             <div className="student-dashboard-main">
