@@ -265,6 +265,7 @@ export default class Student extends Component {
             <div className="student-dashboard-main">
                 <div className="student-dashboard-left-container">
                     {student.first} {student.last}
+                    {student.about}
                     <img src={student.image} className="student-image"/>
                 </div>
                 <div className="student-dashboard-right-container">

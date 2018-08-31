@@ -4,6 +4,16 @@ CREATE TABLE cohort_type (
     type TEXT
 );
 
+CREATE TABLE document_types (
+    id SERIAL PRIMARY KEY,
+    type TEXT
+);
+
+CREATE TABLE project_images_types (
+    id SERIAL PRIMARY KEY,
+    type TEXT
+);
+
 CREATE TABLE project_tags (
     id SERIAL PRIMARY KEY,
     tag_name TEXT CHECK (tag_name = lower(tag_name))
@@ -97,6 +107,13 @@ CREATE TABLE daily_featured_projects (
     id SERIAL PRIMARY KEY,
     project_id INT REFERENCES projects(id),
     featured_date DATE
+);
+
+CREATE TABLE projects_images (
+    id SERIAL PRIMARY KEY,
+    project_id INT REFERENCES projects(id),
+    image_type_id INT REFERENCES project_images_types(id),
+    image_url TEXT
 );
 
 

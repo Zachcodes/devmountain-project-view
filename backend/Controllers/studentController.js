@@ -14,5 +14,13 @@ module.exports = {
         db.students.update_student_picture({id, newUrl}).then( studentDetails => {
             res.status(200).send(studentDetails[0])
         })
+    },
+    updateAbout: (req, res) => {
+        let db = req.app.get('db');
+        let {id} = req.session.passport.user;
+        let {about} = req.body;
+        db.students.update_student_about({id, about}).then( studentDetails => {
+            res.status(200).send(studentDetails[0])
+        })
     }
 }

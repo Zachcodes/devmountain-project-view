@@ -72,7 +72,6 @@ module.exports = {
         const db = req.app.get('db')
         //get all projects linked to this student
         let {userId} = req.session;
-        console.log(req.session)
         db.students.get_student_by_user_id({userId}).then( studentArr => {
             if(studentArr.length) {
                 let student = studentArr[0]
