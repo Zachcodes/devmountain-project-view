@@ -15,7 +15,6 @@ module.exports = {
         projectType = +projectType
         //Make sure to do check for if project name already exists
         //Add logic that will use the projectTags and insert into the db instead of checking to see if they exist
-
         db.projects.create_project({url, projectName, projectType, cohortId, description, walkthroughLink}).then(project => {
             let {id: projectId} = project[0]
             let promises = studentIds.map(studentId => db.projects.create_project_student_link({projectId, studentId}))
