@@ -1,11 +1,10 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import placeholder from '../images/thumbnail_placeholder.png'
 import '../css/main.css'
 
 
 export default function GroupProject(props) {
-    let {projectName, members, url} = props
+    let {projectName, members, url, mainImageUrl} = props
     function openWindow(url) {
         window.open(url)
     }
@@ -20,7 +19,7 @@ export default function GroupProject(props) {
     const groupProjectPicture = {
         width: '100%',
         height: '150px',
-        background: `url(${placeholder}) no-repeat`,
+        background: `url(${mainImageUrl}) no-repeat`,
         backgroundSize: 'cover',
         backgroundPosition: 'center top'
 

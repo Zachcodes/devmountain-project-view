@@ -1,9 +1,7 @@
 import React from 'react'
-import placeholder from '../images/thumbnail_placeholder.png'
-
 
 export default function PersonalProject(props) {
-    let {projectName, studentFirst, studentLast, url} = props.projectDetails
+    let {projectName, studentFirst, studentLast, url, mainImageUrl} = props.projectDetails
     function openWindow(url) {
         window.open(url)
     }
@@ -18,7 +16,7 @@ export default function PersonalProject(props) {
     const personalProjectPicture = {
         width: '100%',
         height: '150px',
-        background: `url(${placeholder}) no-repeat`,
+        background: `url(${mainImageUrl}) no-repeat`,
         backgroundSize: 'cover',
         backgroundPosition: 'center top'
 

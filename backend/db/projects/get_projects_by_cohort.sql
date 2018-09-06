@@ -9,4 +9,5 @@ inner join students s
 on s.id = pl.student_id
 full join projects_images pi 
 on pi.project_id = p.id
-where cohort_id = ${id};
+where cohort_id = ${id}
+and pi.image_type_id = 1;

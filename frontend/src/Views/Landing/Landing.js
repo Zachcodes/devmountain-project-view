@@ -32,17 +32,17 @@ export default class Home extends Component {
     }
 
     render() {
+        let {doneLoading, featuredProject} = this.state
+        let {project_type, students, image_url} = featuredProject;
+
         let featuredImage = {
             width: '100%',
             height: '40%',
-            background: `url(${placeholder}) no-repeat`,
+            background: `url(${image_url}) no-repeat`,
             backgroundSize: 'contain',
             backgroundPosition: 'center top',
             marginBottom: '10px'
         }
-
-        let {doneLoading, featuredProject} = this.state
-        let {project_type, students} = featuredProject;
         return (
             doneLoading
             ?

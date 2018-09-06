@@ -54,7 +54,6 @@ export default class CohortDetails extends Component {
         let {cohortid} = this.props.match.params;
         axios.get(`/api/cohorts/${cohortid}/projects`).then(res => {
             let personal = res.data.personalProjects;
-            console.log(personal)
             let group = res.data.groupProjects;
             let students = res.data.students
 
@@ -121,11 +120,13 @@ export default class CohortDetails extends Component {
                             <div className="cohort-details-project-container">
                                 {
                                     this.state.groupProjects.map( (project, index) => {
+                                        console.log(project)
                                         return (
                                             <GroupProject key={project.projectId}
                                             projectName={project.projectName} 
                                             members={project.groupMembers} 
                                             url={project.url}
+                                            mainImageUrl={project.mainImageUrl}
                                             />
                                         )
                                     })

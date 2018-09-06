@@ -29,7 +29,8 @@ export default class Student extends Component {
                 let tempProject = {
                     projectName: data[i].project_name,
                     url: data[i].url,
-                    projectType: data[i].project_type
+                    projectType: data[i].project_type,
+                    projectImage: data[i].image_url
                 }
                 projects.push(tempProject)
             }
@@ -86,6 +87,7 @@ export default class Student extends Component {
                     {
                         projects.map((project, index) => {
                             let type = project.projectType === 1 ? 'Personal' : 'Group'
+                            studentRightPicture.background = `url(${project.projectImage}) no-repeat`
                             return (
                                 <div key={index} className="student-right-project-container">
                                     <p>{type}: {project.projectName}</p>

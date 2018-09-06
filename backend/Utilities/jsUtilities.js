@@ -13,6 +13,7 @@ module.exports = {
                 if(groupProjects[i].rating) newGroupObject['rating'] = groupProjects[i].rating
                 if(groupProjects[i].projectRatingId) newGroupObject['projectRatingId'] = groupProjects[i].projectRatingId
                 newGroupObject['groupMembers'] = []
+                newGroupObject['mainImageUrl'] = groupProjects[i].mainImageUrl
                 groups[groupProjects[i].projectName] = newGroupObject
                 let studentName = { 
                     studentName: `${groupProjects[i].studentFirst} ${groupProjects[i].studentLast}`,
@@ -38,6 +39,7 @@ module.exports = {
         }
         return returnObj;
         function formatCamelCase(project) {
+            console.log(project)
             let formattedObj = {}
             formattedObj['projectId'] = project.project_id
             formattedObj['url'] = project.url
@@ -46,6 +48,7 @@ module.exports = {
             formattedObj['studentFirst'] = project.student_first
             formattedObj['studentLast'] = project.student_last
             formattedObj['studentId'] = project.student_id
+            formattedObj['mainImageUrl'] = project.image_url
             if(project.rating) {
                 formattedObj['rating'] = project.rating
                 formattedObj['staffName'] = project.staff_name
