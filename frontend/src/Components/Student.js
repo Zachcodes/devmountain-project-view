@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 
 import StudentInfoEdit from './StudentInfoEdit'
+import ImageUploader from './ImageUploader'
 
 export default class Student extends Component {
     constructor() {
@@ -23,7 +24,8 @@ export default class Student extends Component {
                 availableTags: [],
                 selectedTags: [],
                 newTags: [],
-                newTag: ''
+                newTag: '',
+                mainImageUrl: ''
             },
             groupFormValues: {
                 gName: '',
@@ -35,7 +37,8 @@ export default class Student extends Component {
                 availableTags: [],
                 selectedTags: [],
                 newTags: [],
-                newTag: ''
+                newTag: '',
+                mainImageUrl: ''
             }
         }
     }
@@ -78,7 +81,7 @@ export default class Student extends Component {
         let {cohort, id} = this.state.student
         let studentIds = [id]
         if(type === 'personal') {
-            let { pName, pUrl, pDescription, pWalkthroughLink, selectedTags, newTags } = this.state.personalFormValues;
+            let { pName, pUrl, pDescription, pWalkthroughLink, selectedTags, newTags, mainImageUrl } = this.state.personalFormValues;
             if(!pName || !pUrl || !pDescription) return alert('A project name, url and description are required')
             let personalProject = {
                 projectName: pName,
@@ -89,7 +92,8 @@ export default class Student extends Component {
                 newTags, 
                 studentIds,
                 projectType: 1,
-                cohortId: cohort
+                cohortId: cohort,
+                mainImageUrl
             }
             axios.post('/api/projects', personalProject).then(res => {
                 this.setState({
@@ -99,7 +103,7 @@ export default class Student extends Component {
             })
         }
         else {
-            let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, selectedTags, newTags} = this.state.groupFormValues;
+            let { gName, gUrl, gDescription, gWalkthroughLink, gGroupMembers, selectedTags, newTags, mainImageUrl} = this.state.groupFormValues;
             if(!gName || !gUrl || !gDescription || !gGroupMembers.length) return alert('A project name, url, description and group members are required')
             gGroupMembers = gGroupMembers.map(member => member.id)
             let groupProject = {
@@ -111,7 +115,8 @@ export default class Student extends Component {
                 projectTags: selectedTags,
                 newTags, 
                 projectType: 2,
-                cohortId: cohort
+                cohortId: cohort,
+                mainImageUrl
             }
             axios.post('/api/projects', groupProject).then(res => {
                 this.setState({
@@ -232,6 +237,13 @@ export default class Student extends Component {
         this.setState({student})
     }
 
+    updateMainProjectImageUrl = (filename, stateProperty) => {
+        this.setState(state => {
+            state[stateProperty].mainImageUrl = filename;
+            return state;
+        })
+    }
+
     render() {
         let {retrievedDashboard, 
             hasGroup, 
@@ -248,7 +260,8 @@ export default class Student extends Component {
             availableTags: pAvailableTags, 
             selectedTags: pSelectedTags, 
             newTag: pNewTag, 
-            newTags: pNewTags} = personalFormValues;
+            newTags: pNewTags,
+            mainImageUrl: pMainImageUrl} = personalFormValues;
         let { gName, 
             gUrl, 
             gDescription, 
@@ -258,7 +271,8 @@ export default class Student extends Component {
             availableTags: gAvailableTags, 
             selectedTags: gSelectedTags, 
             newTag: gNewTag, 
-            newTags: gNewTags} = groupFormValues;
+            newTags: gNewTags,
+            mainImageUrl: gMainImageUrl} = groupFormValues;
         return (
             retrievedDashboard 
             ?
@@ -291,6 +305,7 @@ export default class Student extends Component {
                                 <label>Project Url:</label> <input value={pUrl} onChange={(e) => this.updateFormValue('personalFormValues', 'pUrl', e.target.value)}></input>
                                 <label>Project Description:</label> <input value={pDescription} onChange={(e) => this.updateFormValue('personalFormValues', 'pDescription', e.target.value)}></input>
                                 <label>Project Walkthrough Link:</label> <input value={pWalkthroughLink} onChange={(e) => this.updateFormValue('personalFormValues', 'pWalkthroughLink', e.target.value)}></input>
+                                <label>Upload Main Project Image:</label> <ImageUploader type="mainProjectImage" updateMainProjectImageUrl={this.updateMainProjectImageUrl} stateProperty="personalFormValues"/>
                                 <div>
                                     <select onChange={(e) => this.addTag('personalFormValues', e.target.value)}>
                                         <option value=""></option>
@@ -356,6 +371,7 @@ export default class Student extends Component {
                                 <label>Project Url:</label> <input value={gUrl} onChange={(e) => this.updateFormValue('groupFormValues', 'gUrl', e.target.value)}></input>
                                 <label>Project Description:</label> <input value={gDescription} onChange={(e) => this.updateFormValue('groupFormValues', 'gDescription', e.target.value)}></input>
                                 <label>Project Walkthrough Link:</label> <input value={gWalkthroughLink} onChange={(e) => this.updateFormValue('groupFormValues', 'gWalkthroughLink', e.target.value)}></input>
+                                <label>Upload Main Project Image:</label> <ImageUploader type="mainProjectImage" updateMainProjectImageUrl={this.updateMainProjectImageUrl} stateProperty="groupFormValues"/>
                                 <div>
                                     <select onChange={(e) => this.addGroupMember(e.target.value)}>
                                         <option value=""></option>

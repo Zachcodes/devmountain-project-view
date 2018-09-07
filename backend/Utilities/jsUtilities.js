@@ -39,7 +39,6 @@ module.exports = {
         }
         return returnObj;
         function formatCamelCase(project) {
-            console.log(project)
             let formattedObj = {}
             formattedObj['projectId'] = project.project_id
             formattedObj['url'] = project.url

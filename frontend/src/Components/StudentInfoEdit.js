@@ -34,7 +34,7 @@ export default class StudentInfoEdit extends Component {
                 </div>
                 <div>
                     <label>Choose new picture</label>
-                    <ImageUploader resetStudentData={this.props.resetStudentData}/>
+                    <ImageUploader resetStudentData={this.props.resetStudentData} type="studentPicture"/>
                 </div>
             </form>
         )

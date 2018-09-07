@@ -21,9 +21,23 @@ export default class ImageUploader extends Component {
 
     onFinish = (fileDetails) => {
         let {filename} = fileDetails 
-        axios.put('/api/students/updatePicture', {pictureUrl: filename}).then( res => {
+        let {type, updateMainProjectImageUrl, stateProperty} = this.props
+        let apiPath;
+        switch(type) {
+            case 'studentPicture': 
+                apiPath =  '/api/students/updatePicture';
+                this.sendToBackend(apiPath, filename)
+                break;
+            case 'mainProjectImage':
+                updateMainProjectImageUrl(filename, stateProperty)
+                break;
+        }
+    }
+
+    sendToBackend = (apiPath, filename) => {
+        axios.put(apiPath, {pictureUrl: filename}).then( res => {
             this.props.resetStudentData(res.data)
-        })
+        }) 
     }
 
     render() {
