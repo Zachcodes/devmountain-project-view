@@ -23,7 +23,6 @@ module.exports = {
         for(key in tempPersonal) {
             personalProjects.push(tempPersonal[key])
         }
-        console.log(personalProjects)
         let groupProjects = formatted.filter( project => project.projectType === 2)
         let groups = {}
         for(let i = 0; i < groupProjects.length; i++) {
@@ -34,6 +33,14 @@ module.exports = {
                 newGroupObject['url'] = groupProjects[i].url
                 if(groupProjects[i].rating) newGroupObject['rating'] = groupProjects[i].rating
                 if(groupProjects[i].projectRatingId) newGroupObject['projectRatingId'] = groupProjects[i].projectRatingId
+                if(groupProjects[i].tagName) {
+                    newGroupObject['tags'] = []
+                    let tagObj = {
+                        tagName: groupProjects[i].tagName,
+                        tagId: groupProjects[i].tagId 
+                    }
+                    newGroupObject['tags'].push(tagObj)
+                } 
                 newGroupObject['groupMembers'] = []
                 newGroupObject['mainImageUrl'] = groupProjects[i].mainImageUrl
                 groups[groupProjects[i].projectName] = newGroupObject
@@ -49,6 +56,16 @@ module.exports = {
                     studentId: groupProjects[i].studentId
                 }
                 groups[groupProjects[i].projectName].groupMembers.push(studentName) 
+                if(groups[groupProjects[i].projectName].tags) {
+                    let tagExists = groups[groupProjects[i].projectName].tags.filter(tag => tag.tagId === groupProjects[i].tagId)
+                    if(!tagExists.length) {
+                        let tagObj = {
+                            tagName: groupProjects[i].tagName,
+                            tagId: groupProjects[i].tagId 
+                        }
+                        groups[groupProjects[i].projectName].tags.push(tagObj)
+                    }
+                }
             } 
         }
         let groupArr = []
