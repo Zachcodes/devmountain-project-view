@@ -51,11 +51,15 @@ module.exports = {
                 groups[groupProjects[i].projectName].groupMembers.push(studentName) 
             } 
             else {
-                let studentName = { 
-                    studentName: `${groupProjects[i].studentFirst} ${groupProjects[i].studentLast}`,
-                    studentId: groupProjects[i].studentId
+                let studentExists = groups[groupProjects[i].projectName].groupMembers.filter(student => student.studentId === groupProjects[i].studentId)
+                if(!studentExists.length) {
+                    let studentName = { 
+                        studentName: `${groupProjects[i].studentFirst} ${groupProjects[i].studentLast}`,
+                        studentId: groupProjects[i].studentId
+                    }
+                    groups[groupProjects[i].projectName].groupMembers.push(studentName) 
                 }
-                groups[groupProjects[i].projectName].groupMembers.push(studentName) 
+
                 if(groups[groupProjects[i].projectName].tags) {
                     let tagExists = groups[groupProjects[i].projectName].tags.filter(tag => tag.tagId === groupProjects[i].tagId)
                     if(!tagExists.length) {

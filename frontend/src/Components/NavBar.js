@@ -17,7 +17,6 @@ class NavBar extends Component {
 
     componentDidMount() {
         let {getPrograms, programs, loggedIn, checkLogin} = this.props 
-        console.log(loggedIn)
         if(!programs.length) getPrograms()
         if(!loggedIn) checkLogin()
     }

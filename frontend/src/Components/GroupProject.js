@@ -4,6 +4,7 @@ import '../css/main.css'
 
 
 export default function GroupProject(props) {
+    console.log(props)
     let {projectName, members, url, mainImageUrl} = props
     function openWindow(url) {
         window.open(url)
