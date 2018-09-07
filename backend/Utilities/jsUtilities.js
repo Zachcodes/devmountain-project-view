@@ -2,6 +2,28 @@ module.exports = {
     splitPersonalAndGroup: function(projectsArr) {
         let formatted = projectsArr.map(formatCamelCase)
         let personalProjects = formatted.filter( project => project.projectType === 1)
+        let tempPersonal = {}
+        personalProjects.forEach(project => {
+            if(!tempPersonal[project.projectId]) {
+                tempPersonal[project.projectId] = project
+                tempPersonal[project.projectId].tags = [] 
+                let tagObj = {}
+                tagObj.tagId = project.tagName 
+                tagObj.tagName = project.tagName
+                tempPersonal[project.projectId].tags.push(tagObj)
+            }
+            else {
+                let tagObj = {}
+                tagObj.tagId = project.tagName 
+                tagObj.tagName = project.tagName
+                tempPersonal[project.projectId].tags.push(tagObj)
+            }
+        })
+        personalProjects = []
+        for(key in tempPersonal) {
+            personalProjects.push(tempPersonal[key])
+        }
+        console.log(personalProjects)
         let groupProjects = formatted.filter( project => project.projectType === 2)
         let groups = {}
         for(let i = 0; i < groupProjects.length; i++) {
@@ -52,6 +74,10 @@ module.exports = {
                 formattedObj['rating'] = project.rating
                 formattedObj['staffName'] = project.staff_name
                 formattedObj['projectRatingId'] = project.project_rating_id 
+             }
+             if(project.tag_name) {
+                formattedObj['tagName'] = project.tag_name
+                formattedObj['tagId'] = project.tag_id 
              }
             return formattedObj;
         }

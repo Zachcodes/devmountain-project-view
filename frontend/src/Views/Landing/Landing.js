@@ -34,7 +34,6 @@ export default class Home extends Component {
     render() {
         let {doneLoading, featuredProject} = this.state
         let {project_type, students, image_url} = featuredProject;
-
         let featuredImage = {
             width: '100%',
             height: '40%',
