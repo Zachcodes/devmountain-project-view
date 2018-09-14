@@ -15,7 +15,7 @@ import Landing from './Views/Landing/Landing';
 import ProgramLanding from './Views/ProgramLanding/ProgramLanding';
 import ProgramCohorts from './Views/ProgramCohorts/ProgramCohorts';
 import CohortDetails from './Views/CohortDetails/CohortDetails';
-import Student from './Views/Student/Student';
+import StudentDetails from './Views/StudentDetails/StudentDetails';
 import Projects from './Views/Projects/Projects';
 import ProjectDetails from './Views/ProjectDetails/ProjectDetails';
 import Login from './Views/Login/Login';
@@ -34,7 +34,7 @@ ReactDOM.render(
                         <Route exact path="/programs" component={ProgramLanding} />
                         <Route exact path="/programs/cohorts/:programtype" component={ProgramCohorts}/>
                         <Route exact path="/programs/cohorts/:programtype/:cohortid" component={CohortDetails}/>
-                        <Route path="/students/:studentid" component={Student}/>
+                        <Route path="/students/:studentid" component={StudentDetails}/>
                         <Route exact path="/projects" component={Projects}/>
                         <Route path="/projects/:projectid" component={ProjectDetails}/>
                         <Route path="/login" component={Login} />

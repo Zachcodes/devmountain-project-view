@@ -106,7 +106,7 @@ export default class CohortDetails extends Component {
                                     this.state.personalProjects.map( (project, index) => {
                                         return (
                                             <PersonalProject 
-                                            key={project.projectId} 
+                                            key={`${project.projectId}_${index}`} 
                                             projectDetails={project} />
                                         )
                                     })
@@ -157,7 +157,7 @@ export default class CohortDetails extends Component {
                             type="submit"
                             value="Submit"
                             />
-                            <button onClick={this.loadDefault}>Reset</button>
+                            <button type="button" onClick={this.loadDefault}>Reset</button>
                         </div>
                     </form>
                 </div>

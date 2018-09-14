@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import placeholder from '../../images/thumbnail_placeholder.png';
-import './Student.css'
+import './StudentDetails.css'
 
 export default class Student extends Component {
     constructor() {
