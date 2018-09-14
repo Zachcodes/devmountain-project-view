@@ -2,19 +2,7 @@ import React, {Component} from 'react'
 import ReactS3Uploader from 'react-s3-uploader'
 import axios from 'axios'
 
-
-const config = {
-    bucketName: process.env.REACT_APP_BUCKET,
-    region: process.env.REACT_APP_REGION,
-    accessKeyId: process.env.REACT_APP_S3_PUBLIC_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY
-}
-
 export default class ImageUploader extends Component {
-    constructor() {
-        super()
-    }
-
     onProgress = (percentage) => {
         //TODO: Provide user feedback down the line notifying them of the current progress
     }
@@ -30,6 +18,8 @@ export default class ImageUploader extends Component {
                 break;
             case 'mainProjectImage':
                 updateMainProjectImageUrl(filename, stateProperty)
+                break;
+            default:
                 break;
         }
     }

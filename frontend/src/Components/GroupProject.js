@@ -4,7 +4,6 @@ import '../css/main.css'
 
 
 export default function GroupProject(props) {
-    console.log(props)
     let {projectName, members, url, mainImageUrl} = props
     function openWindow(url) {
         window.open(url)
@@ -41,7 +40,7 @@ export default function GroupProject(props) {
                 <div>Project name: {projectName}</div>
                 <div>Group Members: {
                     members.map((member, index) => {
-                        if(index == members.length -1) {
+                        if(index === members.length -1) {
                             return (
                                 <Link to={`/students/${member.id}`}
                                 key={member.studentId}>

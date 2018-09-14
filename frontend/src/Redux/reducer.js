@@ -2,7 +2,6 @@ import {GET_PROGRAMS_FULFILLED,
         LOGIN_FULFILLED, 
         LOGIN_REJECTED,
         LOGIN_CHECK_FULFILLED,
-        LOGIN_CHECK_REJECTED,
         LOGOUT_FULFILLED} from './actions'
 
 const initialState = {

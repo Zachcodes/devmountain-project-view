@@ -59,7 +59,7 @@ class NavBar extends Component {
         return (
             <div className="navbar-container">
                 <div className="navbar-left">
-                    <Link to='/'><img src={logo} className="devmountain-logo" /></Link>
+                    <Link to='/'><img src={logo} alt="DevMountain Main Logo" className="devmountain-logo" /></Link>
                     <Link to='/'><span>DevMountain Project Browser</span></Link>
                 </div>
                 <div className="navbar-right">

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import axios from 'axios'
-import {Redirect} from 'react-router-dom'
 import './LoggedIn.css'
 
 //components 
@@ -31,9 +30,9 @@ export default class LoggedIn extends Component {
         let {role, initialAuth, redirect} = this.state
         let {redirectToLogin} = this
         let typeToRender = ''
-        if(role == 'student') typeToRender = <Student />
-        if(role == 'staff') typeToRender = <Staff />
-        if(role == 'admin') typeToRender = <Admin />
+        if(role === 'student') typeToRender = <Student />
+        if(role === 'staff') typeToRender = <Staff />
+        if(role === 'admin') typeToRender = <Admin />
         if(initialAuth && redirect) redirectToLogin()
         return (
             initialAuth

@@ -49,8 +49,8 @@ export default class RatedPersonal extends Component {
                 flexDirection: 'column',
             }
         }
-        let {project, type, updateProjects} = this.props;
-        let {projectName, rating, studentName, studentLast, studentFirst, groupMembers} = project;
+        let {project, type} = this.props;
+        let {projectName, studentName, studentLast, studentFirst, groupMembers} = project;
         let {newRating} = this.state
         if(studentLast) studentName = `${studentFirst} ${studentLast}`
         return (

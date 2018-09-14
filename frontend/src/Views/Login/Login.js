@@ -43,7 +43,7 @@ class Login extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.errorLoggingIn != prevProps.errorLoggingIn) {
+        if(this.props.errorLoggingIn !== prevProps.errorLoggingIn) {
             this.setState({
                 username: '',
                 password: ''
@@ -51,7 +51,7 @@ class Login extends Component {
                 toast.error('No user found')
             })
         } 
-        else if (this.props.loggedIn != prevProps.loggedIn) {
+        else if (this.props.loggedIn !== prevProps.loggedIn) {
             this.setState({
                 redirect: true
             })

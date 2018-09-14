@@ -56,7 +56,6 @@ export default class CohortDetails extends Component {
             let personal = res.data.personalProjects;
             let group = res.data.groupProjects;
             let students = res.data.students
-
             this.setState({
                 groupProjects: group,
                 personalProjects: personal,
@@ -105,7 +104,6 @@ export default class CohortDetails extends Component {
                             <div className="cohort-details-project-container">
                                 {
                                     this.state.personalProjects.map( (project, index) => {
-                                        console.log(project)
                                         return (
                                             <PersonalProject 
                                             key={project.projectId} 

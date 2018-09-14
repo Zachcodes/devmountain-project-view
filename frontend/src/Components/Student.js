@@ -260,8 +260,7 @@ export default class Student extends Component {
             availableTags: pAvailableTags, 
             selectedTags: pSelectedTags, 
             newTag: pNewTag, 
-            newTags: pNewTags,
-            mainImageUrl: pMainImageUrl} = personalFormValues;
+            newTags: pNewTags} = personalFormValues;
         let { gName, 
             gUrl, 
             gDescription, 
@@ -271,8 +270,7 @@ export default class Student extends Component {
             availableTags: gAvailableTags, 
             selectedTags: gSelectedTags, 
             newTag: gNewTag, 
-            newTags: gNewTags,
-            mainImageUrl: gMainImageUrl} = groupFormValues;
+            newTags: gNewTags} = groupFormValues;
         return (
             retrievedDashboard 
             ?
@@ -280,7 +278,7 @@ export default class Student extends Component {
                 <div className="student-dashboard-left-container">
                     {student.first} {student.last}
                     {student.about}
-                    <img src={student.image} className="student-image"/>
+                    <img src={student.image} alt="Student" className="student-image"/>
                 </div>
                 <div className="student-dashboard-right-container">
                     {
