@@ -53,6 +53,7 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     averageRatingCron.start()
     checkLinkCron.start()
     cleanUpLogCron.start()
+    syncCohortsCron.start()
 })
 
 app.use(passport.initialize())
@@ -135,6 +136,11 @@ const cleanUpLogCron = new CronJob('0 30 12 * * 6', () => {
     cronJobs.cleanUpLogging()
 })
 
+const syncCohortsCron = new CronJob('0 30 1 * * 0-6', () => {
+    const db = app.get('db')
+    cronJobs.grabCohortsFromDevMountain(db)
+})
+
 //routes 
 
 //devmountain auth
@@ -198,9 +204,6 @@ app.get('/api/loadDashboard/student', sessionCheck, dc.loadStudentDashboard)
 //filter routes 
 app.get('/api/filter/:cohortId', fc.filterProjects)
 
-
-// *** TEMP ROUTE FOR TESTING *** 
-app.get('/api/test/cohorts', cronJobs.grabCohortsFromDevMountain)
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
 })

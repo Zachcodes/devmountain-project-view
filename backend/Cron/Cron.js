@@ -149,8 +149,7 @@ module.exports = {
 
     },
 
-    async grabCohortsFromDevMountain(req, res) {
-        let db = req.app.get('db')
+    async grabCohortsFromDevMountain(db) {
         let cohorts = await db.cohorts.get_cohort_ids()
         let ownedExternalCohortIds = cohorts.map(cohort => cohort.external_cohort_id)
         let devMountainResponse = await axios.get(process.env.DEVMOUNTAIN_DOMAIN, {
