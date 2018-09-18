@@ -102,8 +102,7 @@ passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, us
                 if(user[0]) userId = user[0].id
                 if(projectBrowserRole === 3 && userId) {
                     let defaultPictureUrl = process.env.DEFAULT_PICTURE
-                    //TODO: This is hardcoded right now until you get data dump from the devmountain api
-                    cohortId = 1
+                    cohortId = cohortId ? cohortId : null;
                     db.auth.create_student({first_name, last_name, cohortId, userId, defaultPictureUrl}).then( student => {
                         done(null, user)
                     })
