@@ -146,6 +146,64 @@ module.exports = {
             })
         })
 
+    },
+
+    async grabCohortsFromDevMountain(req, res) {
+        let db = req.app.get('db')
+        axios.get(process.env.DEVMOUNTAIN_DOMAIN, {
+            headers: {
+                authorization: process.env.THIRD_PARTY_AUTH
+            }
+        }).then(response => {
+            let {data} = response;
+            let formattedCohorts = data.map(cohort => {
+                let cohort_type;
+                switch(cohort.subject) {
+                    case 'webdev':
+                        cohort_type = 1;
+                        break;
+                    case 'ios':
+                        cohort_type = 3;
+                        break;
+                    case 'salesforce-admin':
+                        cohort_type = 5;
+                        break;
+                    case 'qa':
+                        cohort_type = 4;
+                        break;
+                    case 'ux':
+                        cohort_type = 2;
+                        break;
+                    case 'sf':
+                        cohort_type = 5;
+                        break;
+                    case 'dgm':
+                        cohort_type = null;
+                        break;
+                    case 'online':
+                        cohort_type = 6;
+                        break;
+                    default: 
+                        cohort_type = null;
+                }
+                let formattedCohort = {
+                    name: cohort.short_name,
+                    cohort_type,
+                    external_cohort_id: cohort.id,
+                    type: cohort.type
+                }
+                return formattedCohort;
+            })
+            //TODO: Use this for inserting cohorts that we don't have
+            // db.cohorts.insert(formattedCohorts, function (err, res) {
+            //     console.log(res)
+            //   });
+        }).catch(err => {
+            console.log(2222)
+            //Do some sort of error handling here
+        })
+        // let cohorts = await db.cohorts.get_cohort_ids()
+        
     }
 
 }

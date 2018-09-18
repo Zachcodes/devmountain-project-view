@@ -1,0 +1,1 @@
+select id, external_cohort_id from cohorts;

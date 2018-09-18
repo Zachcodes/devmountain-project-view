@@ -198,6 +198,9 @@ app.get('/api/loadDashboard/student', sessionCheck, dc.loadStudentDashboard)
 //filter routes 
 app.get('/api/filter/:cohortId', fc.filterProjects)
 
+
+// *** TEMP ROUTE FOR TESTING *** 
+app.get('/api/test/cohorts', cronJobs.grabCohortsFromDevMountain)
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
 })

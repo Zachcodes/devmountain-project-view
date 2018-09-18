@@ -33,7 +33,9 @@ CREATE TABLE user_roles (
 CREATE TABLE cohorts (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    cohort_type INT REFERENCES cohort_type(id)
+    cohort_type INT REFERENCES cohort_type(id),
+    external_cohort_id INT,
+    type TEXT
 );
 
 CREATE TABLE projects (
