@@ -94,6 +94,38 @@
     background-color: white;
     border-top: 1px solid black;
     height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.featured-title {
+    width: 100%;
+    height: 100px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #25aae1;
+}
+
+.featured-project-container {
+    display: flex; 
+    justify-content: space-between;
+    height: 300px;
+    width: 100%;
+    padding: 0px 10%;
+}
+.featured-project-image {
+    height: 100%;
+    width: 45%;
+    background-color: black;
+}
+
+.featured-project-about {
+    height: 100%;
+    width: 45%;
+    background-color: red;
 }
 
 .landing-horizontal-line {
@@ -102,10 +134,26 @@
     background-color: black;
 }
 
-.about-main-container {
+.landing-about-main-container {
     width: 100%;
     height: 300px;
     background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 20px 10%;
+    justify-content: space-between;
+}
+
+.landing-about-image {
+    height: 100%;
+    width: 45%;
+    background-color: green;
+}
+
+.landing-about-info-container {
+    height: 100%;
+    width: 45%;
+    background-color: blue;
 }
 /* End of rebuild styles */
 

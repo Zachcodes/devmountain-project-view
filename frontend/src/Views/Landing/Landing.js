@@ -68,11 +68,16 @@ export default class Home extends Component {
                 </div>
                 <div className="landing-bottom-main-container">
                     <div className="featured-main-container">
-
+                        <div className="featured-title">Featured Project</div>
+                        <div className="featured-project-container">
+                            <div className="featured-project-image"></div>
+                            <div className="featured-project-about"></div>
+                        </div>
                     </div>
                     <span className="landing-horizontal-line"></span>
-                    <div className="about-main-container">
-
+                    <div className="landing-about-main-container">
+                        <div className="landing-about-image"></div>
+                        <div className="landing-about-info-container"></div>
                     </div>
                 </div>
             </div>
