@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import './Landing.css'
 import LandingImage from '../../images/landing2.jpg'
+import AboutImage from '../../images/about_image.jpg'
 
 export default class Home extends Component {
     constructor() {
@@ -74,9 +75,8 @@ export default class Home extends Component {
                             <div className="featured-project-about"></div>
                         </div>
                     </div>
-                    <span className="landing-horizontal-line"></span>
                     <div className="landing-about-main-container">
-                        <div className="landing-about-image"></div>
+                        <img className="landing-about-image" src={AboutImage}/>
                         <div className="landing-about-info-container"></div>
                     </div>
                 </div>

@@ -93,6 +93,7 @@
     width: 100%;
     background-color: white;
     border-top: 1px solid black;
+    border-bottom: 1px solid black;
     height: 500px;
     display: flex;
     flex-direction: column;
@@ -126,12 +127,6 @@
     height: 100%;
     width: 45%;
     background-color: red;
-}
-
-.landing-horizontal-line {
-    width: 80%;
-    height: .5px;
-    background-color: black;
 }
 
 .landing-about-main-container {
