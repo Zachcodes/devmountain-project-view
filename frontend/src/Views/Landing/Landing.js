@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import './Landing.css'
+import LandingImage from '../../images/landing2.jpg'
 
 export default class Home extends Component {
     constructor() {
@@ -41,79 +42,37 @@ export default class Home extends Component {
             backgroundPosition: 'center top',
             marginBottom: '10px'
         }
+        
+        let landingImage = {
+            width: '100%',
+            height: '100%',
+            opacity: .7
+        }
         return (
             doneLoading
             ?
             <div className="program-container">
-                <div className="program-left-container">
-                    <div className="landing-featured-container">
-                        <div className="landing-featured-title">Today's Featured Project</div>
-                        <div 
-                        className="landing-featured-image"
-                        style={featuredImage} 
-                        onClick={() => this.openWindow(featuredProject.url)}></div>
-                        <div className="landing-featured-information-container">
-                            <div className="landing-featured-name">
-                                <div>
-                                     <u>Featured Project Name</u> 
-                                </div>
-                                <div>
-                                    {featuredProject.project_name}
-                                </div>
-                            </div>
-                                {
-                                    project_type === 1 
-                                    ?
-                                    <div className="landing-featured-type">
-                                        <div>
-                                            <u>Project Type</u>
-                                        </div>
-                                        <div>
-                                            Personal
-                                        </div>
-                                    </div>  
-                                    :
-                                    <div className="landing-featured-type">
-                                        <div>
-                                            <u>Project Type</u>
-                                        </div>
-                                        <div>
-                                            Group
-                                        </div>
-                                    </div> 
-                                }
-                                {
-                                    project_type === 1 
-                                    ?
-                                    <div className="landing-featured-students">
-                                        <div>
-                                            <u>Developer</u>
-                                        </div>
-                                        <div>  
-                                            {
-                                                students.map((student, index) => <Link to={`/students/${student.id}`} key={`${index}_${student.first}`}><p>{`${student.first} ${student.last}`}</p></Link>)
-                                            }
-                                        </div>
-                                    </div>
-                                    :
-                                    <div className="landing-featured-students">
-                                        <div>
-                                            <u>Group Members</u>
-                                        </div>
-                                        <div>
-                                            {
-                                                students.map((student, index) => <Link to={`/students/${student.id}`} key={`${index}_${student.first}`}><p>{`${student.first} ${student.last}`}</p></Link>)
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                           
+                <div className="landing-main-image-container">
+                    <img style={landingImage} src={LandingImage}/>
+                    <div className="landing-sub-image-container">
+                        <div className="landing-sub-headline">DEVMOUNTAIN PROJECT BROWSER</div>
+                        <div className="landing-sub-info">This is where a brief snippet of information will go about this app. The main bulk of the information will be down below but this will be two or 3 sentences.</div>
+                        <div className="landing-sub-button-container">
+                            <button className="landing-sub-button">Enter Gallery</button>
+                            <button className="landing-sub-button">Learn More</button>
+                        </div>
+                        <div className="landing-sub-circle-button-container">
+                            <span className="landing-sub-circle-button"></span>
                         </div>
                     </div>
                 </div>
-                <div className="program-right-container">
-                    <div>
-                        Welcome to DevMountain's Project Browser! This project was inspired by all the excellent projects that DevMountain students have produced. These projects are seen by their mentors, instructors and fellow classmates but not many students going forward will see them. There's a lot of creativity that has gone into these projects and hopefully they can help inspire you and showcase all the hard work that has made them possible! 
+                <div className="landing-bottom-main-container">
+                    <div className="featured-main-container">
+
+                    </div>
+                    <span className="landing-horizontal-line"></span>
+                    <div className="about-main-container">
+
                     </div>
                 </div>
             </div>
@@ -123,4 +82,97 @@ export default class Home extends Component {
             </div>
         )
     }
+    // render() {
+    //     let {doneLoading, featuredProject} = this.state
+    //     let {project_type, students, image_url} = featuredProject;
+    //     let featuredImage = {
+    //         width: '100%',
+    //         height: '40%',
+    //         background: `url(${image_url}) no-repeat`,
+    //         backgroundSize: 'contain',
+    //         backgroundPosition: 'center top',
+    //         marginBottom: '10px'
+    //     }
+    //     return (
+    //         doneLoading
+    //         ?
+    //         <div className="program-container">
+    //             <div className="program-left-container">
+    //                 <div className="landing-featured-container">
+    //                     <div className="landing-featured-title">Today's Featured Project</div>
+    //                     <div 
+    //                     className="landing-featured-image"
+    //                     style={featuredImage} 
+    //                     onClick={() => this.openWindow(featuredProject.url)}></div>
+    //                     <div className="landing-featured-information-container">
+    //                         <div className="landing-featured-name">
+    //                             <div>
+    //                                  <u>Featured Project Name</u> 
+    //                             </div>
+    //                             <div>
+    //                                 {featuredProject.project_name}
+    //                             </div>
+    //                         </div>
+    //                             {
+    //                                 project_type === 1 
+    //                                 ?
+    //                                 <div className="landing-featured-type">
+    //                                     <div>
+    //                                         <u>Project Type</u>
+    //                                     </div>
+    //                                     <div>
+    //                                         Personal
+    //                                     </div>
+    //                                 </div>  
+    //                                 :
+    //                                 <div className="landing-featured-type">
+    //                                     <div>
+    //                                         <u>Project Type</u>
+    //                                     </div>
+    //                                     <div>
+    //                                         Group
+    //                                     </div>
+    //                                 </div> 
+    //                             }
+    //                             {
+    //                                 project_type === 1 
+    //                                 ?
+    //                                 <div className="landing-featured-students">
+    //                                     <div>
+    //                                         <u>Developer</u>
+    //                                     </div>
+    //                                     <div>  
+    //                                         {
+    //                                             students.map((student, index) => <Link to={`/students/${student.id}`} key={`${index}_${student.first}`}><p>{`${student.first} ${student.last}`}</p></Link>)
+    //                                         }
+    //                                     </div>
+    //                                 </div>
+    //                                 :
+    //                                 <div className="landing-featured-students">
+    //                                     <div>
+    //                                         <u>Group Members</u>
+    //                                     </div>
+    //                                     <div>
+    //                                         {
+    //                                             students.map((student, index) => <Link to={`/students/${student.id}`} key={`${index}_${student.first}`}><p>{`${student.first} ${student.last}`}</p></Link>)
+    //                                         }
+    //                                     </div>
+    //                                 </div>
+    //                             }
+                           
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="program-right-container">
+    //                 <div>
+    //                     Welcome to DevMountain's Project Browser! This project was inspired by all the excellent projects that DevMountain students have produced. These projects are seen by their mentors, instructors and fellow classmates but not many students going forward will see them. There's a lot of creativity that has gone into these projects and hopefully they can help inspire you and showcase all the hard work that has made them possible! 
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         :
+    //         <div>
+    //             Loading!
+    //         </div>
+    //     )
+    // }
 }
