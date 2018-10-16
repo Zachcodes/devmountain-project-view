@@ -5,6 +5,7 @@ import './Landing.css'
 import LandingImage from '../../images/landing2.jpg'
 import AboutImage from '../../images/about_image.jpg'
 
+
 export default class Home extends Component {
     constructor() {
         super()
@@ -30,6 +31,10 @@ export default class Home extends Component {
 
     openWindow = (url) => {
         window.open(url)
+    }
+
+    jumpToLanding = () => {
+        console.log('getting here')
     }
 
     render() {
@@ -59,8 +64,9 @@ export default class Home extends Component {
                         <div className="landing-sub-headline">DEVMOUNTAIN PROJECT BROWSER</div>
                         <div className="landing-sub-info">This is where a brief snippet of information will go about this app. The main bulk of the information will be down below but this will be two or 3 sentences.</div>
                         <div className="landing-sub-button-container">
-                            <button className="landing-sub-button">Programs</button>
-                            <button className="landing-sub-button">Learn More</button>
+                        <Link to="/programs"><button className="landing-sub-button">Programs</button></Link>
+                            {/* <Link onClick={this.jumpToLanding} to="/#landing-about"><button className="landing-sub-button">Learn More</button></Link> */}
+                            <a href="#landing-about"><button className="landing-sub-button">Learn More</button></a>
                         </div>
                         <div className="landing-sub-circle-button-container">
                             <span className="landing-sub-circle-button"></span>
@@ -77,7 +83,7 @@ export default class Home extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="landing-about-main-container">
+                    <div className="landing-about-main-container" name="landing-about" id="landing-about">
                         <img className="landing-about-image" src={AboutImage}/>
                         <div className="landing-about-info-container">
                             <div className="landing-about-title">About DevMountain</div>

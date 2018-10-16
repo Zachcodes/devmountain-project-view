@@ -68,6 +68,11 @@
     cursor: pointer;
 }
 
+.landing-sub-button a {
+    color: white;
+    text-decoration: none;
+}
+
 .landing-sub-circle-button-container {
     width: 100%;
     margin-top: auto;

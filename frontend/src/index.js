@@ -20,6 +20,7 @@ import Projects from './Views/Projects/Projects';
 import ProjectDetails from './Views/ProjectDetails/ProjectDetails';
 import Login from './Views/Login/Login';
 import LoggedIn from './Views/LoggedIn/LoggedIn';
+import Footer from './Components/Footer'
 
 ReactDOM.render(
 <Provider store={store}>
@@ -40,6 +41,7 @@ ReactDOM.render(
                         <Route path="/login" component={Login} />
                         <Route path="/dashboard" component={LoggedIn} />
                     </Switch>
+                    <Footer/>
                 </App>
             )
         }}/>

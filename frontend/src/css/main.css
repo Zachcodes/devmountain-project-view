@@ -1,3 +1,7 @@
+* {
+    font-family: 'Nunito', sans-serif;
+}
+
 .personal-project-container {
     display: flex;
     flex-direction: column;
@@ -114,6 +118,29 @@
     display: none;
     color: white;
     margin-right: 10px;
+}
+
+/* Footer */
+.footer-main-container {
+    height: 50px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+    color: white;
+    border-top: .5px solid white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.footer-credit {
+    margin: 0px 5px;
+}
+
+.footer-credit > a {
+    font-family: 'Nunito', sans-serif;
+    color: white;
 }
 
 @media (max-width: 768px) {
