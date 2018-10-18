@@ -5,6 +5,7 @@ import './Landing.css'
 import LandingImage from '../../images/landing2.jpg'
 import AboutImage from '../../images/about_image.jpg'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 export default class Home extends Component {
     constructor() {
@@ -52,7 +53,7 @@ export default class Home extends Component {
         let landingImage = {
             width: '100%',
             height: '100%',
-            opacity: .7
+            opacity: .9
         }
         return (
             doneLoading
@@ -69,7 +70,9 @@ export default class Home extends Component {
                             <a href="#landing-about"><button className="landing-sub-button">Learn More</button></a>
                         </div>
                         <div className="landing-sub-circle-button-container">
-                            <span className="landing-sub-circle-button"></span>
+                            <span className="landing-sub-circle-button">
+                                <FontAwesomeIcon icon="arrow-down" className="arrow-down"/>
+                            </span>
                         </div>
                     </div>
                 </div>

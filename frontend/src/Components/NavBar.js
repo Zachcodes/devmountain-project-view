@@ -31,7 +31,8 @@ class NavBar extends Component {
         let x = e.clientX, y = e.clientY 
         let elementMouseIsOver = document.elementFromPoint(x, y)
         if(elementMouseIsOver) {
-            if(!elementMouseIsOver.classList.contains('navbar-dropdown-show') &&                                              !elementMouseIsOver.classList.contains('programs') && 
+            if(!elementMouseIsOver.classList.contains('navbar-dropdown-show') &&                     
+               !elementMouseIsOver.classList.contains('programs') && 
                !elementMouseIsOver.classList.contains('navbar-dropdown-link')
               ) {
                 this.dropDownRef.current.classList.remove('navbar-dropdown-show')

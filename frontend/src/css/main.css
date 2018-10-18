@@ -17,7 +17,7 @@
     flex-direction: row;
     justify-content: space-between;
     background-color: #252525;
-    height: 35px;
+    height: 80px;
 }
 
 .navbar-left {
@@ -30,7 +30,7 @@
 }
 
 .navbar-left span {
-    font-size:12px;
+    font-size:18px;
     color: white;
 }
 .navbar-left a {
@@ -64,8 +64,8 @@
 }
 
 .devmountain-logo {
-    height: 30px;
-    width: 30px;
+    height: 50px;
+    width: 50px;
     margin-right: 5px;
 }
 
@@ -96,6 +96,9 @@
     align-items: center;
 }
 
+.navbar-right-link a {
+    font-size: 18px;
+}
 .navbar-dropdown-link {
     width: 100%;
     height: 30px;
@@ -142,6 +145,7 @@
     font-family: 'Nunito', sans-serif;
     color: white;
 }
+
 
 @media (max-width: 768px) {
     .navbar-right-link {
