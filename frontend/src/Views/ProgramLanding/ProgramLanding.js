@@ -18,6 +18,7 @@ class ProgramLanding extends Component {
 
     componentDidUpdate(prevProps) {
         if(this.props.programs.length !== prevProps.programs.length && !this.state.doneLoading) {
+            this.refreshCohorts()
             this.setState({
                 doneLoading: true
             })
@@ -53,7 +54,15 @@ class ProgramLanding extends Component {
     render() {
         let {doneLoading, active, cohorts} = this.state
         let {programs} = this.props
-        console.log(cohorts)
+
+        let filtered = cohorts.filter( cohort => {
+            if(active === 0) {
+                return true;
+            } else if(cohort.cohort_type === active) {
+                return true
+            }
+        })
+
         return (
             doneLoading 
             ?
@@ -73,7 +82,22 @@ class ProgramLanding extends Component {
                         className={active === 2 ? 'program-heading active' : 'program-heading'}>UX</span>
                 </div>
                 <div>
-        
+                    {
+                        cohorts.filter( cohort => {
+                            if(active === 0) {
+                                return true;
+                            } else if(cohort.cohort_type === active) {
+                                return true
+                            }
+                        }).map( cohort => {
+                            console.log(cohort)
+                            return (
+                                <div>
+                                    {cohort.name}
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 {/* <div className="program-right-title">
                     Programs

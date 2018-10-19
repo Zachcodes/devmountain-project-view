@@ -1,5 +1,5 @@
 module.exports = {
-    getAllPrograms: (req, res, next) => {
+    getAllPrograms: (req, res) => {
         const db = req.app.get('db')
         db.programs.get_program_types().then( types => {
             db.projects.get_daily_featured_project().then(project => {
@@ -17,14 +17,21 @@ module.exports = {
             res.status(500).send(err)
         })
     },
-    getProgramByType: (req, res, next) => {
+    getProgramByType: (req, res) => {
         const db = req.app.get('db')
 
         let { programtype } = req.params;
+        
         programtype = Number(programtype)
- 
-        db.cohorts.get_cohorts_by_type({programtype}).then( cohorts => {
-            res.status(200).send(cohorts)
-        })
+        if(programtype !== 0) {
+            db.cohorts.get_cohorts_by_type({programtype}).then( cohorts => {
+                res.status(200).send(cohorts)
+            })
+        }
+        else {
+            db.cohorts.get_cohorts().then( cohorts => {
+                res.status(200).send(cohorts)
+            }).catch(err => res.status(500).send(err))
+        }
     }
 }
