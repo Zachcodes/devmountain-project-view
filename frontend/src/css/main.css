@@ -2,6 +2,19 @@
     font-family: 'Nunito', sans-serif;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+    min-height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
 .personal-project-container {
     display: flex;
     flex-direction: column;
@@ -135,6 +148,10 @@
     font-family: 'Nunito', sans-serif;
     font-size: 18px;
     font-weight: 300;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 .footer-credit {

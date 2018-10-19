@@ -68,14 +68,16 @@ class NavBar extends Component {
                         loggedIn
                         ?
                         <span className="navbar-right-span">
-                            <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
+                            {/* <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div> */}
+                            <div className="navbar-right-link programs"><Link to="/programs">Programs</Link></div>
                             <div className="navbar-right-link dashboard"><Link to="/dashboard">Dashboard</Link></div>
                             <div className="navbar-right-link navbar-right-logout" onClick={this.logout}>Logout</div>
                             <i className="fas fa-bars hamburger-nav" onMouseEnter={this.setClassDropdown} onMouseLeave={this.checkDropdownStatus}></i>
                         </span>
                         :
                         <span className="navbar-right-span">
-                            <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div>
+                            {/* <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div> */}
+                            <div className="navbar-right-link programs"><Link to="/programs">Programs</Link></div>
                             <div className="navbar-right-link login"><a href="http://localhost:3200/api/auth">Login</a></div>
                             <i className="fas fa-bars hamburger-nav" onMouseEnter={this.setClassDropdown} onMouseLeave={this.checkDropdownStatus}></i>
                         </span>

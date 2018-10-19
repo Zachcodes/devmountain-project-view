@@ -35,10 +35,6 @@ export default class Home extends Component {
         window.open(url)
     }
 
-    jumpToLanding = () => {
-        console.log('getting here')
-    }
-
     render() {
         let {doneLoading, featuredProject} = this.state
         let {description, image_url} = featuredProject;
@@ -71,14 +67,16 @@ export default class Home extends Component {
                             <HashLink to="#landing-about"><button className="landing-sub-button">Learn More</button></HashLink>
                         </div>
                         <div className="landing-sub-circle-button-container">
+                            <HashLink to="#featured-main">
                             <span className="landing-sub-circle-button">
                                 <FontAwesomeIcon icon="arrow-down" className="arrow-down"/>
                             </span>
+                            </HashLink>
                         </div>
                     </div>
                 </div>
                 <div className="landing-bottom-main-container">
-                    <div className="featured-main-container">
+                    <div className="featured-main-container" id="featured-main">
                         <div className="featured-title">Featured Project</div>
                         <div className="featured-project-container">
                             <img className="featured-project-image" src={image_url}/>

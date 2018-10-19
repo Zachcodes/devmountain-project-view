@@ -53,3 +53,7 @@
     background-color: #2aabe2;
     color: white;
 }
+
+.active {
+    color: blue;
+}

@@ -9,7 +9,8 @@ class ProgramLanding extends Component {
         super(props)
         this.state = {
             grabbedData: false,
-            doneLoading: props.programs.length ? true : false
+            doneLoading: props.programs.length ? true : false,
+            active: 'all'
         }
     }
 
@@ -21,14 +22,37 @@ class ProgramLanding extends Component {
         }
     }
 
+    setActiveProgram = (type) => {
+        this.setState({
+            active: type
+        })
+    }
+
     render() {
-        let {doneLoading} = this.state
+        let {doneLoading, active} = this.state
         let {programs} = this.props
         return (
             doneLoading 
             ?
             <div>
-                <div className="program-right-title">
+                <div>
+                    <span 
+                        onClick={e => this.setActiveProgram('all')}
+                        className={active === 'all' ? 'program-heading active' : 'program-heading'}>All</span> / 
+                    <span 
+                        onClick={e => this.setActiveProgram('web')}
+                        className={active === 'web' ? 'program-heading active' : 'program-heading'}>Web Dev</span> / 
+                    <span 
+                        onClick={e => this.setActiveProgram('ios')}
+                        className={active === 'ios' ? 'program-heading active' : 'program-heading'}>IOS Dev</span> / 
+                    <span 
+                        onClick={e => this.setActiveProgram('ux')}
+                        className={active === 'ux' ? 'program-heading active' : 'program-heading'}>UX</span>
+                </div>
+                <div>
+
+                </div>
+                {/* <div className="program-right-title">
                     Programs
                 </div>
                 <div className="program-right-body">
@@ -41,7 +65,7 @@ class ProgramLanding extends Component {
                         </div>
                         )
                     })}
-                </div>
+                </div> */}
             </div>
             :
             <div>

@@ -193,6 +193,10 @@
     color: white;
     font-size: 30px;
 }
+
+.landing-sub-circle-button:hover {
+    cursor: pointer;
+}
 /* End of rebuild styles */
 
 /* .program-right-container {
