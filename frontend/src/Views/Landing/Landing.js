@@ -1,7 +1,8 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
-import './Landing.css'
+import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
+import './Landing.css';
 import LandingImage from '../../images/landing2.jpg'
 import AboutImage from '../../images/about_image.jpg'
 
@@ -67,7 +68,7 @@ export default class Home extends Component {
                         <div className="landing-sub-button-container">
                         <Link to="/programs"><button className="landing-sub-button">Programs</button></Link>
                             {/* <Link onClick={this.jumpToLanding} to="/#landing-about"><button className="landing-sub-button">Learn More</button></Link> */}
-                            <a href="#landing-about"><button className="landing-sub-button">Learn More</button></a>
+                            <HashLink to="#landing-about"><button className="landing-sub-button">Learn More</button></HashLink>
                         </div>
                         <div className="landing-sub-circle-button-container">
                             <span className="landing-sub-circle-button">
