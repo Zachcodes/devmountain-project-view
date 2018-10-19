@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import './ProgramLanding.css'
+import axios from 'axios';
 
 import {connect} from 'react-redux'
 
@@ -10,7 +11,8 @@ class ProgramLanding extends Component {
         this.state = {
             grabbedData: false,
             doneLoading: props.programs.length ? true : false,
-            active: 'all'
+            active: 0,
+            cohorts: []
         }
     }
 
@@ -25,32 +27,53 @@ class ProgramLanding extends Component {
     setActiveProgram = (type) => {
         this.setState({
             active: type
+        }, () => {
+            this.refreshCohorts()
         })
     }
 
+
+    refreshCohorts = () => {
+        let { active } = this.state;
+        axios.get(`/api/programs/${active}`).then(response => {
+            this.setState({
+                grabbedData: true,
+                cohorts: response.data
+            })
+        }).catch(err => {
+            this.setState({
+                grabbedData: true
+            }, () => {
+                alert('Failed to grab cohorts');
+            })
+        }) 
+    }
+
+
     render() {
-        let {doneLoading, active} = this.state
+        let {doneLoading, active, cohorts} = this.state
         let {programs} = this.props
+        console.log(cohorts)
         return (
             doneLoading 
             ?
             <div>
                 <div>
                     <span 
-                        onClick={e => this.setActiveProgram('all')}
-                        className={active === 'all' ? 'program-heading active' : 'program-heading'}>All</span> / 
+                        onClick={e => this.setActiveProgram(0)}
+                        className={active === 0 ? 'program-heading active' : 'program-heading'}>All</span> / 
                     <span 
-                        onClick={e => this.setActiveProgram('web')}
-                        className={active === 'web' ? 'program-heading active' : 'program-heading'}>Web Dev</span> / 
+                        onClick={e => this.setActiveProgram(1)}
+                        className={active === 1 ? 'program-heading active' : 'program-heading'}>Web Dev</span> / 
                     <span 
-                        onClick={e => this.setActiveProgram('ios')}
-                        className={active === 'ios' ? 'program-heading active' : 'program-heading'}>IOS Dev</span> / 
+                        onClick={e => this.setActiveProgram(3)}
+                        className={active === 3 ? 'program-heading active' : 'program-heading'}>IOS Dev</span> / 
                     <span 
-                        onClick={e => this.setActiveProgram('ux')}
-                        className={active === 'ux' ? 'program-heading active' : 'program-heading'}>UX</span>
+                        onClick={e => this.setActiveProgram(2)}
+                        className={active === 2 ? 'program-heading active' : 'program-heading'}>UX</span>
                 </div>
                 <div>
-
+        
                 </div>
                 {/* <div className="program-right-title">
                     Programs
