@@ -55,6 +55,19 @@ class ProgramLanding extends Component {
         }) 
     }
 
+    setAmountToDisplay = (type) => {
+        let {amountToDisplay} = this.state
+        let newAmount;
+        switch(type) {
+            case 'more':
+                newAmount = amountToDisplay + 20;
+                break;
+            case 'less':
+                newAmount = 20;
+                break;
+        }
+        this.setState({amountToDisplay: newAmount})
+    }
 
     render() {
         let {doneLoading, active, cohorts, amountToDisplay} = this.state
@@ -70,9 +83,12 @@ class ProgramLanding extends Component {
                 <Cohort type={this.props.match.params.programtype} name={cohort.name} id={cohort.id} key={index}/>
             )
         })
+        let showMore = false;
         if(filtered.length > amountToDisplay) {
             filtered = filtered.slice(0, amountToDisplay)
+            showMore = true;
         }
+
         return (
             <div className="program-landing-main-container">
                 <div className="program-landing-title-container">
@@ -94,6 +110,13 @@ class ProgramLanding extends Component {
                         filtered
                     }
                 </div>
+                {
+                    showMore 
+                    ?
+                    <button onClick={() => this.setAmountToDisplay('more')}>Show More</button>
+                    :
+                    <button onClick={() => this.setAmountToDisplay('less')}>Show Less</button>
+                }
             </div>
         )
     }

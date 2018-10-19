@@ -152,6 +152,8 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
+    /* TODO: Come back and get rid of this */
+    display: none;
 }
 
 .footer-credit {
