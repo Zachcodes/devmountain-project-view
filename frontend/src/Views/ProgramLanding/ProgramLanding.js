@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import './ProgramLanding.css'
 import axios from 'axios';
+import Cohort from '../../Components/Cohort';
 
 import {connect} from 'react-redux'
 
@@ -12,13 +13,17 @@ class ProgramLanding extends Component {
             grabbedData: false,
             doneLoading: props.programs.length ? true : false,
             active: 0,
-            cohorts: []
+            cohorts: [],
+            amountToDisplay: 20
         }
+    }
+
+    componentDidMount() {
+        this.refreshCohorts()
     }
 
     componentDidUpdate(prevProps) {
         if(this.props.programs.length !== prevProps.programs.length && !this.state.doneLoading) {
-            this.refreshCohorts()
             this.setState({
                 doneLoading: true
             })
@@ -52,22 +57,25 @@ class ProgramLanding extends Component {
 
 
     render() {
-        let {doneLoading, active, cohorts} = this.state
+        let {doneLoading, active, cohorts, amountToDisplay} = this.state
         let {programs} = this.props
-
         let filtered = cohorts.filter( cohort => {
             if(active === 0) {
                 return true;
             } else if(cohort.cohort_type === active) {
                 return true
             }
+        }).map( (cohort, index) => {
+            return (
+                <Cohort type={this.props.match.params.programtype} name={cohort.name} id={cohort.id} key={index}/>
+            )
         })
-
+        if(filtered.length > amountToDisplay) {
+            filtered = filtered.slice(0, amountToDisplay)
+        }
         return (
-            doneLoading 
-            ?
-            <div>
-                <div>
+            <div className="program-landing-main-container">
+                <div className="program-landing-title-container">
                     <span 
                         onClick={e => this.setActiveProgram(0)}
                         className={active === 0 ? 'program-heading active' : 'program-heading'}>All</span> / 
@@ -81,42 +89,11 @@ class ProgramLanding extends Component {
                         onClick={e => this.setActiveProgram(2)}
                         className={active === 2 ? 'program-heading active' : 'program-heading'}>UX</span>
                 </div>
-                <div>
+                <div className="program-landing-cohorts-container">
                     {
-                        cohorts.filter( cohort => {
-                            if(active === 0) {
-                                return true;
-                            } else if(cohort.cohort_type === active) {
-                                return true
-                            }
-                        }).map( cohort => {
-                            console.log(cohort)
-                            return (
-                                <div>
-                                    {cohort.name}
-                                </div>
-                            )
-                        })
+                        filtered
                     }
                 </div>
-                {/* <div className="program-right-title">
-                    Programs
-                </div>
-                <div className="program-right-body">
-                    {programs.map(program => {
-                    return (
-                        <div className="program-right-styled-program" key={program.id}>
-                            <Link to={`programs/cohorts/${program.id}`} className="program-right-link">
-                                <button className="program-right-button">{program.type}</button>
-                            </Link>
-                        </div>
-                        )
-                    })}
-                </div> */}
-            </div>
-            :
-            <div>
-                Loading!
             </div>
         )
     }
