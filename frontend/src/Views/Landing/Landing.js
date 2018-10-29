@@ -85,11 +85,11 @@ export default class Home extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="landing-about-main-container" name="landing-about" id="landing-about">
-                        <img className="landing-about-image" src={AboutImage}/>
+                    <div className="landing-about-main-container" name="landing-about" id="landing-about" style={{backgroundImage: `url(${AboutImage})`}}>
+                        {/* <img className="landing-about-image" src={AboutImage}/> */}
                         <div className="landing-about-info-container">
                             <div className="landing-about-title">About DevMountain</div>
-                                <div className="landing-about-info">DevMountain is an industry-leading coding school that began in the heart of the Wasatch Mountains. Founded by fellow coders, DevMountain's expert faculty are passionate about sharing their craft and empowering the next wave of programmers, entrepreneurs and designers.
+                            <div className="landing-about-info">DevMountain is an industry-leading coding school that began in the heart of the Wasatch Mountains. Founded by fellow coders, DevMountain's expert faculty are passionate about sharing their craft and empowering the next wave of programmers, entrepreneurs and designers.
 
                                 Through our full-time (Immersive) or part-time ("After Hours") coding bootcamps, we are accelerating education by focusing on modern technical skills for today's fast-paced high-tech industries. We offer a variety of courses taught by industry professionals with years of real-world experience, from web development and user experience (UX) design to iOS development.
 

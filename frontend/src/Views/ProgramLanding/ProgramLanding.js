@@ -73,9 +73,9 @@ class ProgramLanding extends Component {
         let {doneLoading, active, cohorts, amountToDisplay} = this.state
         let {programs} = this.props
         let filtered = cohorts.filter( cohort => {
-            if(active === 0) {
+            if(active === 0 && cohort.name) {
                 return true;
-            } else if(cohort.cohort_type === active) {
+            } else if(cohort.cohort_type === active && cohort.name) {
                 return true
             }
         }).map( (cohort, index) => {
@@ -105,17 +105,19 @@ class ProgramLanding extends Component {
                         onClick={e => this.setActiveProgram(2)}
                         className={active === 2 ? 'program-heading active' : 'program-heading'}>UX</span>
                 </div>
-                <div className="program-landing-cohorts-container">
-                    {
-                        filtered
-                    }
+                <div className="program-landing-cohorts-outer-container">
+                    <div className="program-landing-cohorts-inner-container">
+                        {
+                            filtered
+                        }
+                    </div>
                 </div>
                 {
                     showMore 
                     ?
-                    <button onClick={() => this.setAmountToDisplay('more')}>Show More</button>
+                    <button className="program-show-button" onClick={() => this.setAmountToDisplay('more')}>Show More</button>
                     :
-                    <button onClick={() => this.setAmountToDisplay('less')}>Show Less</button>
+                    <button className="program-show-button" onClick={() => this.setAmountToDisplay('less')}>Show Less</button>
                 }
             </div>
         )
