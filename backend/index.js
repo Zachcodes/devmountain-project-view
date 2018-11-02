@@ -46,7 +46,6 @@ app.use(session({
     secret: process.env.SESSION_SECRET
 }))
 
-console.log(process.env.CONNECTION_STRING)
 //massive setup 
 Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     app.set('db', dbInstance)
@@ -135,7 +134,8 @@ const cleanUpLogCron = new CronJob('0 30 12 * * 6', () => {
     cronJobs.cleanUpLogging()
 })
 
-const syncCohortsCron = new CronJob('0 30 1 * * 0-6', () => {
+// const syncCohortsCron = new CronJob('0 30 1 * * 0-6', () => {
+const syncCohortsCron = new CronJob('30 * * * * * *', () => {
     const db = app.get('db')
     cronJobs.grabCohortsFromDevMountain(db)
 })

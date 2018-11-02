@@ -9,11 +9,11 @@
     justify-content: center;
 }
 
-.program-landing-cohorts-outer-container {
+/* .program-landing-cohorts-outer-container {
     display: flex;
     justify-content: center;
     padding: 20px 0px;
-}
+} */
 
 .program-landing-cohorts-inner-container {
     display: flex;
@@ -21,9 +21,7 @@
     justify-content: center;
     height: 400px;
     overflow: scroll;
-    width: 100%;
-    padding: 5px 0px;
-    max-width: 700px;
+    margin: 10px 0px;
 }
 
 .program-landing-cohort {
@@ -32,7 +30,7 @@
     justify-content: center;
     align-items: center;
     padding: 5px;
-    height: 150px;
+    height: 110px;
     width: 20%;
     box-shadow: 1px 1px 1px black;
     background-color: #25aae1;
@@ -59,6 +57,14 @@
 .program-landing-cohort:hover {
     box-shadow: 1.2px 1.2px 1.2px black;
     transition: box-shadow .3s;
+    cursor: pointer;
+}
+
+.program-heading {
+    margin: 0px 5px;
+}
+
+.program-heading:hover {
     cursor: pointer;
 }
 

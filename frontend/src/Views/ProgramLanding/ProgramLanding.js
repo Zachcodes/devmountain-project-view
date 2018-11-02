@@ -44,7 +44,8 @@ class ProgramLanding extends Component {
         axios.get(`/api/programs/${active}`).then(response => {
             this.setState({
                 grabbedData: true,
-                cohorts: response.data
+                cohorts: response.data,
+                amountToDisplay: response.data.length
             })
         }).catch(err => {
             this.setState({
@@ -72,6 +73,7 @@ class ProgramLanding extends Component {
     render() {
         let {doneLoading, active, cohorts, amountToDisplay} = this.state
         let {programs} = this.props
+        console.log(cohorts)
         let filtered = cohorts.filter( cohort => {
             if(active === 0 && cohort.name) {
                 return true;
@@ -80,7 +82,7 @@ class ProgramLanding extends Component {
             }
         }).map( (cohort, index) => {
             return (
-                <Cohort type={this.props.match.params.programtype} name={cohort.name} id={cohort.id} key={index}/>
+                <Cohort type={cohort.type} name={cohort.name} id={cohort.id} key={index}/>
             )
         })
         let showMore = false;
@@ -105,20 +107,20 @@ class ProgramLanding extends Component {
                         onClick={e => this.setActiveProgram(2)}
                         className={active === 2 ? 'program-heading active' : 'program-heading'}>UX</span>
                 </div>
-                <div className="program-landing-cohorts-outer-container">
-                    <div className="program-landing-cohorts-inner-container">
-                        {
-                            filtered
-                        }
-                    </div>
+                {/* <div className="program-landing-cohorts-outer-container"> */}
+                <div className="program-landing-cohorts-inner-container">
+                    {
+                        filtered
+                    }
                 </div>
-                {
+                {/* </div> */}
+                {/* {
                     showMore 
                     ?
                     <button className="program-show-button" onClick={() => this.setAmountToDisplay('more')}>Show More</button>
                     :
                     <button className="program-show-button" onClick={() => this.setAmountToDisplay('less')}>Show Less</button>
-                }
+                } */}
             </div>
         )
     }

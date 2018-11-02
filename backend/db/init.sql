@@ -35,7 +35,9 @@ CREATE TABLE cohorts (
     name TEXT,
     cohort_type INT REFERENCES cohort_type(id),
     external_cohort_id INT,
-    type TEXT
+    type TEXT,
+    start_date TEXT,
+    end_date TEXT
 );
 
 CREATE TABLE projects (
