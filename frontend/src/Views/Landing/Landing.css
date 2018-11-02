@@ -185,9 +185,9 @@
 }
 
 .landing-about-info {
-    font-size: 18px;
+    font-size: .7em;
     line-height: 19px;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
     font-weight: 500;
 }
 

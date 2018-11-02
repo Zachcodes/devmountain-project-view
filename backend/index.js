@@ -46,7 +46,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET
 }))
 
-
+console.log(process.env.CONNECTION_STRING)
 //massive setup 
 Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     app.set('db', dbInstance)

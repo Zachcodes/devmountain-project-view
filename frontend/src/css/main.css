@@ -25,12 +25,11 @@ body {
 .navbar-container {
     position: relative;
     top: 0;
-    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     background-color: #252525;
-    height: 80px;
+    height: 50px;
 }
 
 .navbar-left {
@@ -43,9 +42,10 @@ body {
 }
 
 .navbar-left span {
-    font-size:18px;
+    font-size:14px;
     color: white;
 }
+
 .navbar-left a {
     text-decoration: none;
 }
@@ -77,8 +77,8 @@ body {
 }
 
 .devmountain-logo {
-    height: 50px;
-    width: 50px;
+    height: 35px;
+    width: 35px;
     margin-right: 5px;
 }
 
@@ -110,7 +110,7 @@ body {
 }
 
 .navbar-right-link a {
-    font-size: 18px;
+    font-size: 12px;
 }
 .navbar-dropdown-link {
     width: 100%;
