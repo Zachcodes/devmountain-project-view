@@ -138,7 +138,7 @@ body {
 
 /* Footer */
 .footer-main-container {
-    height: 50px;
+    height: 20px;
     background-color: black;
     display: flex;
     align-items: center;
@@ -158,11 +158,13 @@ body {
 
 .footer-credit {
     margin: 0px 5px;
+    font-size: 10px;
 }
 
 .footer-credit > a {
     font-family: 'Nunito', sans-serif;
     color: white;
+    font-size: 10px;
 }
 
 
