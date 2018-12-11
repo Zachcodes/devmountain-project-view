@@ -1,4 +1,4 @@
-require('dotenv').config({ path: __dirname + '/../.env'})
+require('dotenv').config({ path: __dirname + '/../../.env'})
 const axios = require('axios')
 const fs = require('fs')
 const errorFile = __dirname + '/../logging/deadLinks.txt'

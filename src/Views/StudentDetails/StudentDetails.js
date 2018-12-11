@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios';
 import placeholder from '../../images/thumbnail_placeholder.png';
 import './StudentDetails.css'
+import TinyNav from '../../Components/TinyNav'
 
 export default class Student extends Component {
     constructor() {
@@ -74,7 +75,7 @@ export default class Student extends Component {
             ?
             <div className="student-main-container">
 
-                <div className="student-left-main-container">
+                {/* <div className="student-left-main-container">
                     <div className="student-left-title">
                         {first} {last}
                     </div>
@@ -96,6 +97,20 @@ export default class Student extends Component {
                             )
                         })
                     }
+                </div> */}
+                <div className="student-info-main-container">
+                    {/* Need to make tiny nav and have it display current route */}
+                    <TinyNav heightClass="student-tiny-nav"/>
+                    <div className="student-position-container">
+                        <div className="student-info-picture-container"></div>
+                        <div className="student-details-container">
+                            <div className="student-text-container"></div>
+                            <div className="student-social-media-button-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="student-projects-display-container">
+                    {/* This is where all the projects will be displayed */}
                 </div>
 
             </div>

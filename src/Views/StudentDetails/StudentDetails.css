@@ -1,8 +1,43 @@
 .student-main-container {
     display: flex;
+    flex-direction: column;
+    height: calc(100vh - 70px);
 }
 
-.student-left-main-container {
+.student-info-main-container {
+    height: 60%;
+    background-color: #303030;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.student-position-container {
+    height: 90%;
+    display: flex;
+}
+
+.student-tiny-nav {
+    height: 10%;
+}
+
+.student-info-picture-container {
+    width: 40%;
+    background-color: white;
+    height: 100%;
+}
+
+.student-details-container {
+    width: 60%;
+    background-color: red;
+    height: 100%;
+}
+
+.student-projects-display-container {
+    height: 40%;
+}
+
+/* .student-left-main-container {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -36,4 +71,4 @@
     width: 100%;
     height: 150px;
     font-size: 10px;
-}
+} */

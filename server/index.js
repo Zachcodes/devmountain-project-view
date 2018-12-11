@@ -35,7 +35,6 @@ const saltRounds = 10;
 
 const app = express()
 
-
 app.set('saltRounds', saltRounds)
 app.set('bcrypt', bcrypt)
 
@@ -49,10 +48,11 @@ app.use(session({
 //massive setup 
 Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     app.set('db', dbInstance)
-    averageRatingCron.start()
-    checkLinkCron.start()
-    cleanUpLogCron.start()
-    syncCohortsCron.start()
+    // TODO: Bring these back in later
+    // averageRatingCron.start()
+    // checkLinkCron.start()
+    // cleanUpLogCron.start()
+    // syncCohortsCron.start()
 })
 
 app.use(passport.initialize())
