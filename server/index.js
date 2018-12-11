@@ -154,13 +154,16 @@ app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
 })
 
 //S3 Stuff
-app.use('/s3', require('react-s3-uploader/s3router')({
-    bucket: process.env.BUCKET,
-    region: process.env.REGION, //optional
-    headers: {'Access-Control-Allow-Origin': '*'}, // optional
-    ACL: 'private', // this is default
-    uniquePrefix: true // (4.0.2 and above) default is true, setting the attribute to false preserves the original filename in S3
-}));
+// app.use('/s3', require('react-s3-uploader/s3router')({
+//     bucket: process.env.BUCKET,
+//     region: process.env.REGION, //optional
+//     headers: {'Access-Control-Allow-Origin': '*'}, // optional
+//     ACL: 'private', // this is default
+//     uniquePrefix: true // (4.0.2 and above) default is true, setting the attribute to false preserves the original filename in S3
+// }));
+app.use('/s3', (req, res) => {
+    console.log(req.body)
+});
 
 //session routes 
 app.get('/api/loginCheck', lc.loginCheck)

@@ -30,9 +30,11 @@ export default class LoggedIn extends Component {
         let {role, initialAuth, redirect} = this.state
         let {redirectToLogin} = this
         let typeToRender = ''
+        role = 'student'
         if(role === 'student') typeToRender = <Student />
         if(role === 'staff') typeToRender = <Staff />
         if(role === 'admin') typeToRender = <Admin />
+        if(initialAuth) redirect = false;
         if(initialAuth && redirect) redirectToLogin()
         return (
             initialAuth
