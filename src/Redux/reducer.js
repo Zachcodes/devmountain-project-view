@@ -2,7 +2,10 @@ import {GET_PROGRAMS_FULFILLED,
         LOGIN_FULFILLED, 
         LOGIN_REJECTED,
         LOGIN_CHECK_FULFILLED,
-        LOGOUT_FULFILLED} from './actions'
+        LOGOUT_FULFILLED,
+        HIDE_MODAL,
+        SHOW_MODAL
+       } from './actions'
 
 const initialState = {
     programs: [],
@@ -37,6 +40,16 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 loggedIn: false
+            }
+        case HIDE_MODAL:
+            return {
+                ...state,
+                showModal: false
+            }
+        case SHOW_MODAL:
+            return {
+                ...state,
+                showModal: true
             }
         default: 
             return state;

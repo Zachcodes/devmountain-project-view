@@ -1,4 +1,4 @@
-import {GET_PROGRAMS, LOGIN, LOGIN_CHECK, LOGOUT} from './actions'
+import {GET_PROGRAMS, LOGIN, LOGIN_CHECK, LOGOUT, HIDE_MODAL, SHOW_MODAL} from './actions'
 import axios from 'axios'
 
 export function getPrograms() {
@@ -26,5 +26,17 @@ export function logout() {
     return {
         type: LOGOUT,
         payload: axios.delete('/api/logout')
+    }
+}
+
+export function showModal() {
+    return {
+        type: SHOW_MODAL
+    }
+}
+
+export function hideModal() {
+    return {
+        type: HIDE_MODAL
     }
 }

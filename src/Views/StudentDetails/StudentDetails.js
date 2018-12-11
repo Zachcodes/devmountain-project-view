@@ -4,8 +4,10 @@ import placeholder from '../../images/thumbnail_placeholder.png';
 import './StudentDetails.css'
 import TinyNav from '../../Components/TinyNav'
 import ProjectModal from '../../Components/ProjectModal'
+import { connect } from 'react-redux';
+import { showModal } from '../../Redux/actionCreators'
 
-export default class Student extends Component {
+class Student extends Component {
     constructor() {
         super()
         this.state = {
@@ -51,6 +53,7 @@ export default class Student extends Component {
 
     render() {
         let {doneLoading, first, last, projects, about, image} = this.state
+        let {showModal} = this.props
 
         //styles 
         let studentPicture = {
@@ -92,7 +95,7 @@ export default class Student extends Component {
                         projects.map(project => {
                             let type = project.projectType === 1 ? 'Personal' : 'Group'
                             return (
-                                <div key={project.project_id} className="student-project-container">
+                                <div key={project.project_id} className="student-project-container" onClick={showModal}>
                                     {/* Make it so that this opens a modal for a project */}
                                     <img src={placeholder} className="student-project-image"></img>
                                 </div>
@@ -109,3 +112,5 @@ export default class Student extends Component {
         )
     }
 }
+
+export default connect(null, {showModal})(Student)
