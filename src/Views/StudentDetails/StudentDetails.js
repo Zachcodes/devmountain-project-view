@@ -3,6 +3,7 @@ import axios from 'axios';
 import placeholder from '../../images/thumbnail_placeholder.png';
 import './StudentDetails.css'
 import TinyNav from '../../Components/TinyNav'
+import ProjectModal from '../../Components/ProjectModal'
 
 export default class Student extends Component {
     constructor() {
@@ -28,7 +29,7 @@ export default class Student extends Component {
                 if(!about) about = data[i].about 
                 if(!image) image = data[i].image 
                 let tempProject = {
-                    id: data[i].id,
+                    project_id: data[i].project_id,
                     projectName: data[i].project_name,
                     url: data[i].url,
                     projectType: data[i].project_type,
@@ -62,7 +63,7 @@ export default class Student extends Component {
             doneLoading 
             ?
             <div className="student-main-container">
-
+                <ProjectModal/>
                 <div className="student-info-main-container">
                     {/* Need to make tiny nav and have it display current route */}
                     <TinyNav heightClass="student-tiny-nav"/>
@@ -88,10 +89,10 @@ export default class Student extends Component {
                 </div>
                 <div className="student-projects-display-container">
                     {
-                        projects.map((project, index) => {
+                        projects.map(project => {
                             let type = project.projectType === 1 ? 'Personal' : 'Group'
                             return (
-                                <div key={project.id} className="student-project-container">
+                                <div key={project.project_id} className="student-project-container">
                                     {/* Make it so that this opens a modal for a project */}
                                     <img src={placeholder} className="student-project-image"></img>
                                 </div>

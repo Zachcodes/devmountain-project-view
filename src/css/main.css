@@ -187,3 +187,7 @@ body {
 .tiny-nav-container {
     color: white;
 }
+
+.hide-modal {
+    display: none;
+}

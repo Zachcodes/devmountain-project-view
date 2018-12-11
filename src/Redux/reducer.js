@@ -7,7 +7,8 @@ import {GET_PROGRAMS_FULFILLED,
 const initialState = {
     programs: [],
     loggedIn: false,
-    errorLoggingIn: false
+    errorLoggingIn: false,
+    showModal: false
 }
 
 export default function reducer(state = initialState, action) {
