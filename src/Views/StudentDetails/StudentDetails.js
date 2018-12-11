@@ -28,6 +28,7 @@ export default class Student extends Component {
                 if(!about) about = data[i].about 
                 if(!image) image = data[i].image 
                 let tempProject = {
+                    id: data[i].id,
                     projectName: data[i].project_name,
                     url: data[i].url,
                     projectType: data[i].project_type,
@@ -47,27 +48,14 @@ export default class Student extends Component {
         })
     }
 
-    openWindow = (url) => {
-        window.open(url)
-    }
-
     render() {
         let {doneLoading, first, last, projects, about, image} = this.state
 
         //styles 
-        let studentLeftPicture = {
+        let studentPicture = {
             width: '100%',
-            height: '40%',
-            background: `url(${image}) no-repeat`,
-            backgroundSize: 'contain',
-            backgroundPosition: 'center top'
-        }
-        let studentRightPicture = {
-            width: '100%',
-            height: '40%',
-            background: `url(${placeholder}) no-repeat`,
-            backgroundSize: 'contain',
-            backgroundPosition: 'center top'
+            height: '100%',
+            maxWidth: '350px'
         }
         
         return (
@@ -75,42 +63,41 @@ export default class Student extends Component {
             ?
             <div className="student-main-container">
 
-                {/* <div className="student-left-main-container">
-                    <div className="student-left-title">
-                        {first} {last}
-                    </div>
-                    <div style={studentLeftPicture}></div>
-                    <div className="student-left-details">
-                        {about}
-                    </div>
-                </div>
-                <div className="student-right-main-container">
-                    {
-                        projects.map((project, index) => {
-                            let type = project.projectType === 1 ? 'Personal' : 'Group'
-                            studentRightPicture.background = `url(${project.projectImage}) no-repeat`
-                            return (
-                                <div key={index} className="student-right-project-container">
-                                    <p>{type}: {project.projectName}</p>
-                                    <div style={studentRightPicture} className="project-url-link"onClick={() => this.openWindow(project.url)}></div>
-                                </div>
-                            )
-                        })
-                    }
-                </div> */}
                 <div className="student-info-main-container">
                     {/* Need to make tiny nav and have it display current route */}
                     <TinyNav heightClass="student-tiny-nav"/>
                     <div className="student-position-container">
-                        <div className="student-info-picture-container"></div>
+                        <div className="student-info-picture-container">
+                            <img src={image} style={studentPicture}/>
+                        </div>
                         <div className="student-details-container">
-                            <div className="student-text-container"></div>
-                            <div className="student-social-media-button-container"></div>
+                            <div className="student-text-container">
+                                <span className="student-text-name">{first} {last}</span>
+                                <span className="student-text">{about}</span>
+                                <span className="student-text">Email: fake@email.com</span>
+                            </div>
+                            <div className="student-social-media-button-container">
+                                {/* These buttons will need to be dynamically generated based on whether the students have added these links */}
+                                <button className="social-media-button no-margin">LinkedIn</button>
+                                <button className="social-media-button">GitHub</button>
+                                <button className="social-media-button">Medium</button>
+                                <button className="social-media-button">Portfolio</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="student-projects-display-container">
-                    {/* This is where all the projects will be displayed */}
+                    {
+                        projects.map((project, index) => {
+                            let type = project.projectType === 1 ? 'Personal' : 'Group'
+                            return (
+                                <div key={project.id} className="student-project-container">
+                                    {/* Make it so that this opens a modal for a project */}
+                                    <img src={placeholder} className="student-project-image"></img>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
 
             </div>

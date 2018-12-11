@@ -23,20 +23,71 @@
 
 .student-info-picture-container {
     width: 40%;
-    background-color: white;
     height: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .student-details-container {
     width: 60%;
-    background-color: red;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
 }
 
 .student-projects-display-container {
     height: 40%;
+    display: flex;
+    padding: 20px 15px;
+    overflow-x: auto;
 }
 
+.student-project-container {
+    height: 100%;
+    width: 300px;
+    margin: 0px 10px;
+}
+
+.student-project-image {
+    height: 100%;
+    width: 100%;
+}
+
+.student-social-media-button-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.student-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.student-text-name {
+    font-size: 20px;
+    color: #25AAE1;
+}
+
+.student-text {
+    font-size: 16px;
+    color: white;
+}
+
+.social-media-button {
+    color: black;
+    padding: 5px;
+    font-size: 18px;
+    margin: 5px;
+}
+
+.social-media-button:hover {
+    cursor: pointer;
+}
+
+.no-margin {
+    margin-left: 0px;
+}
 /* .student-left-main-container {
     width: 50%;
     display: flex;
