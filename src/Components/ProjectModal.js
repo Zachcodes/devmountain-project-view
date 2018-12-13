@@ -5,17 +5,35 @@ class ProjectModal extends Component {
     constructor() {
         super()
         this.state = {
-            selectedImageIndex: 0
+            selectedImageIndex: 0,
+            intervalId: 0
         }
     }
     componentDidMount() {
-
+        if(!this.state.intervalId) {
+            let bound = this.setSelectedImageIndex.bind(this)
+            let intervalId = setInterval(bound, 5000)
+            this.setState({intervalId})
+        }
     }
 
     componentWillUnmount() {
-
+        clearInterval(this.state.intervalId)
     }
-    
+
+    setSelectedImageIndex() {
+        let { selectedImageIndex } = this.state 
+        let { selectedModalProject } = this.props 
+        let { projectImages } = selectedModalProject
+        if(selectedImageIndex >= projectImages.length - 1) {
+            selectedImageIndex = 0
+        }
+        else selectedImageIndex = selectedImageIndex + 1
+        this.setState({
+            selectedImageIndex
+        })
+    }
+
     render() {
         let {showModal, selectedModalProject} = this.props
         let { selectedImageIndex } = this.state;
@@ -29,10 +47,7 @@ class ProjectModal extends Component {
                     </div>
                     <div className="project-modal-thumbnail-container">
                         {
-                            projectImages.filter( (image, i) => {
-                                if(i !== selectedImageIndex) return true;
-                            })
-                            .map( (imageUrl, i) => {
+                            projectImages.map( (imageUrl, i) => {
                                 return (
                                     <img src={imageUrl}
                                     key={i + Math.random()}/>
