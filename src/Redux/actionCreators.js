@@ -29,9 +29,11 @@ export function logout() {
     }
 }
 
-export function showModal() {
+export function showModal(project) {
+    console.log('project', project)
     return {
-        type: SHOW_MODAL
+        type: SHOW_MODAL,
+        payload: project
     }
 }
 

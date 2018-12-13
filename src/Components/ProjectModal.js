@@ -15,7 +15,8 @@ class ProjectModal extends Component {
 
 function mapStateToProps(state) {
     return {
-        showModal: state.showModal
+        showModal: state.showModal,
+        selectedModalProject: state.selectedModalProject
     }
 }
 

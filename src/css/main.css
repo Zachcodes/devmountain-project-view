@@ -188,6 +188,16 @@ body {
     color: white;
 }
 
+/* Project Modal */
+.project-modal-main-container {
+    position: fixed;
+    height: 70%;
+    width: 60%;
+    top: 50%;
+    left: 20%;
+    transform: translateY(-50%);
+    background-color: #a6a6a6;
+}
 .hide-modal {
     display: none;
 }

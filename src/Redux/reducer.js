@@ -11,7 +11,8 @@ const initialState = {
     programs: [],
     loggedIn: false,
     errorLoggingIn: false,
-    showModal: false
+    showModal: false,
+    selectedModalProject: {}
 }
 
 export default function reducer(state = initialState, action) {
@@ -44,12 +45,14 @@ export default function reducer(state = initialState, action) {
         case HIDE_MODAL:
             return {
                 ...state,
-                showModal: false
+                showModal: false,
+                selectedModalProject: {}
             }
         case SHOW_MODAL:
             return {
                 ...state,
-                showModal: true
+                showModal: true,
+                selectedModalProject: action.payload
             }
         default: 
             return state;
