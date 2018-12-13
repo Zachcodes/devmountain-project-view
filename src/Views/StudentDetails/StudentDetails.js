@@ -22,46 +22,51 @@ class Student extends Component {
     componentDidMount() {
         axios.get(`/api/students/${this.props.match.params.studentid}`).then( response => {
             let {data} = response;
-            let first, last, about;
-            let projects = {};
-            let image;
-            for(let i = 0; i < data.length; i++) {
-                if(!first) first = data[i].first 
-                if(!last) last = data[i].last 
-                if(!about) about = data[i].about 
-                if(!image) image = data[i].image 
-
-                // Setting up the project to make sure all the images are added to the array
-                if(!projects[data[i].project_id]) {
-                    projects[data[i].project_id] = {
-                        project_id: data[i].project_id,
-                        projectName: data[i].project_name,
-                        url: data[i].url,
-                        projectType: data[i].project_type,
-                        projectImages: [data[i].image_url]
-                    } 
-                }
-                else {
-                    projects[data[i].project_id].projectImages.push(data[i].image_url)
-                }
-            }
-            let formattedProjects = []
-            for(let key in projects) formattedProjects.push(projects[key])
-            this.setState({
-                first, 
-                last,
-                projects: formattedProjects,
-                image,
-                about,
-                doneLoading: true
-            })
+            let finalState = this.formatDbResponse(data)
+            this.setState(finalState)
 
         })
     }
 
+    formatDbResponse(data) {
+        let first, last, about;
+        let projects = {};
+        let image;
+        for(let i = 0; i < data.length; i++) {
+            if(!first) first = data[i].first 
+            if(!last) last = data[i].last 
+            if(!about) about = data[i].about 
+            if(!image) image = data[i].image 
+
+            // Setting up the project to make sure all the images are added to the array
+            if(!projects[data[i].project_id]) {
+                projects[data[i].project_id] = {
+                    project_id: data[i].project_id,
+                    projectName: data[i].project_name,
+                    url: data[i].url,
+                    projectType: data[i].project_type,
+                    projectImages: [data[i].image_url]
+                } 
+            }
+            else {
+                projects[data[i].project_id].projectImages.push(data[i].image_url)
+            }
+        }
+        let formattedProjects = []
+        for(let key in projects) formattedProjects.push(projects[key])
+        return {
+            first,
+            last,
+            projects: formattedProjects,
+            image,
+            about,
+            doneLoading: true
+        }
+    }
+
     render() {
         let {doneLoading, first, last, projects, about, image} = this.state
-        let {showModal} = this.props
+        let {showModal, showModalSTORE} = this.props
 
         //styles 
         let studentPicture = {
@@ -74,7 +79,13 @@ class Student extends Component {
             doneLoading 
             ?
             <div className="student-main-container">
-                <ProjectModal/>
+                {
+                    showModalSTORE
+                    ?
+                    <ProjectModal/>
+                    :
+                    null
+                }
                 <div className="student-info-main-container">
                     {/* TODO: Need to make tiny nav and have it display current route */}
                     <TinyNav heightClass="student-tiny-nav"/>
@@ -121,4 +132,9 @@ class Student extends Component {
     }
 }
 
-export default connect(null, {showModal})(Student)
+function mapStateToProps(state) {
+    return {
+        showModalSTORE: state.showModal
+    }
+}
+export default connect(mapStateToProps, {showModal})(Student)
