@@ -8,6 +8,14 @@ class ProjectModal extends Component {
             selectedImageIndex: 0
         }
     }
+    componentDidMount() {
+
+    }
+
+    componentWillUnmount() {
+
+    }
+    
     render() {
         let {showModal, selectedModalProject} = this.props
         let { selectedImageIndex } = this.state;
