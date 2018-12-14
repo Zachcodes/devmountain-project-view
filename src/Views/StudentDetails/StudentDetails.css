@@ -59,6 +59,9 @@
     flex-direction: row;
 }
 
+.student-social-media-button-container button:first-child {
+    margin-left: 0px;
+}
 .student-text-container {
     display: flex;
     flex-direction: column;
@@ -75,51 +78,26 @@
 }
 
 .social-media-button {
-    color: black;
+    color: white;
     padding: 5px;
     font-size: 18px;
     margin: 5px;
+    background-color: #25AAE1;
+    border: none;
 }
 
 .social-media-button:hover {
     cursor: pointer;
 }
 
-.no-margin {
-    margin-left: 0px;
-}
-/* .student-left-main-container {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    height: 80vh;
-    flex-wrap: wrap;
+.social-media-button:focus {
+    outline: none;
 }
 
-.student-left-title {
-    height: 10%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.disabled-social {
+    background-color: grey;
 }
 
-.student-left-details {
-    display: flex;
-    justify-content: flex-start;
-    height: 50%;
-    flex-wrap: wrap;
-    font-size: 10px;
+.disabled-social:hover {
+    cursor: not-allowed;
 }
-
-.student-right-main-container {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.student-right-project-container {
-    width: 100%;
-    height: 150px;
-    font-size: 10px;
-} */

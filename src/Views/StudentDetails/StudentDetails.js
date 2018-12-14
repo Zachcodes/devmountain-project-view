@@ -16,6 +16,9 @@ class Student extends Component {
             projects: [],
             image: '',
             about: '',
+            linkedin: '',
+            github: '',
+            portfolio: '',
             doneLoading: false
         }
     }
@@ -24,16 +27,18 @@ class Student extends Component {
     }
 
     formatDbResponse(data) {
-        let first, last, about;
+        let first, last, about, image, github, linkedin, portfolio;
         let projects = {};
-        let image;
         for(let i = 0; i < data.length; i++) {
             if(!first) first = data[i].first 
             if(!last) last = data[i].last 
             if(!about) about = data[i].about 
-            if(!image) image = data[i].image 
+            if(!image) image = data[i].image
+            if(!github && data[i].github) github = data[i].github
+            if(!linkedin && data[i].linkedin) linkedin = data[i].linkedin
+            if(!portfolio && data[i].portfolio) portfolio = data[i].portfolio
 
-            // Setting up the project to make sure all the images are added to the array
+
             if(!projects[data[i].project_id]) {
                 projects[data[i].project_id] = {
                     project_id: data[i].project_id,
@@ -56,6 +61,9 @@ class Student extends Component {
             projects: formattedProjects,
             image,
             about,
+            github,
+            linkedin,
+            portfolio,
             doneLoading: true
         }
     }
@@ -72,8 +80,14 @@ class Student extends Component {
         })
     }
 
+    open(url) {
+        url ? window.open(url) : null;
+    }
+
     render() {
-        let {doneLoading, first, last, projects, about, image} = this.state
+        let {doneLoading, first, last, projects, about, image, github, linkedin, portfolio} = this.state
+        // TODO: remove this line of code for production
+        portfolio = ''
         let {showModal, showModalSTORE} = this.props
 
         //styles 
@@ -108,11 +122,12 @@ class Student extends Component {
                                 <span className="student-text">Email: fake@email.com</span>
                             </div>
                             <div className="student-social-media-button-container">
-                                {/* TODO: These buttons will need to be dynamically generated based on whether the students have added these links */}
-                                <button className="social-media-button no-margin">LinkedIn</button>
-                                <button className="social-media-button">GitHub</button>
-                                <button className="social-media-button">Medium</button>
-                                <button className="social-media-button">Portfolio</button>
+                                <button className={linkedin ? "social-media-button" : "social-media-button disabled-social"}
+                                onClick={() => this.open(linkedin)}>LinkedIn</button>
+                                <button className={github ? "social-media-button" : "social-media-button disabled-social"}
+                                onClick={() => this.open(github)}>GitHub</button>
+                                <button className={portfolio ? "social-media-button" : "social-media-button disabled-social"}
+                                onClick={() => this.open(portfolio)}>Portfolio</button>
                             </div>
                         </div>
                     </div>
@@ -121,10 +136,11 @@ class Student extends Component {
                     {
                         projects.map(project => {
                             let type = project.projectType === 1 ? 'Personal' : 'Group'
+                            let image = project.projectImages.length ? project.projectImages[0] : placeholder;
                             return (
                                 <div key={project.project_id} className="student-project-container" onClick={() => showModal(project)}>
                                     {/* Make it so that this opens a modal for a project */}
-                                    <img src={placeholder} className="student-project-image"></img>
+                                    <img src={image} className="student-project-image"></img>
                                 </div>
                             )
                         })

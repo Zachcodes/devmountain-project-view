@@ -66,7 +66,10 @@ CREATE TABLE students (
     cohort INT REFERENCES cohorts(id),
     image TEXT,
     about TEXT,
-    user_id INT REFERENCES users(id)
+    user_id INT REFERENCES users(id),
+    linkedin TEXT,
+    github TEXT,
+    portfolio TEXT
 );
 
 CREATE TABLE user_login_info (
