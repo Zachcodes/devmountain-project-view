@@ -20,12 +20,7 @@ class Student extends Component {
         }
     }
     componentDidMount() {
-        axios.get(`/api/students/${this.props.match.params.studentid}`).then( response => {
-            let {data} = response;
-            let finalState = this.formatDbResponse(data)
-            this.setState(finalState)
-
-        })
+        this.loadProfile()
     }
 
     formatDbResponse(data) {
@@ -63,6 +58,18 @@ class Student extends Component {
             about,
             doneLoading: true
         }
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.match.params.studentid !== this.props.match.params.studentid) this.loadProfile()
+    }
+
+    loadProfile() {
+        axios.get(`/api/students/${this.props.match.params.studentid}`).then( response => {
+            let {data} = response;
+            let finalState = this.formatDbResponse(data)
+            this.setState(finalState)
+        })
     }
 
     render() {

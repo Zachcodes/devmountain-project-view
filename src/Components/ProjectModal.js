@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
+import { hideModal } from '../Redux/actionCreators'
 
 class ProjectModal extends Component {
     constructor() {
@@ -15,10 +16,17 @@ class ProjectModal extends Component {
             let intervalId = setInterval(bound, 5000)
             this.setState({intervalId})
         }
+        document.addEventListener("click", this.closeModal)
     }
 
     componentWillUnmount() {
         clearInterval(this.state.intervalId)
+        document.removeEventListener('click', this.closeModal)
+    }
+
+    closeModal = (e) => {
+        let index = e.target.id.indexOf('p-modal')
+        if(index === -1) this.props.hideModal()
     }
 
     setSelectedImageIndex() {
@@ -40,12 +48,12 @@ class ProjectModal extends Component {
         let { projectImages, projectName, projectType, projectDescription, url } = selectedModalProject
         let modalClass = showModal ? `project-modal-main-container` : 'project-modal-main-container hide-modal';
         return (
-            <div className={modalClass}>
-                <div className="project-modal-child modal-child-left">
-                    <div className="project-modal-main-image">
-                        <img src={projectImages[selectedImageIndex]} />
+            <div className={modalClass} id="p-modal-1">
+                <div className="project-modal-child modal-child-left" id="p-modal-2">
+                    <div className="project-modal-main-image" id="p-modal-3">
+                        <img src={projectImages[selectedImageIndex]} id="p-modal-4"/>
                     </div>
-                    <div className="project-modal-thumbnail-container">
+                    <div className="project-modal-thumbnail-container" id="p-modal-5">
                         {
                             projectImages.map( (imageUrl, i) => {
                                 return (
@@ -56,10 +64,10 @@ class ProjectModal extends Component {
                         }
                     </div>
                 </div>
-                <div className="project-modal-child modal-child-right">
-                        <div className="project-modal-name">{projectName}</div>
-                        <div className="project-modal-description">{projectDescription}</div>
-                        <a href={url} target="_blank"><button className="project-modal-button">View Project</button></a>
+                <div className="project-modal-child modal-child-right" id="p-modal-6">
+                        <div className="project-modal-name" id="p-modal-7">{projectName}</div>
+                        <div className="project-modal-description" id="p-modal-8">{projectDescription}</div>
+                        <a href={url} target="_blank" id="p-modal-9"><button className="project-modal-button" id="p-modal-10">View Project</button></a>
                 </div>
             </div>
         )
@@ -73,4 +81,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(ProjectModal)
+export default connect(mapStateToProps, {hideModal})(ProjectModal)
