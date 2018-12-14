@@ -86,8 +86,6 @@ class Student extends Component {
 
     render() {
         let {doneLoading, first, last, projects, about, image, github, linkedin, portfolio} = this.state
-        // TODO: remove this line of code for production
-        portfolio = ''
         let {showModal, showModalSTORE} = this.props
 
         //styles 

@@ -36,7 +36,20 @@
     background-color: #25aae1;
     color: white;
     margin: 5px;
+}
 
+.program-landing-cohort:hover {
+    box-shadow: 1.2px 1.2px 1.2px black;
+    transition: box-shadow .3s;
+    cursor: pointer;
+}
+
+.no-students {
+    background-color: grey;
+}
+
+.no-students:hover {
+    cursor: not-allowed;
 }
 
 .program-show-button {
@@ -54,11 +67,6 @@
     cursor: pointer;
 }
 
-.program-landing-cohort:hover {
-    box-shadow: 1.2px 1.2px 1.2px black;
-    transition: box-shadow .3s;
-    cursor: pointer;
-}
 
 .program-heading {
     margin: 0px 5px;

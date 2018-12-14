@@ -42,6 +42,7 @@ class ProgramLanding extends Component {
     refreshCohorts = () => {
         let { active } = this.state;
         axios.get(`/api/programs/${active}`).then(response => {
+            console.log('response in cohorts', response)
             this.setState({
                 grabbedData: true,
                 cohorts: response.data,
@@ -73,7 +74,6 @@ class ProgramLanding extends Component {
     render() {
         let {doneLoading, active, cohorts, amountToDisplay} = this.state
         let {programs} = this.props
-        console.log(cohorts)
         let filtered = cohorts.filter( cohort => {
             if(active === 0 && cohort.name) {
                 return true;
@@ -82,7 +82,7 @@ class ProgramLanding extends Component {
             }
         }).map( (cohort, index) => {
             return (
-                <Cohort type={cohort.type} name={cohort.name} id={cohort.id} key={index}/>
+                <Cohort type={cohort.type} name={cohort.name} id={cohort.id} key={index} studentCount={cohort.count}/>
             )
         })
         let showMore = false;
