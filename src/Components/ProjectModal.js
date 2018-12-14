@@ -67,7 +67,7 @@ class ProjectModal extends Component {
                 <div className="project-modal-child modal-child-right" id="p-modal-6">
                         <div className="project-modal-name" id="p-modal-7">{projectName}</div>
                         <div className="project-modal-description" id="p-modal-8">{projectDescription}</div>
-                        <a href={url} target="_blank" id="p-modal-9"><button className="project-modal-button" id="p-modal-10">View Project</button></a>
+                        <a href={url} target="_blank" id="p-modal-9" className="project-modal-button"><button id="p-modal-10">View Project</button></a>
                 </div>
             </div>
         )

@@ -139,7 +139,6 @@ class Student extends Component {
                             let image = project.projectImages.length ? project.projectImages[0] : placeholder;
                             return (
                                 <div key={project.project_id} className="student-project-container" onClick={() => showModal(project)}>
-                                    {/* Make it so that this opens a modal for a project */}
                                     <img src={image} className="student-project-image"></img>
                                 </div>
                             )
