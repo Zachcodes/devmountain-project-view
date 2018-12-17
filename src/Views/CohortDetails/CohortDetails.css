@@ -63,8 +63,28 @@
 }
 
 .ch-student-image {
+    /* margin: auto; */
+    height: 345px;
+    width: 345px;
+    /* height: 460px;
+    width: 460px; */
+    /* margin-top: 20px; */
+}
+
+.ch-student-image img:first-child {
+    height: 100%;
+    width: 100%;
+}
+
+.ch-student-container {
+    display: flex;
+    flex-direction: column;
     margin: auto;
-    height: 460px;
-    width: 460px;
     margin-top: 20px;
+}
+
+.ch-student-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -113,11 +113,15 @@ export default class CohortDetails extends Component {
                     <div className="ch-student-wrapper">
                         {  
                             students.map( student => {
-                                console.log('student details', student)
                                 return (
-                                    <img className="ch-student-image"
-                                    key={student.id}
-                                    src={student.image}/>
+                                    <div className="ch-student-container"
+                                    key={student.id}>
+                                        <span className="ch-student-name">{student.first} {student.last}</span>
+                                        <Link to={`/students/${student.id}`}
+                                        className="ch-student-image">
+                                            <img src={student.image}/>
+                                        </Link>
+                                    </div>
                                 )
                             })
                         }
