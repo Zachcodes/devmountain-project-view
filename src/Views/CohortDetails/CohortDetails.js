@@ -17,7 +17,7 @@ export default class CohortDetails extends Component {
             groupProjects: [],
             students: [],
             loaded: false,
-            activeType: 'group'
+            activeType: 'student'
         }
     }
 
@@ -92,7 +92,6 @@ export default class CohortDetails extends Component {
                     ?
                 
                     groupProjects.map( projectDetails => {
-                        console.log('project Details', projectDetails)
                         return (
                             <div className="ch-group-container"
                             key={projectDetails.projectId}>
@@ -111,16 +110,18 @@ export default class CohortDetails extends Component {
                     })
                     
                     :
-
-                    students.map( student => {
-                        // console.log('student details', student)
-                        return (
-                            <div className="ch-student-container"
-                            key={student.id}>
-                                Student
-                            </div>
-                        )
-                    })
+                    <div className="ch-student-wrapper">
+                        {  
+                            students.map( student => {
+                                console.log('student details', student)
+                                return (
+                                    <img className="ch-student-image"
+                                    key={student.id}
+                                    src={student.image}/>
+                                )
+                            })
+                        }
+                    </div>
                 }
             </div>
             :
