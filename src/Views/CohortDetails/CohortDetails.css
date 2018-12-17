@@ -9,7 +9,7 @@
     padding: 10px;
     background-color: #303030;
     color: white;
-    height: 100px;
+    height: 75px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -43,16 +43,16 @@
     padding: 30px;
     display: flex;
     /* TODO: maybe remove */
-    background-color: #303030;
-    border-bottom: .25px solid white;
+    /* background-color: #303030; */
+    border-bottom: .25px solid black;
 
 }
 .ch-1 {
-    background-color: #303030;
+    /* background-color: #303030; */
 }
 
 .ch-3 {
-    color: white;
+    color: black;
 }
 
 .ch-group-left {
@@ -94,7 +94,7 @@
     font-weight: 200;
     letter-spacing: 1px;
     margin-top: 15px;
-    color: white;
+    color: black;
 }
 
 .ch-project-team {
@@ -102,12 +102,12 @@
     font-weight: 200;
     letter-spacing: 1px;
     margin-top: 15px;
-    color: white;
+    color: black;
 }
 
 .ch-project-team  a {
     text-decoration: none;
-    color: white;
+    color: black;
 }
 
 .ch-student-wrapper {
