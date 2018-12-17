@@ -31,6 +31,7 @@ module.exports = {
                 newGroupObject['projectName'] = groupProjects[i].projectName
                 newGroupObject['projectId'] = groupProjects[i].projectId
                 newGroupObject['url'] = groupProjects[i].url
+                newGroupObject['description'] = description
                 if(groupProjects[i].rating) newGroupObject['rating'] = groupProjects[i].rating
                 if(groupProjects[i].projectRatingId) newGroupObject['projectRatingId'] = groupProjects[i].projectRatingId
                 if(groupProjects[i].tagName) {

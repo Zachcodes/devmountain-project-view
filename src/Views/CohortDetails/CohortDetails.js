@@ -92,11 +92,18 @@ export default class CohortDetails extends Component {
                     ?
                 
                     groupProjects.map( projectDetails => {
-                        // console.log('project Details', projectDetails)
+                        console.log('project Details', projectDetails)
                         return (
                             <div className="ch-group-container"
                             key={projectDetails.projectId}>
-                                group project
+                                <div className="ch-group-left">
+                                    <img src={projectDetails.mainImageUrl}/>
+                                </div>
+                                <div className="ch-group-right">
+                                    <div>{projectDetails.projectName}</div>
+                                    <div>{projectDetails.description}</div>
+                                    <div>Team Members:</div>
+                                </div> 
                             </div>
                         )
                     })
