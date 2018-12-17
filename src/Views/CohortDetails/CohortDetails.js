@@ -102,7 +102,9 @@ export default class CohortDetails extends Component {
                                 <div className="ch-group-right">
                                     <div>{projectDetails.projectName}</div>
                                     <div>{projectDetails.description}</div>
-                                    <div>Team Members:</div>
+                                    <div>Team Members: {
+                                        projectDetails.groupMembers.map(student => <ul key={student.studentId}>{student.studentName}</ul>)
+                                    }</div>
                                 </div> 
                             </div>
                         )

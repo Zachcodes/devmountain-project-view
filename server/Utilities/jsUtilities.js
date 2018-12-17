@@ -31,7 +31,7 @@ module.exports = {
                 newGroupObject['projectName'] = groupProjects[i].projectName
                 newGroupObject['projectId'] = groupProjects[i].projectId
                 newGroupObject['url'] = groupProjects[i].url
-                newGroupObject['description'] = description
+                newGroupObject['description'] = groupProjects[i].description
                 if(groupProjects[i].rating) newGroupObject['rating'] = groupProjects[i].rating
                 if(groupProjects[i].projectRatingId) newGroupObject['projectRatingId'] = groupProjects[i].projectRatingId
                 if(groupProjects[i].tagName) {
@@ -90,6 +90,7 @@ module.exports = {
             formattedObj['projectType'] = project.project_type
             formattedObj['studentFirst'] = project.student_first
             formattedObj['studentLast'] = project.student_last
+            formattedObj['description'] = project.description
             formattedObj['studentId'] = project.student_id
             formattedObj['mainImageUrl'] = project.image_url
             if(project.rating) {
