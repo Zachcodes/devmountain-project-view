@@ -1,68 +1,27 @@
-a {
-    text-decoration: none;
-    color: black;
-}
-.cohort-details-main-container {
+.ch-main-container {
     display: flex;
     flex-direction: column;
+}
+
+.ch-header {
     padding: 10px;
-    align-items: space-between;
-}
-.cohort-details-title-div {
-    width: auto;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-}
-.cohort-details-body-div {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-}
-.cohort-details-left-container {
-    width: 30%;
+    background-color: #303030;
+    color: white;
+    height: 100px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-}
-
-.cohort-details-right-container {
-    width: 55%;
-    display: flex;
-    flex-direction: column;
-    padding: 0px 10px;
-}
-
-.cohort-details-filter-container {
-    width: 15%;
-    display: flex;
-    flex-direction: column;
-}
-
-.cohort-details-project-main-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.left-container-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 30px;
-}
-
-.right-container-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 30px;
-}
-
-.cohort-details-project-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.ch-header-filter-container {
+    display: flex;
+    justify-content: center;
+}
+
+.ch-active {
+    color: #25AAE1;
+}
+
+.ch-nav:hover {
+    cursor: pointer;
 }

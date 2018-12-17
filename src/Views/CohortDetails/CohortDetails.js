@@ -8,17 +8,16 @@ import {Link} from 'react-router-dom'
 import GroupProject from '../../Components/GroupProject'
 import PersonalProject from '../../Components/PersonalProject'
 import StudentContainer from '../../Components/StudentContainer'
+import TinyNav from '../../Components/TinyNav'
 
 export default class CohortDetails extends Component {
     constructor() {
         super()
         this.state = {
             groupProjects: [],
-            personalProjects: [],
             students: [],
             loaded: false,
-            filterVal: '',
-            projectTypeFilter: 0
+            activeType: 'group'
         }
     }
 
@@ -67,100 +66,53 @@ export default class CohortDetails extends Component {
         })
     }
 
+    setActiveType = (activeType) => {
+        this.setState({
+            activeType
+        })
+    }
+
     render() {
-        let {search} = this.props.location 
-        let queryValues = queryString.parse(search) 
-        let {filterVal, projectTypeFilter} = this.state
+        let {groupProjects, activeType, students} = this.state
+
+        let  groupClass = activeType === 'group' ? 'ch-active ch-nav' : 'ch-nav';
+        let  studentClass = activeType === 'student' ? 'ch-active ch-nav' : 'ch-nav';
         return (
             this.state.loaded 
             ?
-            <div className="cohort-details-main-container">
-                <div className="cohort-details-title-div">
-                   Cohort {queryValues.name}
-                </div>
-                <div className="cohort-details-body-div">
-                    <div className="cohort-details-left-container">
-                        <div className="left-container-title">
-                            <h2>Students</h2>
-                        </div>
-                        <div className="cohort-details-left-student-container">
-                            {
-                                this.state.students.map(student => {
-                                    return (
-                                        <Link 
-                                        to={`/students/${student.id}`}
-                                        key={student.id}>
-                                            <StudentContainer student={student}/>
-                                        </Link>
-                                    )
-                                })
-                            }
-                        </div>
+            <div className="ch-main-container">
+                <div className="ch-header">
+                    <TinyNav/>
+                    <div className="ch-header-filter-container">
+                        <div><span className={groupClass} onClick={() => this.setActiveType('group')}>Group Projects</span> / <span className={studentClass} onClick={() => this.setActiveType('student')}>Students</span></div>
                     </div>
-                    <div className="cohort-details-right-container">
-                        <div className="cohort-details-project-main-container">
-                            <div className="right-container-title">Projects</div>
-                            <div className="cohort-details-title">Personal</div>
-                            <div className="cohort-details-project-container">
-                                {
-                                    this.state.personalProjects.map( (project, index) => {
-                                        return (
-                                            <PersonalProject 
-                                            key={`${project.projectId}_${index}`} 
-                                            projectDetails={project} />
-                                        )
-                                    })
-                                    
-                                }
-                            </div>
-                        </div>
-                        <div className="cohort-details-project-main-container">
-                            <div className="cohort-details-title">Group</div>
-                            <div className="cohort-details-project-container">
-                                {
-                                    this.state.groupProjects.map( (project, index) => {
-                                        return (
-                                            <GroupProject key={project.projectId}
-                                            projectName={project.projectName} 
-                                            members={project.groupMembers} 
-                                            url={project.url}
-                                            mainImageUrl={project.mainImageUrl}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <form className="cohort-details-filter-container"
-                    onSubmit={this.submitFilter}>
-                        <div>Filter Projects</div>
-                        <div className="cohort-details-filter-type">
-                            <label>
-                            <span>Type:</span>
-                                <select 
-                                value={projectTypeFilter}
-                                onChange={(e) => this.handleChange(e.target.value, 'projectTypeFilter')}>
-                                    <option value=""></option>
-                                    <option value="1">Personal</option>
-                                    <option value="2">group</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div className="cohort-details-filter-input">
-                                <label>
-                                     Filter by tag: <input value={filterVal} onChange={ (e) => {this.handleChange(e.target.value, 'filterVal')} }></input>   
-                                </label>
-                        </div>
-                        <div className="cohort-details-filter-submit">
-                            <input 
-                            type="submit"
-                            value="Submit"
-                            />
-                            <button type="button" onClick={this.loadDefault}>Reset</button>
-                        </div>
-                    </form>
                 </div>
+                {
+                    activeType === 'group'
+                    ?
+                
+                    groupProjects.map( projectDetails => {
+                        // console.log('project Details', projectDetails)
+                        return (
+                            <div className="ch-group-container"
+                            key={projectDetails.projectId}>
+                                group project
+                            </div>
+                        )
+                    })
+                    
+                    :
+
+                    students.map( student => {
+                        // console.log('student details', student)
+                        return (
+                            <div className="ch-student-container"
+                            key={student.id}>
+                                Student
+                            </div>
+                        )
+                    })
+                }
             </div>
             :
             <div>
