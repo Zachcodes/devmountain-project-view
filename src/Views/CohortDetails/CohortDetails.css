@@ -1,6 +1,8 @@
 .ch-main-container {
     display: flex;
     flex-direction: column;
+    background-color: #656464;
+    min-height: calc(100vh - 70px);
 }
 
 .ch-header {
@@ -11,6 +13,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border-bottom: .25px solid white;
 }
 
 .ch-header-filter-container {
@@ -24,4 +27,17 @@
 
 .ch-nav:hover {
     cursor: pointer;
+}
+
+.ch-group-container {
+    height: 200px;
+    border-top: .25px solid white;
+    border-bottom: .25px solid white;
+}
+
+.ch-student-container {
+    height: 200px;
+    border-top: .25px solid white;
+    border-bottom: .25px solid white;
+
 }
