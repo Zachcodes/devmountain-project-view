@@ -17,7 +17,7 @@ export default class CohortDetails extends Component {
             groupProjects: [],
             students: [],
             loaded: false,
-            activeType: 'student'
+            activeType: 'group'
         }
     }
 
@@ -99,10 +99,18 @@ export default class CohortDetails extends Component {
                                     <img src={projectDetails.mainImageUrl}/>
                                 </div>
                                 <div className="ch-group-right">
-                                    <div>{projectDetails.projectName}</div>
-                                    <div>{projectDetails.description}</div>
-                                    <div>Team Members: {
-                                        projectDetails.groupMembers.map(student => <ul key={student.studentId}>{student.studentName}</ul>)
+                                    <div className="ch-project-name">{projectDetails.projectName}</div>
+                                    <div className="ch-project-description">{projectDetails.description}</div>
+                                    <div className="ch-project-team">Team Members: {
+                                        projectDetails.groupMembers.map((student, i, a) => {
+                                            return (
+                                                i === a.length - 1
+                                                ?
+                                                <Link to={`/students/${student.studentId}`}><u key={student.studentId}>{student.studentName}</u></Link>
+                                                :
+                                                <Link to={`/students/${student.studentId}`}><u key={student.studentId}>{student.studentName}, </u></Link>
+                                            )
+                                    })
                                     }</div>
                                 </div> 
                             </div>
