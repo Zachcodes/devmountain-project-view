@@ -46,7 +46,7 @@ class Student extends Component {
                     url: data[i].url,
                     projectType: data[i].project_type,
                     projectImages: [data[i].image_url],
-                    projectDescription: data[i].description
+                    description: data[i].description
                 } 
             }
             else {

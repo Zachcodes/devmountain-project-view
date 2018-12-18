@@ -44,6 +44,18 @@ module.exports = {
                 } 
                 newGroupObject['groupMembers'] = []
                 newGroupObject['mainImageUrl'] = groupProjects[i].mainImageUrl
+                
+
+
+                // newGroupObject['projectImages'] = [groupProjects[i].mainImageUrl]
+                newGroupObject['projectImages'] = {}
+                newGroupObject['projectImages'][groupProjects[i].project_image_id] = groupProjects[i].mainImageUrl
+
+
+
+
+
+
                 groups[groupProjects[i].projectName] = newGroupObject
                 let studentName = { 
                     studentName: `${groupProjects[i].studentFirst} ${groupProjects[i].studentLast}`,
@@ -71,10 +83,22 @@ module.exports = {
                         groups[groupProjects[i].projectName].tags.push(tagObj)
                     }
                 }
+
+                if(groups[groupProjects[i].projectName].projectImages) {
+                    // console.log(1111111, groups[groupProjects[i].projectName].projectImages)
+                    if(!groups[groupProjects[i].projectName].projectImages[groupProjects[i].project_image_id]) {
+                        groups[groupProjects[i].projectName].projectImages[groupProjects[i].project_image_id] = groupProjects[i].mainImageUrl
+                    }
+                }
             } 
         }
         let groupArr = []
         for(let key in groups) {
+            let groupImages = []
+            for(let pId in groups[key].projectImages) {
+                groupImages.push(groups[key].projectImages[pId])
+            }
+            groups[key].projectImages = groupImages
             groupArr.push(groups[key])
         }
         let returnObj = {
@@ -93,6 +117,7 @@ module.exports = {
             formattedObj['description'] = project.description
             formattedObj['studentId'] = project.student_id
             formattedObj['mainImageUrl'] = project.image_url
+            formattedObj['project_image_id'] = project.project_image_id
             if(project.rating) {
                 formattedObj['rating'] = project.rating
                 formattedObj['staffName'] = project.staff_name

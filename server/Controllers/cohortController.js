@@ -17,9 +17,13 @@ module.exports = {
                     }
                     res.status(200).send(returnObj)
 
+                }).catch(err => {
+                    res.status(500).send(err)
                 })
 
 
-        }).catch(err => res.status(500).send(err))
+        }).catch(err => {
+            res.status(500).send(err)
+        })
     }
 }

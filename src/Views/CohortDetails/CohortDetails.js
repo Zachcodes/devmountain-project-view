@@ -9,8 +9,11 @@ import GroupProject from '../../Components/GroupProject'
 import PersonalProject from '../../Components/PersonalProject'
 import StudentContainer from '../../Components/StudentContainer'
 import TinyNav from '../../Components/TinyNav'
+import ProjectModal from '../../Components/ProjectModal'
+import {showModal} from '../../Redux/actionCreators'
+import { connect } from 'react-redux';
 
-export default class CohortDetails extends Component {
+class CohortDetails extends Component {
     constructor() {
         super()
         this.state = {
@@ -52,6 +55,7 @@ export default class CohortDetails extends Component {
     loadDefault = () => {
         let {cohortid} = this.props.match.params;
         axios.get(`/api/cohorts/${cohortid}/projects`).then(res => {
+            console.log(res)
             let personal = res.data.personalProjects;
             let group = res.data.groupProjects;
             let students = res.data.students
@@ -74,6 +78,7 @@ export default class CohortDetails extends Component {
 
     render() {
         let {groupProjects, activeType, students} = this.state
+        let { showModalSTORE, showModal } = this.props
 
         let  groupClass = activeType === 'group' ? 'ch-active ch-nav' : 'ch-nav';
         let  studentClass = activeType === 'student' ? 'ch-active ch-nav' : 'ch-nav';
@@ -81,6 +86,13 @@ export default class CohortDetails extends Component {
             this.state.loaded 
             ?
             <div className="ch-main-container">
+                {
+                    showModalSTORE
+                    ?
+                    <ProjectModal/>
+                    :
+                    null
+                }
                 <div className="ch-header">
                     <TinyNav/>
                     <div className="ch-header-filter-container">
@@ -94,7 +106,8 @@ export default class CohortDetails extends Component {
                     groupProjects.map( projectDetails => {
                         return (
                             <div className="ch-group-container"
-                            key={projectDetails.projectId}>
+                            key={projectDetails.projectId}
+                            onClick={() => showModal(projectDetails)}>
                                 <div className="ch-group-left">
                                     <img src={projectDetails.mainImageUrl}/>
                                 </div>
@@ -143,3 +156,11 @@ export default class CohortDetails extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        showModalSTORE: state.showModal
+    }
+}
+
+export default connect(mapStateToProps, {showModal})(CohortDetails)

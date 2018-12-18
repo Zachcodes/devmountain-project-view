@@ -45,7 +45,7 @@ class ProjectModal extends Component {
     render() {
         let {showModal, selectedModalProject} = this.props
         let { selectedImageIndex } = this.state;
-        let { projectImages, projectName, projectType, projectDescription, url } = selectedModalProject
+        let { projectImages, projectName, projectType, description, url } = selectedModalProject
         let modalClass = showModal ? `project-modal-main-container` : 'project-modal-main-container hide-modal';
         return (
             <div className={modalClass} id="p-modal-1">
@@ -66,7 +66,7 @@ class ProjectModal extends Component {
                 </div>
                 <div className="project-modal-child modal-child-right" id="p-modal-6">
                         <div className="project-modal-name" id="p-modal-7">{projectName}</div>
-                        <div className="project-modal-description" id="p-modal-8">{projectDescription}</div>
+                        <div className="project-modal-description" id="p-modal-8">{description}</div>
                         <a href={url} target="_blank" id="p-modal-9" className="project-modal-button"><button id="p-modal-10">View Project</button></a>
                 </div>
             </div>

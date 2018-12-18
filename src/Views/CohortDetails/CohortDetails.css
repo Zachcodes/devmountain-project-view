@@ -49,6 +49,10 @@
 
 }
 
+.ch-group-container:hover {
+    cursor: pointer;
+}
+
 .ch-group-left {
     width: 40%;
     height: 100%;
