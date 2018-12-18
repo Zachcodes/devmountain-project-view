@@ -88,13 +88,6 @@ class Student extends Component {
         let {doneLoading, first, last, projects, about, image, github, linkedin, portfolio} = this.state
         let {showModal, showModalSTORE} = this.props
 
-        //styles 
-        let studentPicture = {
-            width: '100%',
-            height: '100%',
-            maxWidth: '350px'
-        }
-        
         return (
             doneLoading 
             ?
@@ -111,7 +104,7 @@ class Student extends Component {
                     <TinyNav heightClass="student-tiny-nav"/>
                     <div className="student-position-container">
                         <div className="student-info-picture-container">
-                            <img src={image} style={studentPicture}/>
+                            <img src={image}/>
                         </div>
                         <div className="student-details-container">
                             <div className="student-text-container">
