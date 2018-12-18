@@ -135,33 +135,6 @@ export default class CohortDetails extends Component {
                         }
                     </div>
                 }
-                {
-                    groupProjects.map( projectDetails => {
-                        return (
-                            <div className="ch-group-container ch-1"
-                            key={projectDetails.projectId}>
-                                <div className="ch-group-left">
-                                    <img src={projectDetails.mainImageUrl}/>
-                                </div>
-                                <div className="ch-group-right">
-                                    <div className="ch-project-name ch-2">{projectDetails.projectName}</div>
-                                    <div className="ch-project-description ch-3">{projectDetails.description}</div>
-                                    <div className="ch-project-team ch-3">Team Members: {
-                                        projectDetails.groupMembers.map((student, i, a) => {
-                                            return (
-                                                i === a.length - 1
-                                                ?
-                                                <Link to={`/students/${student.studentId}`}><u key={student.studentId} className="ch-3">{student.studentName}</u></Link>
-                                                :
-                                                <Link to={`/students/${student.studentId}`}><u key={student.studentId} className="ch-3">{student.studentName}, </u></Link>
-                                            )
-                                    })
-                                    }</div>
-                                </div> 
-                            </div>
-                        )
-                    })
-                }
             </div>
             :
             <div>
