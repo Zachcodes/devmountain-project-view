@@ -39,12 +39,12 @@ export default class Student extends Component {
                 newTags: [],
                 newTag: '',
                 mainImageUrl: ''
-            }
+            },
+            activeView: 'info'
         }
     }
 
     componentDidMount() {
-        console.log(232342323)
         axios.get('/api/loadDashboard/student').then(response => {
             console.log(11111)
             let {hasGroup, hasPersonal, group, personal, student, cohortStudents, tags} = response.data
@@ -254,7 +254,9 @@ export default class Student extends Component {
             personal, 
             student, 
             personalFormValues, 
-            groupFormValues} = this.state
+            groupFormValues,
+            activeView
+        } = this.state
         let { pName, 
             pUrl, 
             pDescription, 
@@ -262,7 +264,8 @@ export default class Student extends Component {
             availableTags: pAvailableTags, 
             selectedTags: pSelectedTags, 
             newTag: pNewTag, 
-            newTags: pNewTags} = personalFormValues;
+            newTags: pNewTags
+        } = personalFormValues;
         let { gName, 
             gUrl, 
             gDescription, 
@@ -272,170 +275,29 @@ export default class Student extends Component {
             availableTags: gAvailableTags, 
             selectedTags: gSelectedTags, 
             newTag: gNewTag, 
-            newTags: gNewTags} = groupFormValues;
+            newTags: gNewTags
+        } = groupFormValues;
+
+            let studentDashNav;
+            if(activeView === 'Info') studentDashNav = <span><u>Info</u> | Settings | Projects</span>
+            if(activeView === 'Settings') studentDashNav = <span>Info | <u>Settings</u> | Projects</span>
+            if(activeView === 'Projects') studentDashNav = <span>Info | Settings | <u>Projects</u></span>
         return (
             retrievedDashboard 
             ?
             <div className="student-dashboard-main">
-                <div className="student-dashboard-left-container">
-                    {student.first} {student.last}
-                    {student.about}
-                    <img src={student.image} alt="Student" className="student-image"/>
+                <div className="student-dashboard-left-info-container">
+                    <img src={student.image}/>
+                    <span>{student.first} {student.last}</span>
+                    <span>{student.description}</span>
+                    <span>email</span>
+                    <span>linkedin</span>
+                    <span>github</span>
+                    <span>portfolio</span>
                 </div>
-                <div className="student-dashboard-right-container">
-                    {
-                        hasPersonal 
-                        ?
-                        personal.map(project => {
-                            return (
-                                <div className="student-dashboard-personal-container" key={project.id}>
-                                    <div className="project-container-title">Personal Project</div>
-                                    <div className="personal-container-info">Project Name: {project.project_name}</div>
-                                    <div className="personal-container-info">Description: {project.description}</div>
-                                    <div className="personal-container-info">Project Url: {project.url}</div>
-                                    <div className="personal-container-info">Walkthrough Link: {project.walkthrough_link}</div>
-                                </div>
-                            )
-                        })
-                        :
-                        <div className="student-dashboard-personal-container">
-                            <div className="project-container-title">Personal Project</div>
-                            <form onSubmit={(e) => this.submitProject(e, 'personal')}>
-                                <label>Project Name:</label> <input value={pName} onChange={(e) => this.updateFormValue('personalFormValues', 'pName', e.target.value)}></input>
-                                <label>Project Url:</label> <input value={pUrl} onChange={(e) => this.updateFormValue('personalFormValues', 'pUrl', e.target.value)}></input>
-                                <label>Project Description:</label> <input value={pDescription} onChange={(e) => this.updateFormValue('personalFormValues', 'pDescription', e.target.value)}></input>
-                                <label>Project Walkthrough Link:</label> <input value={pWalkthroughLink} onChange={(e) => this.updateFormValue('personalFormValues', 'pWalkthroughLink', e.target.value)}></input>
-                                <label>Upload Main Project Image:</label> <ImageUploader type="mainProjectImage" updateMainProjectImageUrl={this.updateMainProjectImageUrl} stateProperty="personalFormValues"/>
-                                <div>
-                                    <select onChange={(e) => this.addTag('personalFormValues', e.target.value)}>
-                                        <option value=""></option>
-                                        {
-                                            pAvailableTags.map( tag => {
-                                                return (
-                                                    <option key={tag.id} value={tag.id}>{tag.tag_name}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {
-                                        pSelectedTags.map( tag => {
-                                            return (
-                                                <div key={tag.id}>
-                                                    <p>{tag.tag_name}</p>
-                                                    <button onClick={()=>this.removeTag('personalFormValues', tag.id)}>X</button>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                    <label>New Tag:</label> <input value={pNewTag} onChange={e => this.handleNewTag('personalFormValues', e.target.value)}></input>
-                                    <button onClick={e => this.addNewTag(e, 'personalFormValues')}>Add Tag</button>
-                                    {
-                                        pNewTags.map( (tag, index) => {
-                                            return (
-                                                <div key={`${tag}_${index}`}>
-                                                    <p>{tag}</p>
-                                                    <button onClick={()=>this.removeNewTag('personalFormValues', tag)}>X</button>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                                <button type="submit">Submit For Approval</button>
-                            </form>
-                        </div>
-                    }
-                    {
-                        hasGroup 
-                        ?
-                        group.map(project => {
-                            return (
-                                <div className="student-dashboard-group-container" key={project.id}>
-                                    <div className="project-container-title">Group Project</div>
-                                    <div>Project Name: {project.project_name}</div>
-                                    <div>Description: {project.description}</div>
-                                    <div>Project Url: {project.url}</div>
-                                    <div>Walkthrough Link: {project.walkthrough_link}</div>
-                                    <div>
-                                        {
-                                            project.members.map(member => <p key={member.id}>{member.first} {member.last}</p>)
-                                        }
-                                    </div>
-                                </div>
-                            )
-                        })
-                        :
-                        <div className="student-dashboard-group-container">
-                            <div className="project-container-title">Group Project</div>
-                            <form onSubmit={(e) => this.submitProject(e, 'group')}>
-                                <label>Project Name:</label> <input value={gName} onChange={(e) => this.updateFormValue('groupFormValues', 'gName', e.target.value)}></input>
-                                <label>Project Url:</label> <input value={gUrl} onChange={(e) => this.updateFormValue('groupFormValues', 'gUrl', e.target.value)}></input>
-                                <label>Project Description:</label> <input value={gDescription} onChange={(e) => this.updateFormValue('groupFormValues', 'gDescription', e.target.value)}></input>
-                                <label>Project Walkthrough Link:</label> <input value={gWalkthroughLink} onChange={(e) => this.updateFormValue('groupFormValues', 'gWalkthroughLink', e.target.value)}></input>
-                                <label>Upload Main Project Image:</label> <ImageUploader type="mainProjectImage" updateMainProjectImageUrl={this.updateMainProjectImageUrl} stateProperty="groupFormValues"/>
-                                <div>
-                                    <select onChange={(e) => this.addGroupMember(e.target.value)}>
-                                        <option value=""></option>
-                                        {
-                                            gAvailableGroupMembers.map( student => {
-                                                return (
-                                                    <option key={student.id} value={student.id}>
-                                                        {student.first} {student.last}
-                                                    </option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {
-                                       gGroupMembers.map( student => {
-                                           return (
-                                               <div key={student.id}>
-                                                    <p>{student.first} {student.last}</p>
-                                                    <button onClick={()=>this.removeGroupMember(student.id)}>X</button>
-                                               </div>
-                                           )
-                                       }) 
-                                    }
-                                </div>
-                                <div>
-                                    <select onChange={(e) => this.addTag('groupFormValues', e.target.value)}>
-                                        <option value=""></option>
-                                        {
-                                            gAvailableTags.map( tag => {
-                                                return (
-                                                    <option key={tag.id} value={tag.id}>{tag.tag_name}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {
-                                        gSelectedTags.map( tag => {
-                                            return (
-                                                <div key={tag.id}>
-                                                    <p>{tag.tag_name}</p>
-                                                    <button onClick={()=>this.removeTag('groupFormValues', tag.id)}>X</button>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                    <label>New Tag:</label> <input value={gNewTag} onChange={e => this.handleNewTag('groupFormValues', e.target.value)}></input>
-                                    <button onClick={e => this.addNewTag(e, 'groupFormValues')}>Add Tag</button>
-                                    {
-                                        gNewTags.map( (tag, index) => {
-                                            return (
-                                                <div key={`${tag}_${index}`}>
-                                                    <p>{tag}</p>
-                                                    <button onClick={()=>this.removeNewTag('groupFormValues', tag)}>X</button>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                                <button type="submit">Submit For Approval</button>
-                            </form>
-                        </div>
-                    }
+                <div className="student-dashboard-right-view">
+                    {studentDashNav}
                 </div>
-                <StudentInfoEdit resetStudentData={this.resetStudentData}/>
             </div>
             :
             <div className="student-dashboard-main">
