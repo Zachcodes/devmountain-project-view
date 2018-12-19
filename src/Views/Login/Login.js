@@ -59,6 +59,7 @@ class Login extends Component {
     }
 
     render() {
+        console.log('getting hee')
         let {redirect, initialAuth} = this.state
         return (
             initialAuth

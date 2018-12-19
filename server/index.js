@@ -146,6 +146,7 @@ const syncCohortsCron = new CronJob('30 * * * * * *', () => {
 app.get('/api/auth', passport.authenticate('devmtn'))
 
 app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
+    console.log(111111)
     if(req.user) {
         res.redirect('http://localhost:3005/#/dashboard')
     } else {

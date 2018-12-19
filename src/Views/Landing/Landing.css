@@ -31,7 +31,7 @@
     padding: 3px 0px;
     letter-spacing: 3px;
     text-shadow: 1px 2px 2px black;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 600;
     margin-bottom: 20px;
     font-family: Nunito, sans-serif;
@@ -45,9 +45,9 @@
     padding: 2px 5px;
     letter-spacing: 2px;
     text-shadow: 1px 2px 2px black;
-    font-size: 14px;
+    font-size: 20px;
     word-wrap: break-word;
-    font-weight: 400;
+    font-weight: 200;
     margin-bottom: 40px;
 }
 
@@ -63,9 +63,9 @@
     background-color: #25aae1;
     color: white;
     /* text-shadow: px 2px 2px black; */
-    font-size: 12px;
+    font-size: 18px;
     padding: 5px;
-    box-shadow: .5px 1px 1px black;
+    box-shadow: .25px .5px .5px black;
     /* width: 200px;
     height: 50px; */
     font-weight: 600;

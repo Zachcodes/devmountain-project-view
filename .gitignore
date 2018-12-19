@@ -22,3 +22,4 @@ yarn-debug.log*
 yarn-error.log*
 
 AuthConfig.js
+jwt_public_key
