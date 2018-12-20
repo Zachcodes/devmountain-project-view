@@ -3,7 +3,7 @@ import axios from 'axios'
 import './LoggedIn.css'
 
 //components 
-import Student from '../../Components/Student'
+import StudentDash from '../StudentDash/StudentDash'
 import Staff from '../../Components/Staff'
 import Admin from '../../Components/Admin'
 
@@ -31,7 +31,7 @@ export default class LoggedIn extends Component {
         let {redirectToLogin} = this
         let typeToRender = ''
         role = 'student'
-        if(role === 'student') typeToRender = <Student />
+        if(role === 'student') typeToRender = <StudentDash />
         if(role === 'staff') typeToRender = <Staff />
         if(role === 'admin') typeToRender = <Admin />
         if(initialAuth) redirect = false;
