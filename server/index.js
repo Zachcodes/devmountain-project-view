@@ -183,6 +183,7 @@ app.get('/api/cohorts/:id/projects', cc.getProjectsByCohort)
 app.get('/api/students/:id', sc.getStudent)
 app.put('/api/students/updatePicture', sc.updatePicture)
 app.put('/api/students/updateAbout', sc.updateAbout)
+app.put('/api/students/info', sc.updateInfo)
 
 //login routes 
 app.post('/api/login', validLogin, lc.login)

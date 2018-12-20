@@ -245,6 +245,11 @@ export default class Student extends Component {
     //         return state;
     //     })
     // }
+    updateStudentInfo = (student) => {
+        this.setState({
+            student
+        })
+    }
 
     render() {
         let { studentInfo: student, retrievedDashboard, studentSettings } = this.state
@@ -254,7 +259,7 @@ export default class Student extends Component {
             ?
             <div className="student-dashboard-main">
                 <div className="student-dashboard-left-info-container">
-                    <StudentDashInfo studentInfo={student}/>
+                    <StudentDashInfo studentInfo={student} updateStudentInfo={this.updateStudentInfo}/>
                 </div>
                 <div className="student-dashboard-right-view">
                     <span>Projects</span>
