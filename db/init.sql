@@ -69,7 +69,8 @@ CREATE TABLE students (
     user_id INT REFERENCES users(id),
     linkedin TEXT,
     github TEXT,
-    portfolio TEXT
+    portfolio TEXT,
+    email TEXT
 );
 
 CREATE TABLE user_login_info (

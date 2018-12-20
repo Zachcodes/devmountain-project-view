@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import './StudentDash.css'
 
 import StudentDashInfo from '../../Components/StudentDashInfo'
 import StudentDashSettings from '../../Components/StudentDashSettings'
@@ -40,14 +41,12 @@ export default class Student extends Component {
                 newTags: [],
                 newTag: '',
                 mainImageUrl: ''
-            },
-            activeView: 'Info'
+            }
         }
     }
 
     componentDidMount() {
         axios.get('/api/loadDashboard/student').then(response => {
-            console.log(11111)
             let {hasGroup, hasPersonal, group, personal, student, cohortStudents, tags} = response.data
             this.setState({
                 hasGroup,
@@ -246,46 +245,20 @@ export default class Student extends Component {
     //         return state;
     //     })
     // }
-    setActiveView(view) {
-        this.setState({
-            activeView: view
-        })
-    }
 
     render() {
-        let { studentInfo: student, activeView, retrievedDashboard, studentSettings } = this.state
-        let studentDashNav, studentDashView;
-        let info = <span onClick={() => this.setActiveView('Info')}>Info</span>
-        let settings = <span onClick={() => this.setActiveView('Settings')}>Settings</span>
-        let projects = <span onClick={() => this.setActiveView('Projects')}>Projects</span>
-        if(activeView === 'Info') {
-            studentDashNav = <span><u>{info}</u> | {settings} | {projects}</span>
-            studentDashView = <StudentDashInfo studentInfo={student}/>
-        }
-        if(activeView === 'Settings') {
-            studentDashNav = <span>{info} | <u>{settings}</u> | {projects}</span>
-            studentDashView = <StudentDashSettings studentSettings={studentSettings}/>
-        } 
-        if(activeView === 'Projects') {
-            studentDashNav = <span>{info} | {settings} | <u>{projects}</u></span>
-            studentDashView = <div>Projects!</div>
-        }
+        let { studentInfo: student, retrievedDashboard, studentSettings } = this.state
+
         return (
             retrievedDashboard 
             ?
             <div className="student-dashboard-main">
                 <div className="student-dashboard-left-info-container">
-                    <img src={student.image}/>
-                    <span>{student.first} {student.last}</span>
-                    <span>{student.description}</span>
-                    <span>email</span>
-                    <span>linkedin</span>
-                    <span>github</span>
-                    <span>portfolio</span>
+                    <StudentDashInfo studentInfo={student}/>
                 </div>
                 <div className="student-dashboard-right-view">
-                    {studentDashNav}
-                    {studentDashView}
+                    <span>Projects</span>
+                    <span>Group | Personal</span>
                 </div>
             </div>
             :

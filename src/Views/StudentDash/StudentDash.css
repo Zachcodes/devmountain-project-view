@@ -1,0 +1,27 @@
+.student-dashboard-main {
+   display: flex;
+   min-height: 100vh;
+}
+
+.student-dashboard-left-info-container {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    background-color: #303030;
+    padding: 20px;
+    align-items: center;
+}
+
+.student-dashboard-info-picture {
+    width: 230px;
+    height: 230px;
+}
+
+.student-dashboard-info-text {
+    color: white;
+}
+
+.student-dash-info-container {
+    display: flex;
+    flex-direction: column;
+}
