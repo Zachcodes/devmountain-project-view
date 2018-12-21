@@ -1,4 +1,4 @@
-const {splitPersonalAndGroup} = require('../Utilities/jsUtilities');
+const {splitPersonalAndGroup, addImagesToProject} = require('../Utilities/jsUtilities');
 
 module.exports = {
     loadDashboard: (req, res) => {
@@ -83,27 +83,7 @@ module.exports = {
                 db.students.get_projects_by_student_id({id}).then( projects => {
                     let projectsObj = {}
                     projects.forEach( p => {
-                        if(!projectsObj[p.project_id]) {
-                            projectsObj[p.project_id] = {
-                                ...p,
-                                images: [{
-                                            project_image_id: p.project_image_id,
-                                            image_url: p.image_url,
-                                            image_type: p.image_type_id,
-                                            pi_project_id: p.pi_project_id
-                                        }]
-                            }
-                            delete projectsObj[p.project_id].image_url
-                            delete projectsObj[p.project_id].project_image_id
-                            delete projectsObj[p.project_id].pi_project_id
-                            delete projectsObj[p.project_id].image_type_id
-                        }
-                        else projectsObj[p.project_id].images.push({
-                                                                    project_image_id: p.project_image_id,
-                                                                    image_url: p.image_url,
-                                                                    image_type: p.image_type_id,
-                                                                    pi_project_id: p.pi_project_id
-                                                                  })
+                        addImagesToProject(p, projectsObj)
                     })
                     let condensedProjects = []
                     for(let key in projectsObj) condensedProjects.push(projectsObj[key])

@@ -129,5 +129,28 @@ module.exports = {
              }
             return formattedObj;
         }
+    },
+    addImagesToProject(p, projectsObj) {
+        if(!projectsObj[p.project_id]) {
+            projectsObj[p.project_id] = {
+                ...p,
+                images: [{
+                            project_image_id: p.project_image_id,
+                            image_url: p.image_url,
+                            image_type: p.image_type_id,
+                            pi_project_id: p.pi_project_id
+                        }]
+            }
+            delete projectsObj[p.project_id].image_url
+            delete projectsObj[p.project_id].project_image_id
+            delete projectsObj[p.project_id].pi_project_id
+            delete projectsObj[p.project_id].image_type_id
+        }
+        else projectsObj[p.project_id].images.push({
+                                                    project_image_id: p.project_image_id,
+                                                    image_url: p.image_url,
+                                                    image_type: p.image_type_id,
+                                                    pi_project_id: p.pi_project_id
+                                                  })
     }
 }

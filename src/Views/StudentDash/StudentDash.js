@@ -17,21 +17,19 @@ export default class Student extends Component {
             studentSettings: {},
             cohortStudents: [],
             retrievedDashboard: false,
-            displayedProjects: 'group',
+            displayedProjects: 'personal',
             addNew: false
         }
     }
 
     componentDidMount() {
         axios.get('/api/loadDashboard/student').then(response => {
-            console.log('response.data',response.data)
-            let {hasGroup, hasPersonal, group, personal, student, cohortStudents, tags} = response.data
+            let {group, personal, student, cohortStudents} = response.data
             this.setState({
                 group,
                 personal,
                 studentInfo: student,
                 cohortStudents,
-                tags,
                 retrievedDashboard: true
             })
         }).catch(err => console.log(err))
@@ -71,7 +69,7 @@ export default class Student extends Component {
                     <StudentProject 
                     type="group" 
                     project={project}
-                    key={project.id}/>
+                    key={project.project_id}/>
                 )
             })
         }
@@ -82,7 +80,7 @@ export default class Student extends Component {
                     <StudentProject
                     type="personal"
                     project={project}
-                    key={project.id}/>
+                    key={project.project_id}/>
                 )
             })
         }

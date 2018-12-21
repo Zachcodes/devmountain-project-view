@@ -1,23 +1,36 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-export default function StudentProject(props) {
-    console.log('props in StudentProject', props)
-    let {description, project_name, url} = props.project
-    return (
-        <div className="student-dash-project">
-            <div>
-                <img src={url}/>
-                <div>Map through more project images here</div>
-            </div>
-            <div>
-                <div>{project_name}</div>
-                <div>{description}</div>
-                <div>
-                    <div>Project members images</div>
-                    <button>View Project</button>
-                    <button>Edit Project</button>
+export default class StudentProject extends Component {
+    constructor(props) {
+        super()
+        this.state = {
+            ...props.project,
+            activeImageIndex: 0
+        }
+    }
+    render() {
+        console.log('props in StudentProject', this.props)
+        let {type} = this.props.project
+        let {description, images, project_link, project_name, walkthrough_link, activeImageIndex} = this.state;
+        // TODO: change this to be an actual placeholder image
+        let activeImage = images.length ? images[activeImageIndex].image_url : 'https://s3-us-west-1.amazonaws.com/project-browser-development/pictures/148e1a41-b327-4652-8272-5d4f35f5b617_IMG_0359.jpg'
+        let restOfImages = images.filter( (image,i) => i != activeImageIndex).map(image => <img className="student-dash-project-thumbnail" src={image.image_url}/>)
+        return (
+            <div className="student-dash-project">
+                <div className="student-dash-project-image-container">
+                    <img src={activeImage} className="student-dash-project-main-image"/>
+                    <div className="student-dash-project-thumbnail-container">{restOfImages}</div>
+                </div>
+                <div className="student-dash-project-info-container">
+                    <div className="student-dash-project-info-name">{project_name}</div>
+                    <div className="student-dash-project-info-description">{description}</div>
+                    <div className="student-dash-project-bottom-container">
+                        <div className="student-dash-project-member-pictures">Project members images</div>
+                        <button className="student-dash-project-info-button">View Project</button>
+                        <button className="student-dash-project-info-button">Edit Project</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
