@@ -24,6 +24,7 @@ export default class Student extends Component {
 
     componentDidMount() {
         axios.get('/api/loadDashboard/student').then(response => {
+            console.log('response.data',response.data)
             let {hasGroup, hasPersonal, group, personal, student, cohortStudents, tags} = response.data
             this.setState({
                 group,

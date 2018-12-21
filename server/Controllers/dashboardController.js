@@ -81,35 +81,56 @@ module.exports = {
                 
                 //go get all the projects associated with student 
                 db.students.get_projects_by_student_id({id}).then( projects => {
-                    let hasGroup, hasPersonal;
+                    let projectsObj = {}
+                    projects.forEach( p => {
+                        if(!projectsObj[p.project_id]) {
+                            projectsObj[p.project_id] = {
+                                ...p,
+                                images: [{
+                                            project_image_id: p.project_image_id,
+                                            image_url: p.image_url,
+                                            image_type: p.image_type_id,
+                                            pi_project_id: p.pi_project_id
+                                        }]
+                            }
+                            delete projectsObj[p.project_id].image_url
+                            delete projectsObj[p.project_id].project_image_id
+                            delete projectsObj[p.project_id].pi_project_id
+                            delete projectsObj[p.project_id].image_type_id
+                        }
+                        else projectsObj[p.project_id].images.push({
+                                                                    project_image_id: p.project_image_id,
+                                                                    image_url: p.image_url,
+                                                                    image_type: p.image_type_id,
+                                                                    pi_project_id: p.pi_project_id
+                                                                  })
+                    })
+                    let condensedProjects = []
+                    for(let key in projectsObj) condensedProjects.push(projectsObj[key])
                     let promiseArr = [];
                     //if has a group, get all the group members
-                    let group = projects.filter( project => project.project_type === 2)
-                    let personal = projects.filter( project => project.project_type === 1)
+                    let group = condensedProjects.filter( project => project.project_type === 2)
+                    let personal = condensedProjects.filter( project => project.project_type === 1)
                     if(group.length) {
-                        hasGroup = true;
                         let {project_id} = group[0]
                         promiseArr.push(db.projects.get_group_members({project_id}))
                     }
-                    if(personal.length) hasPersonal = true;
                     Promise.all(promiseArr).then( values => {
                         if(values.length) {
                             let groupMembers = values[0];
                             if(groupMembers.length) group[0].members = groupMembers
                         }
                         db.cohorts.get_students_by_cohort({cohort}).then(students => {
-                            db.tags.get_all_tags().then(tags => {
-                                let returnObj = {
-                                    hasGroup,
-                                    hasPersonal,
-                                    group,
-                                    personal,
-                                    student,
-                                    cohortStudents: students,
-                                    tags
-                                }
-                                res.status(200).send(returnObj)
-                            })
+                            //TODO: Possibly bring back in tags depending on what user wants
+                            // db.tags.get_all_tags().then(tags => {
+                            // })
+                            let returnObj = {
+                                group,
+                                personal,
+                                student,
+                                cohortStudents: students
+                            }
+                            res.status(200).send(returnObj)
                         })
                     })
                     
