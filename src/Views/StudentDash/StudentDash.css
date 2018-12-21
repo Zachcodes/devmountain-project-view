@@ -148,10 +148,17 @@
     border: none;
     border-radius: 3px 3px;
     padding: 5px 10px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .student-dash-project-info-button:hover {
     cursor: pointer;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 5px 10px 0 rgba(0,0,0,0.19);
+}
+
+.student-dash-project-info-name {
+    letter-spacing: 1.5px;
+    color: #25AAE1;
+    font-size: 22px;
+    font-weight: 200;
 }
