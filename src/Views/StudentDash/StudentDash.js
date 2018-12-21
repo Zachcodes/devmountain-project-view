@@ -41,7 +41,8 @@ export default class Student extends Component {
                 newTags: [],
                 newTag: '',
                 mainImageUrl: ''
-            }
+            },
+            displayedProjects: 'group'
         }
     }
 
@@ -251,9 +252,17 @@ export default class Student extends Component {
         })
     }
 
-    render() {
-        let { studentInfo: student, retrievedDashboard, studentSettings } = this.state
+    setDisplayed = (displayedProjects) => {
+        this.setState({
+            displayedProjects
+        })
+    }
 
+    render() {
+        let { studentInfo: student, retrievedDashboard, studentSettings, displayedProjects } = this.state
+        let projectNav;
+        if(displayedProjects === 'group') projectNav = <span><span onClick={() => this.setDisplayed('group')}><u>Group</u></span> | <span onClick={() => this.setDisplayed('personal')}>Personal</span></span>
+        if(displayedProjects === 'personal') projectNav = <span><span onClick={() => this.setDisplayed('group')}>Group</span> | <span onClick={() => this.setDisplayed('personal')}><u>Personal</u></span></span>
         return (
             retrievedDashboard 
             ?
@@ -262,8 +271,14 @@ export default class Student extends Component {
                     <StudentDashInfo studentInfo={student} updateStudentInfo={this.updateStudentInfo}/>
                 </div>
                 <div className="student-dashboard-right-view">
-                    <span>Projects</span>
-                    <span>Group | Personal</span>
+                    <div className="student-dash-right-title">Projects</div>
+                    <div className="student-dash-right-nav">
+                        {projectNav}
+                        <button>Add Project</button>
+                    </div>
+                    <div className="student-dash-right-projects-container">
+                        Projects displayed
+                    </div>
                 </div>
             </div>
             :

@@ -29,6 +29,9 @@ export default class StudentDashInfo extends Component {
         let newStudentInfo = {about, first, last, email, linkedin, portfolio, github, image};
         axios.put('/api/students/info', newStudentInfo).then(res => {
             this.props.updateStudentInfo(res.data)
+            this.setState({
+                edit: false
+            })
         })
     }
 
