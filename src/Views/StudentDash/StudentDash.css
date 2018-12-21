@@ -56,9 +56,16 @@
 
 .student-dash-right-nav-button {
     margin-left: auto;
-    padding: 5px;
-    background-color: green;
-    font-size: 20px;
+    padding: 10px;
+    background-color: #33e633;
+    font-size: 18px;
+    font-weight: 100;
+    border: none;
+    border-radius: 5px 5px;
+}
+
+.student-dash-right-nav-button:hover {
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 5px 10px 0 rgba(0,0,0,0.19);
 }
 
 .student-dash-right-nav-button:hover {
@@ -74,6 +81,8 @@
     font-weight: 100;
     letter-spacing: 1px;
 }
+
+
 /* Student projects styles */
 .student-dash-project {
     width: 100%;
@@ -109,14 +118,40 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    position: relative;
+}
+
+.student-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 .student-dash-project-bottom-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    position: absolute;
+    bottom: 0;
 }
 
 .student-dash-project-member-pictures {
     margin-right: auto;
+}
+
+.student-dash-project-info-button {
+    background-color: #25AAE1;
+    color: white;
+    font-size: 15px;
+    font-weight: 100;
+    border: none;
+    border-radius: 3px 3px;
+    padding: 5px 10px;
+    letter-spacing: 2px;
+}
+
+.student-dash-project-info-button:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 5px 10px 0 rgba(0,0,0,0.19);
 }

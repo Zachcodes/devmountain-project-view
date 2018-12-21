@@ -25,10 +25,12 @@ export default class StudentProject extends Component {
                 <div className="student-dash-project-info-container">
                     <div className="student-dash-project-info-name">{project_name}</div>
                     <div className="student-dash-project-info-description">{description}</div>
-                    <div className="student-dash-project-bottom-container">
-                        <div className="student-dash-project-member-pictures">Project members images</div>
-                        <button className="student-dash-project-info-button" onClick={() => window.open(project_link)}>View Project</button>
-                        <button className="student-dash-project-info-button" onClick={() => this.setState({edit: true})}>Edit Project</button>
+                    <div className="student-wrapper">
+                        <div className="student-dash-project-bottom-container">
+                            <div className="student-dash-project-member-pictures">Project members images</div>
+                            <button className="student-dash-project-info-button" onClick={() => window.open(project_link)}>View Project</button>
+                            <button className="student-dash-project-info-button" onClick={() => this.setState({edit: true})}>Edit Project</button>
+                        </div>
                     </div>
                 </div>
             </div>
