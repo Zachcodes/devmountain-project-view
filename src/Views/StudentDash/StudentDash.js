@@ -63,7 +63,7 @@ export default class Student extends Component {
         let { studentInfo: student, retrievedDashboard, studentSettings, displayedProjects, addNew, group, personal } = this.state
         let projectNav, projectsToDisplay;
         if(displayedProjects === 'group') {
-            projectNav = <span><span onClick={() => this.setDisplayed('group')}><u>Group</u></span> | <span onClick={() => this.setDisplayed('personal')}>Personal</span></span>
+            projectNav = <span className="student-dash-right-nav-span"><span onClick={() => this.setDisplayed('group')} className="student-active-nav">Group</span> <span onClick={() => this.setDisplayed('personal')}>Personal</span></span>
             projectsToDisplay = group.map( project => {
                 return (
                     <StudentProject 
@@ -74,7 +74,7 @@ export default class Student extends Component {
             })
         }
         if(displayedProjects === 'personal') {
-            projectNav = <span><span onClick={() => this.setDisplayed('group')}>Group</span> | <span onClick={() => this.setDisplayed('personal')}><u>Personal</u></span></span>
+            projectNav = <span className="student-dash-right-nav-span"><span onClick={() => this.setDisplayed('group')}>Group</span> <span onClick={() => this.setDisplayed('personal')} className="student-active-nav">Personal</span></span>
             projectsToDisplay = personal.map( project => {
                 return (
                     <StudentProject
@@ -95,7 +95,7 @@ export default class Student extends Component {
                     <div className="student-dash-right-title">Projects</div>
                     <div className="student-dash-right-nav">
                         {projectNav}
-                        <button onClick={this.addNew}>Add Project</button>
+                        <button onClick={this.addNew} className="student-dash-right-nav-button">Add Project</button>
                     </div>
                     <div className="student-dash-right-projects-container">
                         {

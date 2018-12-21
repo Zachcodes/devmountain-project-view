@@ -5,7 +5,8 @@ export default class StudentProject extends Component {
         super()
         this.state = {
             ...props.project,
-            activeImageIndex: 0
+            activeImageIndex: 0,
+            edit: false
         }
     }
     render() {
@@ -26,8 +27,8 @@ export default class StudentProject extends Component {
                     <div className="student-dash-project-info-description">{description}</div>
                     <div className="student-dash-project-bottom-container">
                         <div className="student-dash-project-member-pictures">Project members images</div>
-                        <button className="student-dash-project-info-button">View Project</button>
-                        <button className="student-dash-project-info-button">Edit Project</button>
+                        <button className="student-dash-project-info-button" onClick={() => window.open(project_link)}>View Project</button>
+                        <button className="student-dash-project-info-button" onClick={() => this.setState({edit: true})}>Edit Project</button>
                     </div>
                 </div>
             </div>
