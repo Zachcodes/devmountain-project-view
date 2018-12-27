@@ -59,6 +59,12 @@ export default class Student extends Component {
         })
     }
 
+    openStudent = (id) => {
+        if(id != this.state.studentInfo.id) {
+            this.props.history.push(`/students/${id}`)
+        }
+    }
+
     render() {
         let { studentInfo: student, retrievedDashboard, studentSettings, displayedProjects, addNew, group, personal } = this.state
         let projectNav, projectsToDisplay;
@@ -69,7 +75,8 @@ export default class Student extends Component {
                     <StudentProject 
                     type="group" 
                     project={project}
-                    key={project.project_id}/>
+                    key={project.project_id}
+                    openStudent={this.openStudent}/>
                 )
             })
         }
@@ -80,7 +87,8 @@ export default class Student extends Component {
                     <StudentProject
                     type="personal"
                     project={project}
-                    key={project.project_id}/>
+                    key={project.project_id}
+                    openStudent={this.openStudent}/>
                 )
             })
         }

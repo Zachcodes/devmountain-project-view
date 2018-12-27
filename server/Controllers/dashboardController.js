@@ -99,9 +99,7 @@ module.exports = {
                         }]
                         return p;
                     })
-                    console.log('student', student)
-                    console.log('group', group)
-                    console.log('personal', personal)
+                    // console.log('group before', group)
                     if(group.length) {
                         let {project_id} = group[0]
                         promiseArr.push(db.projects.get_group_members({project_id}))
