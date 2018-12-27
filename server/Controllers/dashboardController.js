@@ -77,7 +77,7 @@ module.exports = {
         db.students.get_student_by_user_id({userId}).then( studentArr => {
             if(studentArr.length) {
                 let student = studentArr[0]
-                let {id, cohort} = student
+                let {id, cohort, image, first, last} = student
                 
                 //go get all the projects associated with student 
                 db.students.get_projects_by_student_id({id}).then( projects => {
@@ -90,7 +90,18 @@ module.exports = {
                     let promiseArr = [];
                     //if has a group, get all the group members
                     let group = condensedProjects.filter( project => project.project_type === 2)
-                    let personal = condensedProjects.filter( project => project.project_type === 1)
+                    let personal = condensedProjects.filter( project => project.project_type === 1).map(p => {
+                        p.members = [{
+                            student_id: id,
+                            student_image: image,
+                            student_first: first,
+                            student_last: last
+                        }]
+                        return p;
+                    })
+                    console.log('student', student)
+                    console.log('group', group)
+                    console.log('personal', personal)
                     if(group.length) {
                         let {project_id} = group[0]
                         promiseArr.push(db.projects.get_group_members({project_id}))

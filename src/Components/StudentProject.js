@@ -12,10 +12,11 @@ export default class StudentProject extends Component {
     render() {
         console.log('props in StudentProject', this.props)
         let {type} = this.props.project
-        let {description, images, project_link, project_name, walkthrough_link, activeImageIndex} = this.state;
+        let {description, images, project_link, project_name, walkthrough_link, activeImageIndex, members} = this.state;
         // TODO: change this to be an actual placeholder image
         let activeImage = images.length ? images[activeImageIndex].image_url : 'https://s3-us-west-1.amazonaws.com/project-browser-development/pictures/148e1a41-b327-4652-8272-5d4f35f5b617_IMG_0359.jpg'
         let restOfImages = images.filter( (image,i) => i != activeImageIndex).map(image => <img className="student-dash-project-thumbnail" src={image.image_url}/>)
+        console.log('members', members)
         return (
             <div className="student-dash-project">
                 <div className="student-dash-project-image-container">
@@ -27,7 +28,11 @@ export default class StudentProject extends Component {
                     <div className="student-dash-project-info-description">{description}</div>
                     <div className="student-wrapper">
                         <div className="student-dash-project-bottom-container">
-                            <div className="student-dash-project-member-pictures">Project members images</div>
+                            <div className="student-dash-project-member-pictures">
+                            {
+                                members.map(m => <img src={m.student_image} className="student-dash-member-picture"/>)
+                            }
+                            </div>
                             <button className="student-dash-project-info-button" onClick={() => window.open(project_link)}>View Project</button>
                             <button className="student-dash-project-info-button" onClick={() => this.setState({edit: true})}>Edit Project</button>
                         </div>
