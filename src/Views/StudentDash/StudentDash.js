@@ -65,6 +65,12 @@ export default class Student extends Component {
         }
     }
 
+    saveChanges = (project) => {
+        axios.put(`/api/projects/${project.project_id}`, project).then( res => {
+            console.log('res', res)
+        })
+    }
+
     render() {
         let { studentInfo: student, retrievedDashboard, studentSettings, displayedProjects, addNew, group, personal } = this.state
         let projectNav, projectsToDisplay;
@@ -76,7 +82,8 @@ export default class Student extends Component {
                     type="group" 
                     project={project}
                     key={project.project_id}
-                    openStudent={this.openStudent}/>
+                    openStudent={this.openStudent}
+                    saveChanges={this.saveChanges}/>
                 )
             })
         }
@@ -88,7 +95,8 @@ export default class Student extends Component {
                     type="personal"
                     project={project}
                     key={project.project_id}
-                    openStudent={this.openStudent}/>
+                    openStudent={this.openStudent}
+                    saveChanges={this.saveChanges}/>
                 )
             })
         }

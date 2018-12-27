@@ -45,6 +45,27 @@ export default class StudentProject extends Component {
        })
     }
 
+    save = () => {
+        let {description, project_name, project_link, images, addedImages, project_id} = this.state 
+        this.props.saveChanges({
+            description,
+            project_name,
+            project_link,
+            images,
+            addedImages,
+            project_id
+        })
+    }
+
+    cancel = () => {
+        this.setState({
+            edit: false,
+            newImage: '',
+            addedImages: [],
+            ...this.props.project
+        })
+    }
+
     render() {
         let {description, images, project_link, project_name, walkthrough_link, activeImageIndex, members, type, edit, newImage, addedImages} = this.state;
         // TODO: change this to be an actual placeholder image
@@ -76,7 +97,8 @@ export default class StudentProject extends Component {
                     })
                 }
                 New Image Url: <input value={newImage} onChange={(e) => this.handleChange(e.target.value, 'newImage')}/><button onClick={this.addNewImage}>Add New Image</button>
-                <button onClick={() => this.setState({edit: false})}>Cancel</button>
+                <button onClick={() => this.save()}>Save Changes</button>
+                <button onClick={() => this.cancel()}>Cancel</button>
             </div>
             :
             <div className="student-dash-project">

@@ -90,5 +90,34 @@ module.exports = {
                 }
             })
         }
+    },
+    updateProject(req, res) {
+        const db = req.app.get('db')
+        let project_id = req.params.project_id
+        let {addedImages, description, images, project_link, project_name} = req.body 
+        images = images.map( i => {
+            return {
+                id: i.project_image_id,
+                image_url: i.image_url
+            }
+        })
+        addedImages = addedImages.map( i => {
+            return {
+                image_url: i.image_url,
+                image_type: 1,
+                project_id: project_id
+            }
+        })
+        let promises = []
+        promises.push(db.projects.update_project_info({description, project_id, project_link, project_name}))
+        // promises.push(db.projects_images.save(images))
+        // promises.push(db.projects_images.insert(addedImages))
+        Promise.all(promises).then( values => {
+            console.log('values', values)
+            res.sendStatus(200)
+        })
+        // db.projects.update_project().then(dbRes => {
+
+        // })
     }
 }
