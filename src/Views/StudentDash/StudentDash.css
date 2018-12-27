@@ -91,6 +91,10 @@
     display: flex;
 }
 
+.editing {
+    flex-direction: column;
+}
+
 .student-dash-project-image-container {
     width: 30%;
     height: 100%;
