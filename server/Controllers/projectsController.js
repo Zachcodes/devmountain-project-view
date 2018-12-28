@@ -95,29 +95,56 @@ module.exports = {
         const db = req.app.get('db')
         let project_id = req.params.project_id
         let {addedImages, description, images, project_link, project_name} = req.body 
-        images = images.map( i => {
-            return {
-                id: i.project_image_id,
-                image_url: i.image_url
-            }
-        })
         addedImages = addedImages.map( i => {
             return {
                 image_url: i.image_url,
-                image_type: 1,
+                image_type_id: 1,
                 project_id: project_id
             }
         })
         let promises = []
         promises.push(db.projects.update_project_info({description, project_id, project_link, project_name}))
-        // promises.push(db.projects_images.save(images))
-        // promises.push(db.projects_images.insert(addedImages))
-        Promise.all(promises).then( values => {
-            console.log('values', values)
-            res.sendStatus(200)
+        promises.push(db.projects_images.insert(addedImages))
+        images.forEach(i => {
+            promises.push(db.projects_images.save({id: i.project_image_id, image_url: i.image_url}))
         })
-        // db.projects.update_project().then(dbRes => {
-
-        // })
+        Promise.all(promises).then( values => {
+            // 1. Get project info and all images associated
+            // 2. Condense the project/images into one object 
+            // 3. Send to the frontend to allow updating of state
+            console.log(values)
+            let updatedProject = values[0]
+            let newImages = values[1]
+            let updatedImages = values[2]
+            let returnProject = {
+                project_id: updatedProject.id,
+                project_link: updatedProject.url,
+                project_name: updatedProject.project_name,
+                project_type: updatedProject.project_type,
+                cohort_id: updatedProject.cohort_id,
+                active: updatedProject.active,
+                description: updatedProject.description,
+                walkthrough_link: updatedProject.walkthrough_link,
+                last_featured: updatedProject.last_featured,
+                images: []
+            }
+            newImages.forEach( i => {
+                returnProject.images.push({
+                    project_image_id: i.id,
+                    image_url: i.image_url,
+                    image_type: i.image_type_id,
+                    pi_project_id: project_id
+                }) 
+            })
+            updatedImages.forEach(i => {
+                returnProject.images.push({
+                    project_image_id: i.id,
+                    image_url: i.image_url,
+                    image_type: i.image_type_id,
+                    pi_project_id: project_id
+                })
+            })
+            res.status(200).send(returnProject)
+        })
     }
 }
