@@ -109,13 +109,9 @@ module.exports = {
             promises.push(db.projects_images.save({id: i.project_image_id, image_url: i.image_url}))
         })
         Promise.all(promises).then( values => {
-            // 1. Get project info and all images associated
-            // 2. Condense the project/images into one object 
-            // 3. Send to the frontend to allow updating of state
-            console.log(values)
             let updatedProject = values[0]
             let newImages = values[1]
-            let updatedImages = values[2]
+            let updatedImages = values.slice(2, values.length)
             let returnProject = {
                 project_id: updatedProject.id,
                 project_link: updatedProject.url,

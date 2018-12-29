@@ -8,8 +8,15 @@ export default class StudentProject extends Component {
             activeImageIndex: 0,
             edit: false,
             newImage: '',
-            addedImages: []
+            addedImages: [],
+            newMembers: [],
+            availableMembers: []
         }
+    }
+
+    componentDidMount() {
+        let availableMembers = this.setAvailableMembers(this.state.members, this.props.cohortStudents)
+        this.setState({availableMembers})
     }
 
     handleChange = (value, key) => {
@@ -66,8 +73,32 @@ export default class StudentProject extends Component {
         })
     }
 
+    addGroupMember = () => {
+        let select = document.getElementById('students-select')
+        let selectedStudentValue = parseInt(select.options[select.selectedIndex].value)
+        if(selectedStudentValue) {
+            let copy = this.state.newMembers.slice()
+            let student = this.props.cohortStudents.find(s => s.id === selectedStudentValue)
+            copy.push(student)
+            this.setState({newMembers: copy})
+        }   
+    }
+
+    setAvailableMembers(members, cohortStudents) {
+        let memberIds = {}
+        let availableMembers = []
+        members.forEach(m => {
+            if(!memberIds[m.student_id]) memberIds[m.student_id] = true
+        })
+        cohortStudents.forEach(s => {
+            if(!memberIds[s.id]) availableMembers.push(s)
+        })
+        return availableMembers;
+    }
+
     render() {
-        let {description, images, project_link, project_name, walkthrough_link, activeImageIndex, members, type, edit, newImage, addedImages} = this.state;
+        let {description, images, project_link, project_name, walkthrough_link, activeImageIndex, members, edit, newImage, addedImages, newMembers, availableMembers} = this.state;
+        let {type} = this.props
         // TODO: change this to be an actual placeholder image
         let activeImage = images.length ? images[activeImageIndex].image_url : 'https://s3-us-west-1.amazonaws.com/project-browser-development/pictures/148e1a41-b327-4652-8272-5d4f35f5b617_IMG_0359.jpg'
         let restOfImages = images.filter( (image,i) => i != activeImageIndex).map(image => <img className="student-dash-project-thumbnail" src={image.image_url}/>)
@@ -97,6 +128,37 @@ export default class StudentProject extends Component {
                     })
                 }
                 New Image Url: <input value={newImage} onChange={(e) => this.handleChange(e.target.value, 'newImage')}/><button onClick={this.addNewImage}>Add New Image</button>
+
+                {
+                    type === 'group'
+                    ?
+                    <div>
+                    <select 
+                    name="cohortstudents"
+                    id="students-select">
+                        <option value="0">None</option>
+                        {
+                            availableMembers.map(s => {
+                                return (
+                                    <option value={s.id}>{`${s.first} ${s.last}`}</option>
+                                )
+                            })
+                        }
+                    </select>
+                    <button onClick={this.addGroupMember}>Add Group Member</button>
+                    {
+                        members.map(m => {
+                            return (
+                                <div>
+                                    Member: <span>{m.student_first} {m.student_last}</span><button>Delete Member</button>
+                                </div>
+                            )
+                        })
+                    }
+                    </div>
+                    :
+                    null
+                }
                 <button onClick={() => this.save()}>Save Changes</button>
                 <button onClick={() => this.cancel()}>Cancel</button>
             </div>

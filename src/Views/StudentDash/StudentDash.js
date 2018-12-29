@@ -17,7 +17,7 @@ export default class Student extends Component {
             studentSettings: {},
             cohortStudents: [],
             retrievedDashboard: false,
-            displayedProjects: 'personal',
+            displayedProjects: 'group',
             addNew: false
         }
     }
@@ -67,7 +67,6 @@ export default class Student extends Component {
 
     saveChanges = (project) => {
         axios.put(`/api/projects/${project.project_id}`, project).then( res => {
-            console.log('res', res)
             let updatedProject = res.data 
             let key;
             updatedProject.project_type === 1 ? key = 'personal' : key = 'group';
@@ -81,7 +80,7 @@ export default class Student extends Component {
     }
 
     render() {
-        let { studentInfo: student, retrievedDashboard, studentSettings, displayedProjects, addNew, group, personal } = this.state
+        let { studentInfo: student, retrievedDashboard, studentSettings, displayedProjects, addNew, group, personal, cohortStudents } = this.state
         let projectNav, projectsToDisplay;
         if(displayedProjects === 'group') {
             projectNav = <span className="student-dash-right-nav-span"><span onClick={() => this.setDisplayed('group')} className="student-active-nav">Group</span> <span onClick={() => this.setDisplayed('personal')}>Personal</span></span>
@@ -92,7 +91,8 @@ export default class Student extends Component {
                     project={project}
                     key={project.project_id}
                     openStudent={this.openStudent}
-                    saveChanges={this.saveChanges}/>
+                    saveChanges={this.saveChanges}
+                    cohortStudents={cohortStudents}/>
                 )
             })
         }
