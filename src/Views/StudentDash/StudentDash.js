@@ -67,15 +67,16 @@ export default class Student extends Component {
 
     saveChanges = (project) => {
         axios.put(`/api/projects/${project.project_id}`, project).then( res => {
-            let updatedProject = res.data 
-            let key;
-            updatedProject.project_type === 1 ? key = 'personal' : key = 'group';
-            let copy = this.state[key].slice()
-            let index = copy.findIndex(p => p.project_id === updatedProject.project_id)
-            copy.splice(index, 1, updatedProject)
-            let obj = {}
-            obj[key] = copy 
-            this.setState(obj)
+            // let updatedProject = res.data 
+            // let key;
+            // updatedProject.project_type === 1 ? key = 'personal' : key = 'group';
+            // let copy = this.state[key].slice()
+            // let index = copy.findIndex(p => p.project_id === updatedProject.project_id)
+            // copy.splice(index, 1, updatedProject)
+            // let obj = {}
+            // obj[key] = copy 
+            // this.setState(obj)
+            console.log('Getting res', res)
         })
     }
 

@@ -52,22 +52,27 @@ export default class StudentProject extends Component {
     }
 
     save = () => {
-        let {description, project_name, project_link, images, addedImages, project_id} = this.state 
+        let {description, project_name, project_link, images, addedImages, project_id, members} = this.state 
         this.props.saveChanges({
             description,
             project_name,
             project_link,
             images,
             addedImages,
-            project_id
+            project_id,
+            members,
+            originalMembers: this.props.project.members
         })
     }
 
     cancel = () => {
+        let availableMembers = this.setAvailableMembers(this.props.project.members, this.props.cohortStudents)
         this.setState({
             edit: false,
             newImage: '',
             addedImages: [],
+            availableMembers,
+            addedMembers: false,
             ...this.props.project
         })
     }
@@ -94,6 +99,14 @@ export default class StudentProject extends Component {
             if(!memberIds[s.student_id]) availableMembers.push(s)
         })
         return availableMembers;
+    }
+
+    deleteGroupMember = (student_id) => {
+        let copy = this.state.members.slice()
+        let index = copy.findIndex( m => m.student_id === student_id)
+        copy.splice(index, 1)
+        let availableMembers = this.setAvailableMembers(copy, this.props.cohortStudents)
+        this.setState({members: copy, availableMembers})
     }
 
     render() {
@@ -150,7 +163,7 @@ export default class StudentProject extends Component {
                         members.map(m => {
                             return (
                                 <div>
-                                    Member: <span>{m.student_first} {m.student_last}</span><button>Delete Member</button>
+                                    Member: <span>{m.student_first} {m.student_last}</span><button onClick={() => this.deleteGroupMember(m.student_id)}>Delete Member</button>
                                 </div>
                             )
                         })

@@ -152,5 +152,30 @@ module.exports = {
                                                     image_type: p.image_type_id,
                                                     pi_project_id: p.pi_project_id
                                                   })
+    },
+    setDeletedGroupMembers(members, originalMembers) {
+        let oIds = {}
+        originalMembers.forEach(m => {
+            if(!oIds[m.student_id]) oIds[m.student_id] = true;
+        })
+        members.forEach( m => {
+            if(oIds[m.student_id]) oIds[m.student_id] = false;
+        })
+        let deletedIds = []
+        for(let key in oIds) {
+            if(oIds[key]) deletedIds.push(parseInt(key))
+        }
+        return deletedIds;
+    }, 
+    setAddedGroupMembers(members, originalMembers) {
+        let oIds = {}
+        let addedIds = []
+        originalMembers.forEach(m => {
+            if(!oIds[m.student_id]) oIds[m.student_id] = true;
+        })
+        members.forEach( m => {
+            if(!oIds[m.student_id]) addedIds.push(m.student_id)
+        })
+        return addedIds;
     }
 }
