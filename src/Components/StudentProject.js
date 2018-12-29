@@ -6,10 +6,9 @@ export default class StudentProject extends Component {
         this.state = {
             ...props.project,
             activeImageIndex: 0,
-            edit: false,
+            edit: true,
             newImage: '',
             addedImages: [],
-            newMembers: [],
             availableMembers: []
         }
     }
@@ -77,10 +76,11 @@ export default class StudentProject extends Component {
         let select = document.getElementById('students-select')
         let selectedStudentValue = parseInt(select.options[select.selectedIndex].value)
         if(selectedStudentValue) {
-            let copy = this.state.newMembers.slice()
-            let student = this.props.cohortStudents.find(s => s.id === selectedStudentValue)
+            let copy = this.state.members.slice()
+            let student = this.props.cohortStudents.find(s => s.student_id === selectedStudentValue)
             copy.push(student)
-            this.setState({newMembers: copy})
+            let availableMembers = this.setAvailableMembers(copy, this.props.cohortStudents)
+            this.setState({members: copy, availableMembers})
         }   
     }
 
@@ -91,13 +91,13 @@ export default class StudentProject extends Component {
             if(!memberIds[m.student_id]) memberIds[m.student_id] = true
         })
         cohortStudents.forEach(s => {
-            if(!memberIds[s.id]) availableMembers.push(s)
+            if(!memberIds[s.student_id]) availableMembers.push(s)
         })
         return availableMembers;
     }
 
     render() {
-        let {description, images, project_link, project_name, walkthrough_link, activeImageIndex, members, edit, newImage, addedImages, newMembers, availableMembers} = this.state;
+        let {description, images, project_link, project_name, walkthrough_link, activeImageIndex, members, edit, newImage, addedImages, availableMembers} = this.state;
         let {type} = this.props
         // TODO: change this to be an actual placeholder image
         let activeImage = images.length ? images[activeImageIndex].image_url : 'https://s3-us-west-1.amazonaws.com/project-browser-development/pictures/148e1a41-b327-4652-8272-5d4f35f5b617_IMG_0359.jpg'
@@ -140,7 +140,7 @@ export default class StudentProject extends Component {
                         {
                             availableMembers.map(s => {
                                 return (
-                                    <option value={s.id}>{`${s.first} ${s.last}`}</option>
+                                    <option value={s.student_id}>{`${s.student_first} ${s.student_last}`}</option>
                                 )
                             })
                         }
