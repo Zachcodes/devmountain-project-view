@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {setAvailableMembers} from '../jsutil/functions'
+import axios from 'axios'
 
 export default class NewProject extends Component {
     constructor(props) {
@@ -72,6 +73,23 @@ export default class NewProject extends Component {
         this.setState({groupMembers: copy, availableMembers})
     }
 
+    submitProject = () => {
+        let {name, description, url, images, type, walkthroughLink, groupMembers} = this.state
+        let project = {
+            name,
+            description,
+            url,
+            images,
+            type,
+            walkthroughLink,
+            groupMembers,
+            cohortId: this.props.cohortId
+        }
+        axios.post('/api/projects', {project}).then(res => {
+            console.log('getting res')
+        })
+    }
+
     render() {
         let {name, description, url, images, type, groupMembers, imageInput, availableMembers} = this.state
         return (
@@ -133,7 +151,7 @@ export default class NewProject extends Component {
                         <button onClick={this.addGroupMember}>Add Group Member</button>
                     </div>
                     <div>
-                        <button>Add</button>
+                        <button onClick={this.submitProject}>Submit Project</button>
                         <button onClick={this.clear}>Clear</button>
                     </div>
                 </div>

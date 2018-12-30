@@ -130,7 +130,8 @@ export default class Student extends Component {
                             <NewProject 
                             type={displayedProjects}
                             cancel={this.cancel}
-                            cohortStudents={cohortStudents}/>
+                            cohortStudents={cohortStudents}
+                            cohortId={student.cohort}/>
                             :
                             projectsToDisplay.length 
                             ?
