@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {setAvailableMembers} from '../jsutil/functions'
 
 export default class StudentProject extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export default class StudentProject extends Component {
 
     componentDidMount() {
         if(this.props.type === 'group') {
-            let availableMembers = this.setAvailableMembers(this.state.members, this.props.cohortStudents)
+            let availableMembers = setAvailableMembers(this.state.members, this.props.cohortStudents)
             this.setState({availableMembers})
         }
     }
@@ -69,7 +70,7 @@ export default class StudentProject extends Component {
     }
 
     cancel = () => {
-        let availableMembers = this.setAvailableMembers(this.props.project.members, this.props.cohortStudents)
+        let availableMembers = setAvailableMembers(this.props.project.members, this.props.cohortStudents)
         this.setState({
             edit: false,
             newImage: '',
@@ -87,28 +88,16 @@ export default class StudentProject extends Component {
             let copy = this.state.members.slice()
             let student = this.props.cohortStudents.find(s => s.student_id === selectedStudentValue)
             copy.push(student)
-            let availableMembers = this.setAvailableMembers(copy, this.props.cohortStudents)
+            let availableMembers = setAvailableMembers(copy, this.props.cohortStudents)
             this.setState({members: copy, availableMembers})
         }   
-    }
-
-    setAvailableMembers(members, cohortStudents) {
-        let memberIds = {}
-        let availableMembers = []
-        members.forEach(m => {
-            if(!memberIds[m.student_id]) memberIds[m.student_id] = true
-        })
-        cohortStudents.forEach(s => {
-            if(!memberIds[s.student_id]) availableMembers.push(s)
-        })
-        return availableMembers;
     }
 
     deleteGroupMember = (student_id) => {
         let copy = this.state.members.slice()
         let index = copy.findIndex( m => m.student_id === student_id)
         copy.splice(index, 1)
-        let availableMembers = this.setAvailableMembers(copy, this.props.cohortStudents)
+        let availableMembers = setAvailableMembers(copy, this.props.cohortStudents)
         this.setState({members: copy, availableMembers})
     }
 

@@ -99,7 +99,7 @@ module.exports = {
         let {addedImages, description, images, project_link, project_name, members, originalMembers} = req.body 
         let deletedStudentIds = setDeletedGroupMembers(members, originalMembers)
         let addedStudentIds = setAddedGroupMembers(members, originalMembers, project_id)
-        console.log('addedStudentIds', addedStudentIds)
+        // BUG: I think there is a slight bug here when you try to add a group member, then delete them and add again but this is minor and can be fixed later
         if(addedStudentIds.length) await db.projects_students_link.insert(addedStudentIds)
         if(deletedStudentIds.length) await db.projects.delete_group_member({ids: deletedStudentIds.join()})
 
