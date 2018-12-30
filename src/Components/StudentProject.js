@@ -6,7 +6,7 @@ export default class StudentProject extends Component {
         this.state = {
             ...props.project,
             activeImageIndex: 0,
-            edit: true,
+            edit: false,
             newImage: '',
             addedImages: [],
             availableMembers: []
