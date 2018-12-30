@@ -92,62 +92,64 @@ module.exports = {
             })
         }
     },
-    updateProject(req, res) {
+    async updateProject(req, res) {
+        let promises = []
         const db = req.app.get('db')
         let project_id = req.params.project_id
         let {addedImages, description, images, project_link, project_name, members, originalMembers} = req.body 
-        // TODO: Check to see if members length is not equal to originalMembers length 
-        let deletedIds = setDeletedGroupMembers(members, originalMembers)
-        console.log('deletedIds', deletedIds)
-        let addedIds = setAddedGroupMembers(members, originalMembers)
-        console.log('addedIds', addedIds)
-        // addedImages = addedImages.map( i => {
-        //     return {
-        //         image_url: i.image_url,
-        //         image_type_id: 1,
-        //         project_id: project_id
-        //     }
-        // })
-        // let promises = []
-        // promises.push(db.projects.update_project_info({description, project_id, project_link, project_name}))
-        // promises.push(db.projects_images.insert(addedImages))
-        // images.forEach(i => {
-        //     promises.push(db.projects_images.save({id: i.project_image_id, image_url: i.image_url}))
-        // })
-        // Promise.all(promises).then( values => {
-        //     let updatedProject = values[0]
-        //     let newImages = values[1]
-        //     let updatedImages = values.slice(2, values.length)
-        //     let returnProject = {
-        //         project_id: updatedProject.id,
-        //         project_link: updatedProject.url,
-        //         project_name: updatedProject.project_name,
-        //         project_type: updatedProject.project_type,
-        //         cohort_id: updatedProject.cohort_id,
-        //         active: updatedProject.active,
-        //         description: updatedProject.description,
-        //         walkthrough_link: updatedProject.walkthrough_link,
-        //         last_featured: updatedProject.last_featured,
-        //         images: []
-        //     }
-        //     newImages.forEach( i => {
-        //         returnProject.images.push({
-        //             project_image_id: i.id,
-        //             image_url: i.image_url,
-        //             image_type: i.image_type_id,
-        //             pi_project_id: project_id
-        //         }) 
-        //     })
-        //     updatedImages.forEach(i => {
-        //         returnProject.images.push({
-        //             project_image_id: i.id,
-        //             image_url: i.image_url,
-        //             image_type: i.image_type_id,
-        //             pi_project_id: project_id
-        //         })
-        //     })
-        //     res.status(200).send(returnProject)
-        // })
-        res.sendStatus(200)
+        let deletedStudentIds = setDeletedGroupMembers(members, originalMembers)
+        let addedStudentIds = setAddedGroupMembers(members, originalMembers, project_id)
+        console.log('addedStudentIds', addedStudentIds)
+        if(addedStudentIds.length) await db.projects_students_link.insert(addedStudentIds)
+        if(deletedStudentIds.length) await db.projects.delete_group_member({ids: deletedStudentIds.join()})
+
+        addedImages = addedImages.map( i => {
+            return {
+                image_url: i.image_url,
+                image_type_id: 1,
+                project_id: project_id
+            }
+        })
+        promises.push(db.projects.update_project_info({description, project_id, project_link, project_name}))
+        promises.push(db.projects_images.insert(addedImages))
+        images.forEach(i => {
+            promises.push(db.projects_images.save({id: i.project_image_id, image_url: i.image_url}))
+        })
+        Promise.all(promises).then( async (values) => {
+            let updatedProject = values[0][0]
+            let newImages = values[1]
+            let updatedImages = values.slice(2, values.length)
+            let members = await db.projects.get_group_members({project_id})
+            let returnProject = {
+                project_id: updatedProject.id,
+                project_link: updatedProject.url,
+                project_name: updatedProject.project_name,
+                project_type: updatedProject.project_type,
+                cohort_id: updatedProject.cohort_id,
+                active: updatedProject.active,
+                description: updatedProject.description,
+                walkthrough_link: updatedProject.walkthrough_link,
+                last_featured: updatedProject.last_featured,
+                images: [],
+                members
+            }
+            newImages.forEach( i => {
+                returnProject.images.push({
+                    project_image_id: i.id,
+                    image_url: i.image_url,
+                    image_type: i.image_type_id,
+                    pi_project_id: project_id
+                }) 
+            })
+            updatedImages.forEach(i => {
+                returnProject.images.push({
+                    project_image_id: i.id,
+                    image_url: i.image_url,
+                    image_type: i.image_type_id,
+                    pi_project_id: project_id
+                })
+            })
+            res.status(200).send(returnProject)
+        })
     }
 }

@@ -156,25 +156,28 @@ module.exports = {
     setDeletedGroupMembers(members, originalMembers) {
         let oIds = {}
         originalMembers.forEach(m => {
-            if(!oIds[m.student_id]) oIds[m.student_id] = true;
+            if(!oIds[m.student_id]) oIds[m.student_id] = m.projects_students_link_id;
         })
         members.forEach( m => {
             if(oIds[m.student_id]) oIds[m.student_id] = false;
         })
         let deletedIds = []
         for(let key in oIds) {
-            if(oIds[key]) deletedIds.push(parseInt(key))
+            if(oIds[key]) deletedIds.push(oIds[key])
         }
         return deletedIds;
     }, 
-    setAddedGroupMembers(members, originalMembers) {
+    setAddedGroupMembers(members, originalMembers, project_id) {
         let oIds = {}
         let addedIds = []
         originalMembers.forEach(m => {
             if(!oIds[m.student_id]) oIds[m.student_id] = true;
         })
         members.forEach( m => {
-            if(!oIds[m.student_id]) addedIds.push(m.student_id)
+            if(!oIds[m.student_id]) addedIds.push({
+                student_id: m.student_id,
+                project_id: parseInt(project_id)
+            })
         })
         return addedIds;
     }

@@ -14,8 +14,10 @@ export default class StudentProject extends Component {
     }
 
     componentDidMount() {
-        let availableMembers = this.setAvailableMembers(this.state.members, this.props.cohortStudents)
-        this.setState({availableMembers})
+        if(this.props.type === 'group') {
+            let availableMembers = this.setAvailableMembers(this.state.members, this.props.cohortStudents)
+            this.setState({availableMembers})
+        }
     }
 
     handleChange = (value, key) => {
@@ -63,6 +65,7 @@ export default class StudentProject extends Component {
             members,
             originalMembers: this.props.project.members
         })
+        this.setState({edit: false})
     }
 
     cancel = () => {
