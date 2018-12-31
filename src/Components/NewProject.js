@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {setAvailableMembers} from '../jsutil/functions'
 import axios from 'axios'
+import {ToastContainer, toast} from 'react-toastify'
+import { timingSafeEqual } from 'crypto';
 
 export default class NewProject extends Component {
     constructor(props) {
@@ -86,7 +88,10 @@ export default class NewProject extends Component {
             cohortId: this.props.cohortId
         }
         axios.post('/api/projects', {project}).then(res => {
-            console.log('getting res')
+            let project = res.data
+            this.props.addProjectToState(project)
+            toast.success("Successfully added project")
+            this.clear()
         })
     }
 
@@ -156,6 +161,7 @@ export default class NewProject extends Component {
                     </div>
                 </div>
                 <button onClick={this.props.cancel}>Cancel</button>
+                <ToastContainer/>
             </div>
         )
     }

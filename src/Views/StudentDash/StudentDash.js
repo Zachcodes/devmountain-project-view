@@ -69,15 +69,19 @@ export default class Student extends Component {
         // console.log('project', project)
         axios.put(`/api/projects/${project.project_id}`, project).then( res => {
             let updatedProject = res.data 
-            let key;
-            updatedProject.project_type === 1 ? key = 'personal' : key = 'group';
-            let copy = this.state[key].slice()
-            let index = copy.findIndex(p => p.project_id === updatedProject.project_id)
-            copy.splice(index, 1, updatedProject)
-            let obj = {}
-            obj[key] = copy 
-            this.setState(obj)
+            this.addProjectToState(updatedProject)
         })
+    }
+
+    addProjectToState = (project) => {
+        let key;
+        project.project_type === 1 ? key = 'personal' : key = 'group';
+        let copy = this.state[key].slice()
+        let index = copy.findIndex(p => p.project_id === project.project_id)
+        copy.splice(index, 1, project)
+        let obj = {}
+        obj[key] = copy 
+        this.setState(obj)
     }
 
     render() {
@@ -131,7 +135,8 @@ export default class Student extends Component {
                             type={displayedProjects}
                             cancel={this.cancel}
                             cohortStudents={cohortStudents}
-                            cohortId={student.cohort}/>
+                            cohortId={student.cohort}
+                            addProjectToState={this.addProjectToState}/>
                             :
                             projectsToDisplay.length 
                             ?

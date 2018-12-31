@@ -104,8 +104,11 @@ module.exports = {
             description,
             walkthroughLink
         }).then(dbRes => {
-            let projectId;
-            if(dbRes.length) projectId = dbRes[0].id 
+            let projectId, project;
+            if(dbRes.length) {
+                projectId = dbRes[0].id
+                project = dbRes[0]
+            }
             let formattedImages = images.map(i => {
                 return {
                     image_url: i,
@@ -123,7 +126,22 @@ module.exports = {
             if(formattedImages.length) promiseArr.push(db.projects_images.insert(formattedImages))
             if(formattedGroupMembers.length) promiseArr.push(db.projects_students_link.insert(formattedGroupMembers))
             Promise.all(promiseArr).then( values => {
-                
+                let returnProject = {
+                    project_id: project.id,
+                    project_link: project.url,
+                    project_name: project.project_name,
+                    project_type: project.project_type,
+                    cohort_id: project.cohort_id,
+                    active: project.active,
+                    description: project.description,
+                    walkthrough_link: project.walkthrough_link,
+                    last_featured: project.last_featured,
+                    images: [],
+                    members: []
+                }
+                if(values[0]) returnProject.images = values[0]
+                if(values[1]) returnProject.members = values[1]
+                res.status(200).send(returnProject)
             })
         })
     },
