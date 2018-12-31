@@ -70,6 +70,7 @@
     height: 50px; */
     font-weight: 600;
     letter-spacing: 3px;
+    transition: font-size .5s;
 }
 
 .landing-sub-button:focus {
@@ -78,6 +79,7 @@
 
 .landing-sub-button:hover {
     cursor: pointer;
+    font-size: 19px;
 }
 
 .landing-sub-button a {
@@ -128,8 +130,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #25aae1;
+    color: black;
     letter-spacing: 3px;
+    font-size: 24px;
+    font-weight: 200;
 }
 
 .featured-project-container {
@@ -142,6 +146,8 @@
 .featured-project-image {
     height: 100%;
     width: 45%;
+    border: .25px solid black;
+    padding: .5px;
 }
 
 .featured-project-about {
@@ -149,6 +155,7 @@
     width: 45%;
     color: #25aae1;
     letter-spacing: 2px;
+    line-height: 20px;
 }
 
 .landing-about-main-container {

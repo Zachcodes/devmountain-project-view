@@ -59,7 +59,8 @@ module.exports = {
                 groups[groupProjects[i].projectName] = newGroupObject
                 let studentName = { 
                     studentName: `${groupProjects[i].studentFirst} ${groupProjects[i].studentLast}`,
-                    studentId: groupProjects[i].studentId
+                    studentId: groupProjects[i].studentId,
+                    studentImage: groupProjects[i].studentImage
                 }
                 groups[groupProjects[i].projectName].groupMembers.push(studentName) 
             } 
@@ -68,7 +69,8 @@ module.exports = {
                 if(!studentExists.length) {
                     let studentName = { 
                         studentName: `${groupProjects[i].studentFirst} ${groupProjects[i].studentLast}`,
-                        studentId: groupProjects[i].studentId
+                        studentId: groupProjects[i].studentId,
+                        studentImage: groupProjects[i].studentImage
                     }
                     groups[groupProjects[i].projectName].groupMembers.push(studentName) 
                 }
@@ -116,6 +118,7 @@ module.exports = {
             formattedObj['studentLast'] = project.student_last
             formattedObj['description'] = project.description
             formattedObj['studentId'] = project.student_id
+            formattedObj['studentImage'] = project.student_image
             formattedObj['mainImageUrl'] = project.image_url
             formattedObj['project_image_id'] = project.project_image_id
             if(project.rating) {

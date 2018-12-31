@@ -42,7 +42,6 @@ class ProgramLanding extends Component {
     refreshCohorts = () => {
         let { active } = this.state;
         axios.get(`/api/programs/${active}`).then(response => {
-            console.log('response in cohorts', response)
             this.setState({
                 grabbedData: true,
                 cohorts: response.data,
@@ -73,7 +72,6 @@ class ProgramLanding extends Component {
 
     render() {
         let {doneLoading, active, cohorts, amountToDisplay} = this.state
-        let {programs} = this.props
         let filtered = cohorts.filter( cohort => {
             if(active === 0 && cohort.name) {
                 return true;

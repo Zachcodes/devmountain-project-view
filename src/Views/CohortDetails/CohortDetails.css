@@ -3,6 +3,7 @@
     flex-direction: column;
     /* background-color: #bebebe; */
     min-height: calc(100vh - 70px);
+    padding-bottom: 40px;
 }
 
 .ch-header {
@@ -28,10 +29,10 @@
 }
 
 .ch-active {
-    /* color: #25AAE1; */
+    color: #25AAE1;
     /* text-decoration: underline;
     text-decoration-color: #25AAE1; */
-    font-size: 26px;
+    font-size: 24px;
 }
 
 .ch-nav:hover {
@@ -95,7 +96,7 @@
     font-size: 18px;
     font-weight: 200;
     letter-spacing: 1px;
-    margin-top: 15px;
+    margin-top: auto;
     color: black;
 }
 

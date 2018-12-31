@@ -9,9 +9,8 @@ export default function Cohort(props) {
     // TODO: Come back to this later and make it so you cant click if there are no students
     return (
         <Link to={`/programs/cohorts/${type}/${cohortid}?name=${name}`} className={cohortClass}>
-            <div>
-                    <p>{name}</p>
-            </div>
+            <h4>{name}</h4>
+            <h5>{type}</h5>
         </Link>
     )
 }

@@ -9,6 +9,7 @@ p.last_featured,
 s.first as student_first, 
 s.last as student_last, 
 s.id as student_id,
+s.image as student_image,
 pi.id as project_image_id,
 pi.image_url,
 pi.image_type_id 

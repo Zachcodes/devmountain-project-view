@@ -55,7 +55,6 @@ class CohortDetails extends Component {
     loadDefault = () => {
         let {cohortid} = this.props.match.params;
         axios.get(`/api/cohorts/${cohortid}/projects`).then(res => {
-            console.log(res)
             let personal = res.data.personalProjects;
             let group = res.data.groupProjects;
             let students = res.data.students
@@ -74,6 +73,11 @@ class CohortDetails extends Component {
         this.setState({
             activeType
         })
+    }
+
+    openStudent = (e, id) => {
+        e.stopPropagation();
+        this.props.history.push(`/students/${id}`)
     }
 
     render() {
@@ -114,17 +118,15 @@ class CohortDetails extends Component {
                                 <div className="ch-group-right">
                                     <div className="ch-project-name">{projectDetails.projectName}</div>
                                     <div className="ch-project-description">{projectDetails.description}</div>
-                                    <div className="ch-project-team">Team Members: {
-                                        projectDetails.groupMembers.map((student, i, a) => {
-                                            return (
-                                                i === a.length - 1
-                                                ?
-                                                <Link to={`/students/${student.studentId}`}><u key={student.studentId}>{student.studentName}</u></Link>
-                                                :
-                                                <Link to={`/students/${student.studentId}`}><u key={student.studentId}>{student.studentName}, </u></Link>
-                                            )
-                                    })
-                                    }</div>
+                                    <div className="ch-project-team">
+                                    Team Members: 
+                                        {
+                                        projectDetails.groupMembers.map(m => <img src={m.studentImage} 
+                                                    className="student-dash-member-picture" 
+                                                    onClick={(e) => this.openStudent(e, m.studentId)}
+                                                    title={`${m.studentName}`}/>)
+                                        }
+                                    </div>
                                 </div> 
                             </div>
                         )
