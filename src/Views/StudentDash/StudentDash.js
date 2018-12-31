@@ -18,14 +18,13 @@ export default class Student extends Component {
             cohortStudents: [],
             retrievedDashboard: false,
             displayedProjects: 'group',
-            addNew: true
+            addNew: false
         }
     }
 
     componentDidMount() {
         axios.get('/api/loadDashboard/student').then(response => {
             let {group, personal, student, cohortStudents} = response.data
-            console.log('response', response)
             this.setState({
                 group,
                 personal,

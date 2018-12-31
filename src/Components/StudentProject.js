@@ -102,7 +102,6 @@ export default class StudentProject extends Component {
     }
 
     render() {
-        console.log(this.props.project)
         let {description, images, project_link, project_name, walkthrough_link, activeImageIndex, members, edit, newImage, addedImages, availableMembers} = this.state;
         let {type} = this.props
         // TODO: change this to be an actual placeholder image
@@ -112,9 +111,9 @@ export default class StudentProject extends Component {
             edit 
             ?
             <div className="student-dash-project editing">
-                Project Name: <input value={project_name} onChange={(e) => this.handleChange(e.target.value, 'project_name')}/>
-                Project Description: <input value={description} onChange={(e) => this.handleChange(e.target.value, 'description')}/>
-                Project Link: <input value={project_link} onChange={(e) => this.handleChange(e.target.value, 'project_link')}/>
+                <div>Project Name: <input value={project_name} onChange={(e) => this.handleChange(e.target.value, 'project_name')}/></div>
+                <div>Project Description: <input value={description} onChange={(e) => this.handleChange(e.target.value, 'description')}/></div>
+                <div>Project Link: <input value={project_link} onChange={(e) => this.handleChange(e.target.value, 'project_link')}/></div>
                 {
                     images.map( i =>  {
                         return (
@@ -133,7 +132,7 @@ export default class StudentProject extends Component {
                         )
                     })
                 }
-                New Image Url: <input value={newImage} onChange={(e) => this.handleChange(e.target.value, 'newImage')}/><button onClick={this.addNewImage}>Add New Image</button>
+                <div>New Image Url: <input value={newImage} onChange={(e) => this.handleChange(e.target.value, 'newImage')}/><button onClick={this.addNewImage}>Add New Image</button></div>
 
                 {
                     type === 'group'
@@ -165,8 +164,10 @@ export default class StudentProject extends Component {
                     :
                     null
                 }
-                <button onClick={() => this.save()}>Save Changes</button>
-                <button onClick={() => this.cancel()}>Cancel</button>
+                <div>
+                    <button className="editing-button confirm" onClick={() => this.save()}>Save Changes</button>
+                    <button className="editing-button cancel" onClick={() => this.cancel()}>Cancel</button>
+                </div>
             </div>
             :
             <div className="student-dash-project">

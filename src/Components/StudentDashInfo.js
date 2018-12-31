@@ -51,7 +51,7 @@ export default class StudentDashInfo extends Component {
                         <input value={linkedin} onChange={(e) => this.handleChange(e.target.value, 'linkedin')}/>
                         <input value={portfolio} onChange={(e) => this.handleChange(e.target.value, 'portfolio')}/>
                         <input value={github} onChange={(e) => this.handleChange(e.target.value, 'github')}/>
-                        <button onClick={() => this.saveInfo()}>Save</button>
+                        <button className="student-save" onClick={() => this.saveInfo()}>Save</button>
                     </div>
                     :
                     <div className="student-dash-info-container">
@@ -62,7 +62,7 @@ export default class StudentDashInfo extends Component {
                         <span className="student-dashboard-info-text">{linkedin}</span>
                         <span className="student-dashboard-info-text">{github}</span>
                         <span className="student-dashboard-info-text">{portfolio}</span>
-                        <button onClick={() => this.setState({edit: true})}>Edit</button>
+                        <button className="student-save" onClick={() => this.setState({edit: true})}>Edit</button>
                     </div>
                 }
             </div>

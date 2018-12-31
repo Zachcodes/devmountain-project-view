@@ -15,10 +15,30 @@
 .student-dashboard-info-picture {
     width: 230px;
     height: 230px;
+    margin-bottom: 10px;
 }
 
 .student-dashboard-info-text {
     color: white;
+    margin: auto;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.student-save {
+    border-radius: 4px;
+    padding: 5px;
+    background-color:#25AAE1;
+    color: white;
+    border: none;
+    font-size: 20px;
+    letter-spacing: 2px;
+    width: 120px;
+    margin: auto;
+}
+.student-save:hover {
+    cursor: pointer;
 }
 
 .student-dash-info-container {
@@ -29,6 +49,7 @@
 .student-dashboard-right-view {
     width: 70%;
     padding: 20px;
+    padding-bottom: 50px;
     display: flex;
     flex-direction: column;
 }
@@ -50,6 +71,11 @@
     margin-bottom: 15px;
 }
 
+.student-dash-right-nav-span span {
+    font-size: 20px;
+    letter-spacing: 1px;
+    transition: font-size .8s;
+}
 .student-dash-right-nav-span span:hover {
     cursor: pointer;
 }
@@ -74,35 +100,58 @@
 
 .student-active-nav {
     color: #25AAE1;
+    font-size: 22px;
 }
-
-.student-dash-right-nav-span {
-    font-size: 20px;
-    font-weight: 100;
-    letter-spacing: 1px;
-}
-
 
 /* Student projects styles */
 .student-dash-project {
     width: 100%;
-    height: 400px;
+    height: 300px;
     border: 1px solid black;
     display: flex;
+    border-radius: 30px;
+    margin-bottom: 25px;
+    padding: 5px;
 }
 
 .editing {
     flex-direction: column;
+    height: 100%;
+    padding: 10px 15px;
+}
+
+.editing-button {
+    padding: 5px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: black;
+    margin: 0px 5px;
+    border-radius: 5px;
+}
+.editing-button:hover {
+    cursor: pointer;
+}
+
+.confirm {
+    background-color: #33e633;
+}
+
+.cancel {
+    background-color: #ff2f2f;
 }
 
 .student-dash-project-image-container {
     width: 30%;
     height: 100%;
+
 }
 
 .student-dash-project-main-image {
     width: 100%;
     height: 80%;
+    border-radius: 30px;
+    border: .25px solid black;
+    padding: .75px;
 }
 
 .student-dash-project-thumbnail {
@@ -154,6 +203,7 @@
     border-radius: 3px 3px;
     padding: 5px 10px;
     letter-spacing: 1px;
+    margin: 0px 5px;
 }
 
 .student-dash-project-info-button:hover {
