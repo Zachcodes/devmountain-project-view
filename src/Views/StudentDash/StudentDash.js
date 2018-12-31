@@ -25,6 +25,7 @@ export default class Student extends Component {
     componentDidMount() {
         axios.get('/api/loadDashboard/student').then(response => {
             let {group, personal, student, cohortStudents} = response.data
+            console.log('response', response)
             this.setState({
                 group,
                 personal,
@@ -69,16 +70,21 @@ export default class Student extends Component {
         // console.log('project', project)
         axios.put(`/api/projects/${project.project_id}`, project).then( res => {
             let updatedProject = res.data 
-            this.addProjectToState(updatedProject)
+            this.addProjectToState(updatedProject, true)
         })
     }
 
-    addProjectToState = (project) => {
+    addProjectToState = (project, edit) => {
         let key;
         project.project_type === 1 ? key = 'personal' : key = 'group';
         let copy = this.state[key].slice()
-        let index = copy.findIndex(p => p.project_id === project.project_id)
-        copy.splice(index, 1, project)
+        if(edit) {
+            let index = copy.findIndex(p => p.project_id === project.project_id)
+            copy.splice(index, 1, project)
+        }
+        else {
+            copy.push(project)
+        }
         let obj = {}
         obj[key] = copy 
         this.setState(obj)
@@ -86,6 +92,7 @@ export default class Student extends Component {
 
     render() {
         let { studentInfo: student, retrievedDashboard, studentSettings, displayedProjects, addNew, group, personal, cohortStudents } = this.state
+        // debugger;
         let projectNav, projectsToDisplay;
         if(displayedProjects === 'group') {
             projectNav = <span className="student-dash-right-nav-span"><span onClick={() => this.setDisplayed('group')} className="student-active-nav">Group</span> <span onClick={() => this.setDisplayed('personal')}>Personal</span></span>

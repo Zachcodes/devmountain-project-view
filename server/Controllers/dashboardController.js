@@ -99,15 +99,17 @@ module.exports = {
                         }]
                         return p;
                     })
-                    // console.log('group before', group)
+                    console.log('group before', group)
                     if(group.length) {
-                        let {project_id} = group[0]
-                        promiseArr.push(db.projects.get_group_members({project_id}))
+                        group.forEach( p => {
+                            promiseArr.push(db.projects.get_group_members({project_id: p.project_id}))
+                        })
                     }
                     Promise.all(promiseArr).then( values => {
                         if(values.length) {
-                            let groupMembers = values[0];
-                            if(groupMembers.length) group[0].members = groupMembers
+                            values.forEach((members, i) => {
+                                group[i].members = members
+                            })
                         }
                         db.cohorts.get_students_by_cohort({cohort}).then(students => {
                             //TODO: Possibly bring back in tags depending on what user wants

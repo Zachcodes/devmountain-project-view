@@ -102,6 +102,7 @@ export default class StudentProject extends Component {
     }
 
     render() {
+        console.log(this.props.project)
         let {description, images, project_link, project_name, walkthrough_link, activeImageIndex, members, edit, newImage, addedImages, availableMembers} = this.state;
         let {type} = this.props
         // TODO: change this to be an actual placeholder image
