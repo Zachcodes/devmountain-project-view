@@ -53,7 +53,6 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     // checkLinkCron.start()
     // cleanUpLogCron.start()
     // syncCohortsCron.start()
-    // cronJobs.checkLinkStatusExecution(dbInstance)
 })
 
 app.use(passport.initialize())
@@ -126,8 +125,7 @@ const averageRatingCron = new CronJob('0 0 2 * * 0-6', () => {
 })
 
 
-// const checkLinkCron = new CronJob('0 0 1 * * 0-6', () => {
-const checkLinkCron = new CronJob('10 * * * * *', () => {
+const checkLinkCron = new CronJob('0 0 1 * * 0-6', () => {
     const db = app.get('db')
     if(db) cronJobs.checkLinkStatusExecution(db)
 })

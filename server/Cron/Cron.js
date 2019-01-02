@@ -4,6 +4,7 @@ const fs = require('fs')
 const errorFile = __dirname + '/../logging/deadLinks.txt'
 const loggingFolder = __dirname + '/../logging'
 const _ = require('underscore')
+const nodemailer = require('nodemailer')
 
 module.exports = {
 
@@ -101,8 +102,44 @@ module.exports = {
                     }
                 })
                 if(changedProjectsBrokenIds.length) {
+                    
+                    // create reusable transporter object using the default SMTP transport
+                    let transporter = nodemailer.createTransport({
+                        host: 'smtp.gmail.com',
+                        port: 587,
+                        secure: false, // true for 465, false for other ports
+                        auth: {
+                            user: process.env.HOST_EMAIL, // generated ethereal user
+                            pass: process.env.HOST_PASSWORD // generated ethereal password
+                        }
+                    });
+                    
+                    changedProjectsBrokenIds.forEach( projectId => {
+                        db.students.get_student_emails({projectId}).then(dbRes => {
+                            dbRes.forEach( student => {
+                            if(student.email) {
+                                // setup email data with unicode symbols
+                                let mailOptions = {
+                                    from: `"DevMountain Project Browser" ${process.env.HOST_EMAIL}`, // sender address
+                                    to: student.email, // list of receivers
+                                    subject: 'Dead link flagged', // Subject line
+                                    text: `The link for your project ${student.project_name} has been flagged as a dead link. This means that it will no longer be shown in search results or displayed on your student view. Updating the link to a current link will mark it as active and it will be shown again. Thanks!`
+                                };
+                            
+                                // send mail with defined transport object
+                                transporter.sendMail(mailOptions, (error, info) => {
+                                    if (error) {
+                                        return console.log(error);
+                                    }
+                                });
+                            }
+
+                            })
+                        })
+                    })
                     db.projects.update({id: changedProjectsBrokenIds}, {active: false})
                     .catch(err => writeErrorToFile('\n Could not update broken'))
+                    //If this is the first time that the project has been marked as dead, send email here 
                 }
                 if(changedProjectsActiveIds.length) {
                     db.projects.update({id: changedProjectsActiveIds}, {active: true}) 
@@ -113,7 +150,7 @@ module.exports = {
         function writeErrorToFile(errorString) {
             fs.appendFile(errorFile, errorString, function (err) {
                 if (err) throw err;
-                });
+            });
         }
     },
 

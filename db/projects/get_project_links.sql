@@ -1,1 +1,4 @@
-select url, id, active from projects;
+select 
+url, 
+id, 
+active from projects;
