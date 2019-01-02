@@ -53,6 +53,7 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     // checkLinkCron.start()
     // cleanUpLogCron.start()
     // syncCohortsCron.start()
+    cronJobs.grabCohortsFromDevMountain(dbInstance)
 })
 
 app.use(passport.initialize())

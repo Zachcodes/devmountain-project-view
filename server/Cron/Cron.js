@@ -177,13 +177,14 @@ module.exports = {
                                                 authorization: process.env.THIRD_PARTY_AUTH
                                             }
                                         })
-        let {data} = devMountainResponse;
-        let externalCohortIds = data.map(cohort => cohort.id)
+        // console.log(devMountainResponse)
+        let externalCohorts = devMountainResponse.data.cohorts;
+        let externalCohortIds = externalCohorts.map(cohort => cohort.id)
         let noMatchDevMountainIds = _.difference(externalCohortIds, ownedExternalCohortIds)
         //This will only run if there is an id that doesn't exist in our db
         if(noMatchDevMountainIds.length) {
             let formattedCohorts = [];
-            data.forEach(cohort => {
+            externalCohorts.forEach(cohort => {
                 if(noMatchDevMountainIds.indexOf(cohort.id) !== -1) {
                     let cohort_type;
                     switch(cohort.subject) {

@@ -26,48 +26,6 @@ class Student extends Component {
         this.loadProfile()
     }
 
-    formatDbResponse(data) {
-        let first, last, about, image, github, linkedin, portfolio;
-        let projects = {};
-        for(let i = 0; i < data.length; i++) {
-            if(!first) first = data[i].first 
-            if(!last) last = data[i].last 
-            if(!about) about = data[i].about 
-            if(!image) image = data[i].image
-            if(!github && data[i].github) github = data[i].github
-            if(!linkedin && data[i].linkedin) linkedin = data[i].linkedin
-            if(!portfolio && data[i].portfolio) portfolio = data[i].portfolio
-
-
-            if(!projects[data[i].project_id]) {
-                projects[data[i].project_id] = {
-                    project_id: data[i].project_id,
-                    projectName: data[i].project_name,
-                    url: data[i].url,
-                    projectType: data[i].project_type,
-                    projectImages: [data[i].image_url],
-                    description: data[i].description
-                } 
-            }
-            else {
-                projects[data[i].project_id].projectImages.push(data[i].image_url)
-            }
-        }
-        let formattedProjects = []
-        for(let key in projects) formattedProjects.push(projects[key])
-        return {
-            first,
-            last,
-            projects: formattedProjects,
-            image,
-            about,
-            github,
-            linkedin,
-            portfolio,
-            doneLoading: true
-        }
-    }
-
     componentDidUpdate(prevProps) {
         if(prevProps.match.params.studentid !== this.props.match.params.studentid) this.loadProfile()
     }
@@ -136,7 +94,6 @@ class Student extends Component {
                 <div className="student-projects-display-container">
                     {
                         projects.map(project => {
-                            console.log(project)
                             let type = project.project_type === 1 ? 'Personal' : 'Group'
                             let image = project.images.length ? project.images[0].image_url : placeholder;
                             return (

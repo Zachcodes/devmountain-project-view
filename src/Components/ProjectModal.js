@@ -32,8 +32,8 @@ class ProjectModal extends Component {
     setSelectedImageIndex() {
         let { selectedImageIndex } = this.state 
         let { selectedModalProject } = this.props 
-        let { projectImages } = selectedModalProject
-        if(selectedImageIndex >= projectImages.length - 1) {
+        let { images } = selectedModalProject
+        if(selectedImageIndex >= images.length - 1) {
             selectedImageIndex = 0
         }
         else selectedImageIndex = selectedImageIndex + 1
@@ -45,19 +45,19 @@ class ProjectModal extends Component {
     render() {
         let {showModal, selectedModalProject} = this.props
         let { selectedImageIndex } = this.state;
-        let { projectImages, projectName, projectType, description, url } = selectedModalProject
+        let { images, project_name, project_type, description, url } = selectedModalProject
         let modalClass = showModal ? `project-modal-main-container` : 'project-modal-main-container hide-modal';
         return (
             <div className={modalClass} id="p-modal-1">
                 <div className="project-modal-child modal-child-left" id="p-modal-2">
                     <div className="project-modal-main-image" id="p-modal-3">
-                        <img src={projectImages[selectedImageIndex]} id="p-modal-4"/>
+                        <img src={images[selectedImageIndex].image_url} id="p-modal-4"/>
                     </div>
                     <div className="project-modal-thumbnail-container" id="p-modal-5">
                         {
-                            projectImages.map( (imageUrl, i) => {
+                            images.map( (image, i) => {
                                 return (
-                                    <img src={imageUrl}
+                                    <img src={image.image_url}
                                     key={i + Math.random()}/>
                                 )
                             })
@@ -65,7 +65,7 @@ class ProjectModal extends Component {
                     </div>
                 </div>
                 <div className="project-modal-child modal-child-right" id="p-modal-6">
-                        <div className="project-modal-name" id="p-modal-7">{projectName}</div>
+                        <div className="project-modal-name" id="p-modal-7">{project_name}</div>
                         <div className="project-modal-description" id="p-modal-8">{description}</div>
                         <a href={url} target="_blank" id="p-modal-9" className="project-modal-button"><button id="p-modal-10">View Project</button></a>
                 </div>
