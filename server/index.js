@@ -180,7 +180,7 @@ app.get('/api/programs/:programtype', ctc.getProgramByType)
 app.get('/api/cohorts/:id/projects', cc.getProjectsByCohort)
 
 //students routes 
-app.get('/api/students/:id', sc.getStudent)
+app.get('/api/students/:id', sc.getStudentAndProjects)
 app.put('/api/students/updatePicture', sc.updatePicture)
 app.put('/api/students/updateAbout', sc.updateAbout)
 app.put('/api/students/info', sc.updateInfo)

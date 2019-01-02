@@ -126,6 +126,8 @@ module.exports = {
             if(formattedImages.length) promiseArr.push(db.projects_images.insert(formattedImages))
             if(formattedGroupMembers.length) promiseArr.push(db.projects_students_link.insert(formattedGroupMembers))
             Promise.all(promiseArr).then( values => {
+                //TODO: come back and get rid of this later when there is actual rating implemented
+                db.average_project_ratings.insert({average_rating: 4, project_id: projectId})
                 let returnProject = {
                     project_id: project.id,
                     project_link: project.url,

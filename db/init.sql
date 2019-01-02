@@ -84,7 +84,7 @@ CREATE TABLE project_ratings (
     id SERIAL PRIMARY KEY,
     project_id INT REFERENCES projects(id),
     user_id INT REFERENCES users(id),
-    rating INT
+    rating INT DEFAULT 4
 );
 
 CREATE TABLE average_project_ratings (

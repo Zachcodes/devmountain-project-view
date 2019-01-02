@@ -1,9 +1,26 @@
+const {addImagesToProject} = require('../Utilities/jsUtilities')
 module.exports = {
-    getStudent: (req, res) => {
+    getStudentAndProjects: (req, res) => {
         let db = req.app.get('db');
         let {id} = req.params;
-        db.students.get_student_by_id({id}).then(studentDetails => {
-            res.status(200).send(studentDetails)
+        let promises = []
+        let studentPromise = db.students.get_student_by_id({id}).catch(err => console.log('could not retrieve students'))
+        let projectsPromise = db.projects.get_projects_by_student_id({studentId: id}).catch(err => console.log('could not retrieve projects'))
+        promises.push(studentPromise, projectsPromise)
+        Promise.all(promises).then(values => {
+            let student = values[0][0]
+            let projects = values[1]
+            let projectsObj = {}
+            projects.forEach( p => {
+                addImagesToProject(p, projectsObj)
+            })
+            let condensedProjects = []
+            for(let key in projectsObj) condensedProjects.push(projectsObj[key])
+            let returnObj = {
+                student,
+                projects: condensedProjects
+            }
+            res.status(200).send(returnObj)
         })
     },
     updatePicture: (req, res) => {

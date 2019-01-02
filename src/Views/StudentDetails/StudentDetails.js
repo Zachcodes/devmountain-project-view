@@ -74,9 +74,19 @@ class Student extends Component {
 
     loadProfile() {
         axios.get(`/api/students/${this.props.match.params.studentid}`).then( response => {
-            let {data} = response;
-            let finalState = this.formatDbResponse(data)
-            this.setState(finalState)
+            let {projects, student} = response.data;
+            let {first, last, image, about, github, linkedin, portfolio} = student
+            this.setState({
+                projects,
+                first,
+                last,
+                image,
+                about,
+                github,
+                linkedin,
+                portfolio,
+                doneLoading: true
+            })
         })
     }
 
@@ -126,8 +136,9 @@ class Student extends Component {
                 <div className="student-projects-display-container">
                     {
                         projects.map(project => {
-                            let type = project.projectType === 1 ? 'Personal' : 'Group'
-                            let image = project.projectImages.length ? project.projectImages[0] : placeholder;
+                            console.log(project)
+                            let type = project.project_type === 1 ? 'Personal' : 'Group'
+                            let image = project.images.length ? project.images[0].image_url : placeholder;
                             return (
                                 <div key={project.project_id} className="student-project-container" onClick={() => showModal(project)}>
                                     <img src={image} className="student-project-image"></img>

@@ -178,7 +178,6 @@ module.exports = {
                                             }
                                         })
         let {data} = devMountainResponse;
-        return;
         let externalCohortIds = data.map(cohort => cohort.id)
         let noMatchDevMountainIds = _.difference(externalCohortIds, ownedExternalCohortIds)
         //This will only run if there is an id that doesn't exist in our db
