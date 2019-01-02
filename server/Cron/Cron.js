@@ -75,63 +75,46 @@ module.exports = {
     },
 
     checkLinkStatusExecution: (db) => {
-        let completed = {}
         let changedProjectsActiveIds = []
         let changedProjectsBrokenIds = []
     
-        function writeErrorToFile(errorString) {
-            fs.appendFile(errorFile, errorString, function (err) {
-                if (err) throw err;
-              });
-        }
-        function checkFinished() {
-            let finished = true;
-            for(let key in completed) {
-                if(!completed[key]) finished = false
+        db.projects.get_project_links().then( links => {
+            let promises = []
+            for(let i = 0; i < links.length; i++) {
+                if(links[i].url) {
+                    promises.push(axios.get(links[i].url).catch(err => {
+                        if(links[i].active) changedProjectsBrokenIds.push(links[i].id)
+                    }))
+                } 
+                else {
+                    if(links[i].active) {
+                        changedProjectsBrokenIds.push(links[i].id)
+                    } 
+                }
             }
-            if(finished) {
+            Promise.all(promises).then(values => {
+                values.forEach( (res, index) => {
+                    if(res) {
+                        if(links[index].url === res.config.url) {
+                            if(res.status === 200 && links[index].active != true) changedProjectsActiveIds.push(links[index].id)
+                        }
+                    }
+                })
                 if(changedProjectsBrokenIds.length) {
                     db.projects.update({id: changedProjectsBrokenIds}, {active: false})
                     .catch(err => writeErrorToFile('\n Could not update broken'))
                 }
                 if(changedProjectsActiveIds.length) {
-                  db.projects.update({id: changedProjectsActiveIds}, {active: true}) 
-                  .catch(err => writeErrorToFile('\n Could not update active'))
+                    db.projects.update({id: changedProjectsActiveIds}, {active: true}) 
+                    .catch(err => writeErrorToFile('\n Could not update active'))
                 }
-            }
+            })
+        }).catch(err => writeErrorToFile('\n Could not connect to database'))
+        function writeErrorToFile(errorString) {
+            fs.appendFile(errorFile, errorString, function (err) {
+                if (err) throw err;
+                });
         }
-    
-        db.projects.get_project_links().then( links => {
-            for(let i = 0; i < links.length; i++) {
-                completed[i] = false;
-                if(links[i].url) {
-                    axios.get(links[i].url).then(response => {
-                        completed[i] = true;
-                        if(response.status === 200) {
-                            if(!links[i].active) {
-                                changedProjectsActiveIds.push(links[i].id)
-                            }
-                        }
-                        checkFinished()
-                    })
-                    .catch( err => {
-                        if(links[i].active) {
-                            changedProjectsBrokenIds.push(links[i].id)
-                        }  
-                        checkFinished()
-                    })
-                } 
-                else {
-                    completed[i] = true;
-                    if(links[i].active) {
-                        changedProjectsBrokenIds.push(links[i].id)
-                    } 
-                    checkFinished()
-                }
-            }
-        })
-        .catch(err => writeErrorToFile('\n Could not connect to database'))
-        
     },
 
     cleanUpLogging: () => {
