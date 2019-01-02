@@ -45,6 +45,7 @@ class CohortOverview extends Component {
     }
 
     render() {
+        console.log(11111)
         let {cohorts, grabbedData} = this.state;
         return (
             grabbedData 

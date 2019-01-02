@@ -80,7 +80,7 @@ class ProgramLanding extends Component {
             }
         }).map( (cohort, index) => {
             return (
-                <Cohort type={cohort.type} name={cohort.name} id={cohort.id} key={index} studentCount={cohort.count}/>
+                <Cohort type={cohort.type} cohort={cohort} key={cohort.id} studentCount={cohort.count}/>
             )
         })
         let showMore = false;

@@ -24,13 +24,11 @@ module.exports = {
         
         programtype = Number(programtype)
         if(programtype !== 0) {
-            // console.log(12121)
             db.cohorts.get_cohorts_by_type({programtype}).then( cohorts => {
                 res.status(200).send(cohorts)
             })
         }
         else {
-            // console.log(454545)
             db.cohorts.get_cohorts().then( cohorts => {
                 res.status(200).send(cohorts)
             }).catch(err => res.status(500).send(err))

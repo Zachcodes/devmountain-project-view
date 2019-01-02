@@ -215,13 +215,17 @@ module.exports = {
                         default: 
                             cohort_type = null;
                     }
+                    let date1 = new Date(cohort.date_start)
+                    let formattedStartDate = `${date1.getMonth() + 1}/${date1.getDate() + 1}/${date1.getFullYear()}`
+                    let date2 = new Date(cohort.date_end)
+                    let formattedEndDate = `${date2.getMonth() + 1}/${date2.getDate() + 1}/${date2.getFullYear()}`
                     let formattedCohort = {
                         name: cohort.short_name,
                         cohort_type,
                         external_cohort_id: cohort.id,
                         type: cohort.type,
-                        start_date: cohort.date_start,
-                        end_date: cohort.date_end
+                        start_date: formattedStartDate,
+                        end_date: formattedEndDate
                     }
                     formattedCohorts.push(formattedCohort)
                 }
