@@ -49,11 +49,11 @@ app.use(session({
 //massive setup 
 Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     app.set('db', dbInstance)
-    // TODO: Bring these back in later
+    // TODO: Bring this back in when rating is officially put into place
     // averageRatingCron.start()
-    // checkLinkCron.start()
-    // cleanUpLogCron.start()
-    // syncCohortsCron.start()
+    checkLinkCron.start()
+    cleanUpLogCron.start()
+    syncCohortsCron.start()
 })
 
 app.use(passport.initialize())
@@ -69,7 +69,6 @@ passport.deserializeUser((user, done) => {
 
 passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, user, done) {
     let {id: devmtn_id, first_name, last_name, email, cohortId} = user;
-    console.log('user ', user)
     let db = app.get('db')
     db.auth.get_user_by_devmtn_id({devmtn_id}).then( userArr => {
         if(userArr.length) {
@@ -136,8 +135,7 @@ const cleanUpLogCron = new CronJob('0 30 12 * * 6', () => {
     cronJobs.cleanUpLogging()
 })
 
-// const syncCohortsCron = new CronJob('0 30 1 * * 0-6', () => {
-const syncCohortsCron = new CronJob('30 * * * * * *', () => {
+const syncCohortsCron = new CronJob('0 30 1 * * 0-6', () => {
     const db = app.get('db')
     cronJobs.grabCohortsFromDevMountain(db)
 })
@@ -149,9 +147,9 @@ app.get('/api/auth', passport.authenticate('devmtn'))
 
 app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
     if(req.user) {
-        res.redirect(`${process.env.AUTH_REDIRECT}/#/dashboard`)
+        res.redirect(`/#/dashboard`)
     } else {
-        res.redirect(`${process.env.AUTH_REDIRECT}/#/`)
+        res.redirect(`/#/`)
     }
 })
 

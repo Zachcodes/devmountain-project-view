@@ -70,10 +70,7 @@ module.exports = {
     },
     loadStudentDashboard: (req, res) => {
         const db = req.app.get('db')
-        //get all projects linked to this student
         let {userId} = req.session;
-        //TODO: Remove this after testing
-        userId = 34
         db.students.get_student_by_user_id({userId}).then( studentArr => {
             if(studentArr.length) {
                 let student = studentArr[0]
@@ -99,7 +96,6 @@ module.exports = {
                         }]
                         return p;
                     })
-                    console.log('group before', group)
                     if(group.length) {
                         group.forEach( p => {
                             promiseArr.push(db.projects.get_group_members({project_id: p.project_id}))
