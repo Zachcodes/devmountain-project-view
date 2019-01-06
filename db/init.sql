@@ -56,7 +56,8 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name TEXT,
     role_id INT REFERENCES user_roles(id),
-    email TEXT NOT NULL
+    email TEXT NOT NULL, 
+    devmtn_id INT
 );
 
 CREATE TABLE students (

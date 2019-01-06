@@ -69,7 +69,7 @@ passport.deserializeUser((user, done) => {
 
 passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, user, done) {
     let {id: devmtn_id, first_name, last_name, email, cohortId} = user;
-    
+    console.log('user ', user)
     let db = app.get('db')
     db.auth.get_user_by_devmtn_id({devmtn_id}).then( userArr => {
         if(userArr.length) {
@@ -89,6 +89,7 @@ passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, us
             if(isStudent || isAlumni) projectBrowserRole = 3
             if(isMentor || isLeadMentor || isLeadInstructor || isInstructor) projectBrowserRole = 2
             if(isAdmin) projectBrowserRole = 1
+            // TODO: Come back and write logic to make sure that admins are treated correctly and not made students
             projectBrowserRole = 3
             let newUser = {
                 name: `${first_name} ${last_name}`,
@@ -148,9 +149,9 @@ app.get('/api/auth', passport.authenticate('devmtn'))
 
 app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
     if(req.user) {
-        res.redirect('http://localhost:3005/#/dashboard')
+        res.redirect(`${process.env.AUTH_REDIRECT}/#/dashboard`)
     } else {
-        res.redirect('http://localhost:3005/#/')
+        res.redirect(`${process.env.AUTH_REDIRECT}/#/`)
     }
 })
 

@@ -42,3 +42,5 @@ lot of technologies
     Continuous integration (travis ci) continuous development ( look into using this )
     
 Ask Mark for help with what I should do to prepare for the interview
+
+CONNECTION_STRING=postgresql://localhost/project-browser
