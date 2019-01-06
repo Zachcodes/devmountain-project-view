@@ -13,9 +13,9 @@ export default class NewProject extends Component {
           images: [],
           type: props.type,
           walkthroughLink: '',
-          groupMembers: [],
+          groupMembers: props.cohortStudents.filter( s => s.student_id === props.student.id),
           imageInput: '',
-          availableMembers: props.cohortStudents
+          availableMembers: props.cohortStudents.filter(s => s.student_id !== props.student.id)
         }
     }
 
@@ -96,6 +96,7 @@ export default class NewProject extends Component {
 
     render() {
         let {name, description, url, images, type, groupMembers, imageInput, availableMembers} = this.state
+        let {student} = this.props
         return (
             <div>
                 <div className="new-project-main-container">
@@ -126,7 +127,7 @@ export default class NewProject extends Component {
                                 <option value="group">Group</option>
                             </select>
                             :
-                            <select onChange={(e) => this.setState({type: e.target.options[e.target.selectedIndex].value})}>
+                            <select onChange={(e) => this.setState({type: e.target.options[e.target.selectedIndex].value, groupMembers: this.props.cohortStudents.filter( s => s.student_id === this.props.student.id)})}>
                                 <option value="personal">Personal</option>
                                 <option value="group" selected>Group</option>
                             </select>
@@ -136,23 +137,44 @@ export default class NewProject extends Component {
                         {
                             groupMembers.map(m => {
                                 return (
-                                    <div>{m.student_first} {m.student_last} <button onClick={() => this.deleteGroupMember(m.student_id)}>X</button></div>
+                                    <div key={m.student_id}>
+                                        {m.student_first} {m.student_last} 
+                                        {
+                                            m.student_id === student.id 
+                                            ?
+                                            null 
+                                            :
+                                            <button onClick={() => this.deleteGroupMember(m.student_id)}>X</button>
+                                        }
+                                    </div>
                                 )
                             })
                         }
-                        <select 
-                        name="cohortstudentsnew"
-                        id="students-select-new">
-                            <option value="0">None</option>
+                        {
+                            type === 'personal'
+                            ?
+                            null 
+                            :
+                            <select 
+                            name="cohortstudentsnew"
+                            id="students-select-new">
+                            <option value="0" defaultValue>None</option>
                             {
                                 availableMembers.map(s => {
                                     return (
-                                        <option value={s.student_id}>{`${s.student_first} ${s.student_last}`}</option>
+                                        <option key={s.student_id} value={s.student_id}>{`${s.student_first} ${s.student_last}`}</option>
                                     )
                                 })
                             }
-                        </select>
-                        <button onClick={this.addGroupMember}>Add Group Member</button>
+                            </select>
+                        }
+                        {
+                            type === 'personal'
+                            ?
+                            null 
+                            : 
+                            <button onClick={this.addGroupMember}>Add Group Member</button>
+                        }
                     </div>
                     <div>
                         <button onClick={this.submitProject}>Submit Project</button>

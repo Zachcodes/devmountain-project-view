@@ -20,7 +20,7 @@
     "node-cron": "^2.0.3",
     "nodemailer": "^5.0.0",
     "passport": "^0.4.0",
-    "query-string": "^6.1.0",
+    "query-string": "~5.1.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",

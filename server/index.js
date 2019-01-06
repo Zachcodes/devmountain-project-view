@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -34,7 +35,7 @@ require('dotenv').config();
 const saltRounds = 10;
 
 const app = express()
-
+app.use(express.static(__dirname + '/../build'))
 app.set('saltRounds', saltRounds)
 app.set('bcrypt', bcrypt)
 
@@ -53,7 +54,6 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     // checkLinkCron.start()
     // cleanUpLogCron.start()
     // syncCohortsCron.start()
-    cronJobs.grabCohortsFromDevMountain(dbInstance)
 })
 
 app.use(passport.initialize())
@@ -208,6 +208,10 @@ app.get('/api/loadDashboard/student', sessionCheck, dc.loadStudentDashboard)
 
 //filter routes 
 app.get('/api/filter/:cohortId', fc.filterProjects)
+
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../build/index.html'))
+// })
 
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
