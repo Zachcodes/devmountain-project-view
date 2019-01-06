@@ -143,9 +143,9 @@ const syncCohortsCron = new CronJob('0 30 1 * * 0-6', () => {
 //routes 
 
 //devmountain auth
-app.get('/api/auth', passport.authenticate('devmtn'))
+app.get('104.248.176.196:3300/api/auth', passport.authenticate('devmtn'))
 
-app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
+app.get('104.248.176.196:3300/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
     if(req.user) {
         res.redirect(`/#/dashboard`)
     } else {
