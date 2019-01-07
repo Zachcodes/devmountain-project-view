@@ -51,9 +51,9 @@ Massive(process.env.CONNECTION_STRING).then(dbInstance => {
     app.set('db', dbInstance)
     // TODO: Bring this back in when rating is officially put into place
     // averageRatingCron.start()
-    checkLinkCron.start()
-    cleanUpLogCron.start()
-    syncCohortsCron.start()
+    // checkLinkCron.start()
+    // cleanUpLogCron.start()
+    // syncCohortsCron.start()
 })
 
 app.use(passport.initialize())

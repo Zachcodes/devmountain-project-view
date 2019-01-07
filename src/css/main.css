@@ -307,3 +307,7 @@ body {
 .project-modal-button button:first-child:hover {
     cursor: pointer;
 }
+
+.button-hover:hover {
+    cursor: pointer;
+}

@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import './CohortDetails.css'
-import queryString from 'query-string'
 import {Link} from 'react-router-dom'
 
 //components
-import GroupProject from '../../Components/GroupProject'
+import CohortGroupProject from '../../Components/CohortGroupProject'
 import PersonalProject from '../../Components/PersonalProject'
 import StudentContainer from '../../Components/StudentContainer'
 import TinyNav from '../../Components/TinyNav'
@@ -19,7 +18,6 @@ class CohortDetails extends Component {
         this.state = {
             groupProjects: [],
             students: [],
-            loaded: false,
             activeType: 'group'
         }
     }
@@ -62,7 +60,6 @@ class CohortDetails extends Component {
                 groupProjects: group,
                 personalProjects: personal,
                 students: students, 
-                loaded: true,
                 filterVal: '',
                 projectTypeFilter: 0
             })
@@ -75,11 +72,6 @@ class CohortDetails extends Component {
         })
     }
 
-    openStudent = (e, id) => {
-        e.stopPropagation();
-        this.props.history.push(`/students/${id}`)
-    }
-
     render() {
         let {groupProjects, activeType, students} = this.state
         let { showModalSTORE, showModal } = this.props
@@ -87,8 +79,6 @@ class CohortDetails extends Component {
         let  groupClass = activeType === 'group' ? 'ch-active ch-nav' : 'ch-nav';
         let  studentClass = activeType === 'student' ? 'ch-active ch-nav' : 'ch-nav';
         return (
-            this.state.loaded 
-            ?
             <div className="ch-main-container">
                 {
                     showModalSTORE
@@ -107,33 +97,17 @@ class CohortDetails extends Component {
                     activeType === 'group'
                     ?
                 
-                    groupProjects.map( projectDetails => {
+                    groupProjects.map( project => {
                         return (
-                            <div className="ch-group-container"
-                            key={projectDetails.projectId}
-                            onClick={() => showModal(projectDetails)}>
-                                <div className="ch-group-left">
-                                    <img src={projectDetails.mainImageUrl}/>
-                                </div>
-                                <div className="ch-group-right">
-                                    <div className="ch-project-name">{projectDetails.projectName}</div>
-                                    <div className="ch-project-description">{projectDetails.description}</div>
-                                    <div className="ch-project-team">
-                                    Team Members: 
-                                        {
-                                        projectDetails.groupMembers.map(m => <img src={m.studentImage} 
-                                                    className="student-dash-member-picture" 
-                                                    onClick={(e) => this.openStudent(e, m.studentId)}
-                                                    title={`${m.studentName}`}/>)
-                                        }
-                                    </div>
-                                </div> 
-                            </div>
+                            <CohortGroupProject
+                            project={project}
+                            key={project.projectId}
+                            history={this.props.history}/>
                         )
                     })
 
                     :
-                    <div className="ch-student-wrapper">
+                    <div className="ch-student-wrapper">===
                         {  
                             students.map( student => {
                                 return (
@@ -150,10 +124,6 @@ class CohortDetails extends Component {
                         }
                     </div>
                 }
-            </div>
-            :
-            <div>
-                Loading!
             </div>
         )
     }
