@@ -50,7 +50,6 @@ class ProjectModal extends Component {
         let {showModal, selectedModalProject} = this.props
         let { selectedImageIndex } = this.state;
         let { images, project_name, project_type, description, url, groupMembers } = selectedModalProject
-        console.log('groupmembers', groupMembers)
         let modalClass = showModal ? `project-modal-main-container` : 'project-modal-main-container hide-modal';
         return (
             <div className={modalClass} id="p-modal-1">

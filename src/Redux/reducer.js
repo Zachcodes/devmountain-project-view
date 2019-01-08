@@ -12,15 +12,21 @@ const initialState = {
     loggedIn: false,
     errorLoggingIn: false,
     showModal: false,
-    selectedModalProject: {}
+    selectedModalProject: {},
+    featuredProject: {
+        groupMembers: [],
+        images: []
+    }
 }
 
 export default function reducer(state = initialState, action) {
     switch(action.type) {
         case GET_PROGRAMS_FULFILLED:
+            console.log(action.payload)
             return {
                 ...state,
-                programs: action.payload.data.types
+                programs: action.payload.data.types,
+                featuredProject: action.payload.data.featuredProject
             }
         case LOGIN_FULFILLED:
             return {
