@@ -8,19 +8,27 @@ module.exports = {
         let projectsPromise = db.projects.get_projects_by_student_id({studentId: id}).catch(err => console.log('could not retrieve projects'))
         promises.push(studentPromise, projectsPromise)
         Promise.all(promises).then(values => {
+            let groupPromises = []
             let student = values[0][0]
             let projects = values[1]
             let projectsObj = {}
             projects.forEach( p => {
+                if(!projectsObj[Number(p.project_id)]) groupPromises.push(db.projects.get_group_members({project_id: p.project_id}).catch(err => console.log('could not retrieve group members')))
                 addImagesToProject(p, projectsObj)
             })
-            let condensedProjects = []
-            for(let key in projectsObj) condensedProjects.push(projectsObj[key])
-            let returnObj = {
-                student,
-                projects: condensedProjects
-            }
-            res.status(200).send(returnObj)
+            Promise.all(groupPromises).then(values => {
+                let condensedProjects = []
+                for(let key in projectsObj) {
+                    projectsObj[key].groupMembers = values.filter( studentArr => studentArr[0].pl_project_id === Number(key))[0]
+                    condensedProjects.push(projectsObj[key])
+                }
+                
+                let returnObj = {
+                    student,
+                    projects: condensedProjects
+                }
+                res.status(200).send(returnObj)
+            })
         })
     },
     updatePicture: (req, res) => {

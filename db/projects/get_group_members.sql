@@ -9,7 +9,8 @@ s.linkedin,
 s.github,
 s.portfolio,
 s.email,
-pl.id as projects_students_link_id
+pl.id as projects_students_link_id,
+pl.project_id as pl_project_id
 from projects p 
 inner join projects_students_link pl 
 on p.id = pl.project_id
