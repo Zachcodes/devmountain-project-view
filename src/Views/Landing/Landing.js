@@ -37,7 +37,7 @@ export default class Home extends Component {
 
     render() {
         let {doneLoading, featuredProject} = this.state
-        let {description, image_url} = featuredProject;
+        let {description, image_url, project_name, type, cohort_name} = featuredProject;
         let featuredImage = {
             width: '100%',
             height: '40%',
@@ -77,11 +77,16 @@ export default class Home extends Component {
                 </div>
                 <div className="landing-bottom-main-container">
                     <div className="featured-main-container" id="featured-main">
-                        <div className="featured-title">Featured Project</div>
+                        <div className="featured-title">Today's Featured Project</div>
                         <div className="featured-project-container">
                             <img className="featured-project-image" src={image_url}/>
-                            <div className="featured-project-about">
-                                {description}
+                            <div className="featured-project-right">
+                                <h3>{project_name}</h3>
+                                <h5>{description}</h5>
+                                <div className="featured-project-right-row">
+                                    <h3>Program: {type}</h3>
+                                    <h3>Cohort: {cohort_name}</h3>
+                                </div>
                             </div>
                         </div>
                     </div>

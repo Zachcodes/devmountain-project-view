@@ -304,15 +304,18 @@ body {
 }
 
 .project-modal-description {
-    color: white;
-    font-size: 14px;
+    color: black;
+    font-size: 18px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    margin-top: 15px;
 }
 
-.project-modal-button {
+/* .project-modal-button {
     position: absolute;
     margin: auto;
     bottom: 5px;
-}
+} */
 
 .project-modal-button button:first-child {
     font-size: 20px;
@@ -320,6 +323,8 @@ body {
     background-color: #25AAE1;
     color: white;
     border: none;
+    position: absolute;
+    right: 0;
 }
 
 .project-modal-button button:first-child:hover {

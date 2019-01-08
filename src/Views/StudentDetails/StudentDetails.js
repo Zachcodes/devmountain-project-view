@@ -63,7 +63,8 @@ class Student extends Component {
                 {
                     showModalSTORE
                     ?
-                    <ProjectModal/>
+                    <ProjectModal
+                    history={this.props.history}/>
                     :
                     null
                 }

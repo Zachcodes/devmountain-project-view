@@ -42,11 +42,15 @@ class ProjectModal extends Component {
         })
     }
 
+    openStudent = (id) => {
+        this.props.history.push(`/students/${id}`)
+    }
+
     render() {
         let {showModal, selectedModalProject} = this.props
         let { selectedImageIndex } = this.state;
-        let { images, project_name, project_type, description, url } = selectedModalProject
-        console.log(selectedModalProject)
+        let { images, project_name, project_type, description, url, groupMembers } = selectedModalProject
+        console.log('groupmembers', groupMembers)
         let modalClass = showModal ? `project-modal-main-container` : 'project-modal-main-container hide-modal';
         return (
             <div className={modalClass} id="p-modal-1">
@@ -68,7 +72,16 @@ class ProjectModal extends Component {
                 <div className="project-modal-child modal-child-right" id="p-modal-6">
                         <div className="project-modal-name" id="p-modal-7">{project_name}</div>
                         <div className="project-modal-description" id="p-modal-8">{description}</div>
-                        <a href={url} target="_blank" id="p-modal-9" className="project-modal-button"><button id="p-modal-10">View Project</button></a>
+                        <div className="ch-project-team">
+                            Team Members: 
+                            {
+                            groupMembers.map(m => <img src={m.student_image} 
+                                        className="student-dash-member-picture" 
+                                        onClick={() => this.openStudent(m.student_id)}
+                                        title={`${m.student_first} ${m.student_last}`}/>)
+                            }
+                            <a href={url} target="_blank" id="p-modal-9" className="project-modal-button"><button id="p-modal-10">View Project</button></a>
+                        </div>
                 </div>
             </div>
         )
