@@ -43,7 +43,11 @@ app.use(bodyParser.json())
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    secret: process.env.SESSION_SECRET
+    secret: process.env.SESSION_SECRET,
+    cookie: {
+        secure: false,
+        maxAge: 100000
+    }
 }))
 
 //massive setup 

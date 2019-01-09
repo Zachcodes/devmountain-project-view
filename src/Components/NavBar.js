@@ -59,10 +59,10 @@ class NavBar extends Component {
 
     login = () => {
         if(process.env.REACT_APP_ENVIRONMENT === 'production') {
-            window.location.href = '/api/auth';
+            return '/api/auth';
         }
         else {
-            window.location.href = 'http://localhost:3200/api/auth';
+            return 'http://localhost:3200/api/auth';
         }
     }
 
@@ -87,7 +87,7 @@ class NavBar extends Component {
                         :
                         <span className="navbar-right-span">
                             <div className="navbar-right-link programs"><Link to="/programs">Programs</Link></div>
-                            <div className="navbar-right-link login" onClick={this.login}>Login</div>
+                            <div className="navbar-right-link login" ><a href={this.login()}>Login</a></div>
                             <i className="fas fa-bars hamburger-nav" onMouseEnter={this.setClassDropdown} onMouseLeave={this.checkDropdownStatus}></i>
                         </span>
                     }
@@ -111,8 +111,8 @@ class NavBar extends Component {
                         <span className="navbar-dropdown-link" onClick={() => this.hideDropdown('/programs')}>
                             Programs
                         </span>
-                        <span className="navbar-dropdown-link" onClick={this.login}>
-                            Login
+                        <span className="navbar-dropdown-link">
+                            <a href={this.login()}>Login</a>
                         </span>   
                     </div> 
                 }
