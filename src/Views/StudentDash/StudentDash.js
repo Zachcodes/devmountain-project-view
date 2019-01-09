@@ -16,7 +16,6 @@ export default class Student extends Component {
             studentInfo: {},
             studentSettings: {},
             cohortStudents: [],
-            retrievedDashboard: false,
             displayedProjects: 'group',
             addNew: false
         }
@@ -29,8 +28,7 @@ export default class Student extends Component {
                 group,
                 personal,
                 studentInfo: student,
-                cohortStudents,
-                retrievedDashboard: true
+                cohortStudents
             })
         }).catch(err => console.log(err))
     }
@@ -90,7 +88,7 @@ export default class Student extends Component {
     }
 
     render() {
-        let { studentInfo: student, retrievedDashboard, studentSettings, displayedProjects, addNew, group, personal, cohortStudents } = this.state
+        let { studentInfo: student, studentSettings, displayedProjects, addNew, group, personal, cohortStudents } = this.state
         // debugger;
         let projectNav, projectsToDisplay;
         if(displayedProjects === 'group') {
@@ -121,8 +119,6 @@ export default class Student extends Component {
             })
         }
         return (
-            retrievedDashboard 
-            ?
             <div className="student-dashboard-main">
                 <div className="student-dashboard-left-info-container">
                     <StudentDashInfo studentInfo={student} updateStudentInfo={this.updateStudentInfo}/>
@@ -153,10 +149,6 @@ export default class Student extends Component {
                         }
                     </div>
                 </div>
-            </div>
-            :
-            <div className="student-dashboard-main">
-                Loading Dashboard!
             </div>
         )
     }

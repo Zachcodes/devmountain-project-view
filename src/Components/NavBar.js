@@ -41,12 +41,7 @@ class NavBar extends Component {
     }
 
     hideDropdown = (path) => {
-        if(path === 'login') {
-            window.location.href = '/api/auth';
-        }
-        else {
-            this.props.history.push(path)
-        }
+        if(path) this.props.history.push(path)
         this.dropDownRef.current.classList.remove('navbar-dropdown-show')
     }
 
@@ -60,6 +55,15 @@ class NavBar extends Component {
                 if(location.pathname === '/dashboard') history.push('/')
             }
         })
+    }
+
+    login = () => {
+        if(process.env.REACT_APP_ENVIRONMENT === 'production') {
+            window.location.href = '/api/auth';
+        }
+        else {
+            window.location.href = 'http://localhost:3200/api/auth';
+        }
     }
 
     render() {
@@ -83,7 +87,7 @@ class NavBar extends Component {
                         :
                         <span className="navbar-right-span">
                             <div className="navbar-right-link programs"><Link to="/programs">Programs</Link></div>
-                            <div className="navbar-right-link login"><a href="/api/auth">Login</a></div>
+                            <div className="navbar-right-link login" onClick={this.login}>Login</div>
                             <i className="fas fa-bars hamburger-nav" onMouseEnter={this.setClassDropdown} onMouseLeave={this.checkDropdownStatus}></i>
                         </span>
                     }
@@ -107,7 +111,7 @@ class NavBar extends Component {
                         <span className="navbar-dropdown-link" onClick={() => this.hideDropdown('/programs')}>
                             Programs
                         </span>
-                        <span className="navbar-dropdown-link" onClick={() => this.hideDropdown('login')}>
+                        <span className="navbar-dropdown-link" onClick={this.login}>
                             Login
                         </span>   
                     </div> 
