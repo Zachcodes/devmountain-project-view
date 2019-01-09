@@ -40,11 +40,18 @@ class NavBar extends Component {
         }
     }
 
-    hideDropdown = () => {
+    hideDropdown = (path) => {
+        if(path === 'login') {
+            window.location.href = '/api/auth';
+        }
+        else {
+            this.props.history.push(path)
+        }
         this.dropDownRef.current.classList.remove('navbar-dropdown-show')
     }
 
-    logout = () => {
+    logout = (hideDropdown = false) => {
+        if(hideDropdown) this.dropDownRef.current.classList.remove('navbar-dropdown-show')
         let {logout} = this.props
         logout().then(res => {
             let {action} = res;
@@ -56,7 +63,7 @@ class NavBar extends Component {
     }
 
     render() {
-        let {programs, loggedIn} = this.props
+        let {loggedIn} = this.props
         return (
             <div className="navbar-container">
                 <div className="navbar-left">
@@ -68,7 +75,6 @@ class NavBar extends Component {
                         loggedIn
                         ?
                         <span className="navbar-right-span">
-                            {/* <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div> */}
                             <div className="navbar-right-link programs"><Link to="/programs">Programs</Link></div>
                             <div className="navbar-right-link dashboard"><Link to="/dashboard">Dashboard</Link></div>
                             <div className="navbar-right-link navbar-right-logout" onClick={this.logout}>Logout</div>
@@ -76,27 +82,36 @@ class NavBar extends Component {
                         </span>
                         :
                         <span className="navbar-right-span">
-                            {/* <div className="navbar-right-link programs" onMouseLeave={this.checkDropdownStatus}><Link to="/programs" onMouseEnter={this.setClassDropdown}>Programs</Link></div> */}
                             <div className="navbar-right-link programs"><Link to="/programs">Programs</Link></div>
                             <div className="navbar-right-link login"><a href="/api/auth">Login</a></div>
                             <i className="fas fa-bars hamburger-nav" onMouseEnter={this.setClassDropdown} onMouseLeave={this.checkDropdownStatus}></i>
                         </span>
                     }
                 </div>
-                <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
-                    {
-                        programs.map(program => {
-                            return (
-                                <span className="navbar-dropdown-link" key={program.id} onClick={this.hideDropdown}>
-                                    <Link to={`/programs/cohorts/${program.id}`}
-                                    replace={true}>
-                                        {program.type}
-                                    </Link>
-                                </span>
-                            )
-                            })
-                    }
-                </div>
+                {
+                    loggedIn
+                    ?
+                    <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
+                        <span className="navbar-dropdown-link" onClick={() => this.hideDropdown('/programs')}>
+                            Programs
+                        </span>
+                        <span className="navbar-dropdown-link" onClick={() => this.hideDropdown('/dashboard')}>
+                            Dashboard
+                        </span>        
+                        <span className="navbar-dropdown-link" onClick={() => this.logout(true)}>
+                            Logout
+                        </span>        
+                    </div>
+                    :
+                    <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
+                        <span className="navbar-dropdown-link" onClick={() => this.hideDropdown('/programs')}>
+                            Programs
+                        </span>
+                        <span className="navbar-dropdown-link" onClick={() => this.hideDropdown('login')}>
+                            Login
+                        </span>   
+                    </div> 
+                }
             </div>
         )
     }
