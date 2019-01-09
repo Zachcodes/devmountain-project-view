@@ -25,8 +25,9 @@ class ProjectModal extends Component {
     }
 
     closeModal = (e) => {
-        let index = e.target.id.indexOf('p-modal')
-        if(index === -1) this.props.hideModal()
+
+        let index = e.target.classList.contains('modal-element')
+        if(!index) this.props.hideModal()
     }
 
     setSelectedImageIndex() {
@@ -50,36 +51,38 @@ class ProjectModal extends Component {
         let {showModal, selectedModalProject} = this.props
         let { selectedImageIndex } = this.state;
         let { images, project_name, project_type, description, url, groupMembers } = selectedModalProject
-        let modalClass = showModal ? `project-modal-main-container` : 'project-modal-main-container hide-modal';
+        let modalClass = showModal ? `project-modal-main-container modal-element` : 'project-modal-main-container hide-modal modal-element';
         return (
-            <div className={modalClass} id="p-modal-1">
-                <div className="project-modal-child modal-child-left" id="p-modal-2">
-                    <div className="project-modal-main-image" id="p-modal-3">
-                        <img src={images[selectedImageIndex].image_url} id="p-modal-4"/>
+            <div className={modalClass}>
+                <div className="project-modal-child modal-child-left modal-element">
+                    <div className="project-modal-main-image modal-element">
+                        <img src={images[selectedImageIndex].image_url} className="modal-element"/>
                     </div>
-                    <div className="project-modal-thumbnail-container" id="p-modal-5">
+                    <div className="project-modal-thumbnail-container modal-element">
                         {
                             images.map( (image, i) => {
                                 return (
                                     <img src={image.image_url}
-                                    key={i + Math.random()}/>
+                                    key={image.project_image_id}
+                                    className="modal-element"/>
                                 )
                             })
                         }
                     </div>
                 </div>
-                <div className="project-modal-child modal-child-right" id="p-modal-6">
-                        <div className="project-modal-name" id="p-modal-7">{project_name}</div>
-                        <div className="project-modal-description" id="p-modal-8">{description}</div>
-                        <div className="ch-project-team">
+                <div className="project-modal-child modal-child-right modal-element">
+                        <div className="project-modal-name modal-element">{project_name}</div>
+                        <div className="project-modal-description modal-element">{description}</div>
+                        <div className="ch-project-team modal-element">
                             Team Members: 
                             {
                             groupMembers.map(m => <img src={m.student_image} 
-                                        className="student-dash-member-picture" 
+                                        className="student-dash-member-picture modal-element" 
                                         onClick={() => this.openStudent(m.student_id)}
-                                        title={`${m.student_first} ${m.student_last}`}/>)
+                                        title={`${m.student_first} ${m.student_last}`}
+                                        key={m.student_id}/>)
                             }
-                            <a href={url} target="_blank" id="p-modal-9" className="project-modal-button"><button id="p-modal-10">View Project</button></a>
+                            <a href={url} target="_blank" className="project-modal-button modal-element"><button className="modal-element">View Project</button></a>
                         </div>
                 </div>
             </div>
