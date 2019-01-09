@@ -24,6 +24,7 @@ export default class Student extends Component {
     componentDidMount() {
         axios.get('/api/loadDashboard/student').then(response => {
             let {group, personal, student, cohortStudents} = response.data
+            console.log('response in studentDash', response.data)
             this.setState({
                 group,
                 personal,
@@ -89,6 +90,7 @@ export default class Student extends Component {
 
     render() {
         let { studentInfo: student, studentSettings, displayedProjects, addNew, group, personal, cohortStudents } = this.state
+        console.log('student', student)
         // debugger;
         let projectNav, projectsToDisplay;
         if(displayedProjects === 'group') {
