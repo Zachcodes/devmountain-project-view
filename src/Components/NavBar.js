@@ -82,20 +82,20 @@ class NavBar extends Component {
                             <i className="fas fa-bars hamburger-nav" onMouseEnter={this.setClassDropdown} onMouseLeave={this.checkDropdownStatus}></i>
                         </span>
                     }
-                    <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
-                        {
-                            programs.map(program => {
-                                return (
-                                    <span className="navbar-dropdown-link" key={program.id} onClick={this.hideDropdown}>
-                                        <Link to={`/programs/cohorts/${program.id}`}
-                                        replace={true}>
-                                            {program.type}
-                                        </Link>
-                                    </span>
-                                )
-                             })
-                        }
-                    </div>
+                </div>
+                <div className="navbar-dropdown navbar-dropdown-hidden" ref={this.dropDownRef} onMouseLeave={this.checkDropdownStatus}>
+                    {
+                        programs.map(program => {
+                            return (
+                                <span className="navbar-dropdown-link" key={program.id} onClick={this.hideDropdown}>
+                                    <Link to={`/programs/cohorts/${program.id}`}
+                                    replace={true}>
+                                        {program.type}
+                                    </Link>
+                                </span>
+                            )
+                            })
+                    }
                 </div>
             </div>
         )

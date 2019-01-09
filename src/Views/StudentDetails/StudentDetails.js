@@ -69,8 +69,7 @@ class Student extends Component {
                     null
                 }
                 <div className="student-info-main-container">
-                    {/* TODO: Need to make tiny nav and have it display current route */}
-                    <TinyNav heightClass="student-tiny-nav"/>
+                    {/* <TinyNav heightClass="student-tiny-nav"/> */}
                     <div className="student-position-container">
                         <div className="student-info-picture-container">
                             <img src={image}/>

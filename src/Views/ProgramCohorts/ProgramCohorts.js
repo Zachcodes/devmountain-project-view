@@ -17,6 +17,7 @@ class CohortOverview extends Component {
     }
     
     componentDidMount() {
+        console.log(11111)
         if(this.props.match.params.programtype) {
             this.refreshCohorts()
         } 

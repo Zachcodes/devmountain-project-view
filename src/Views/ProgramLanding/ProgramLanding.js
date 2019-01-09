@@ -71,7 +71,7 @@ class ProgramLanding extends Component {
     }
 
     render() {
-        let {doneLoading, active, cohorts, amountToDisplay} = this.state
+        let {active, cohorts, amountToDisplay} = this.state
         let filtered = cohorts.filter( cohort => {
             if(active === 0 && cohort.name) {
                 return true;

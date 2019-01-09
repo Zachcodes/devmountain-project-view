@@ -88,7 +88,7 @@ class CohortDetails extends Component {
                     null
                 }
                 <div className="ch-header">
-                    <TinyNav/>
+                    {/* <TinyNav/> */}
                     <div className="ch-header-filter-container">
                         <div><span className={groupClass} onClick={() => this.setActiveType('group')}>Group Projects</span> / <span className={studentClass} onClick={() => this.setActiveType('student')}>Students</span></div>
                     </div>
@@ -107,7 +107,7 @@ class CohortDetails extends Component {
                     })
 
                     :
-                    <div className="ch-student-wrapper">===
+                    <div className="ch-student-wrapper">
                         {  
                             students.map( student => {
                                 return (
