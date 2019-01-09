@@ -73,7 +73,6 @@ passport.deserializeUser((user, done) => {
 
 passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, user, done) {
     let {id: devmtn_id, first_name, last_name, email, cohortId} = user;
-    console.log('user', user)
     let db = app.get('db')
     db.auth.get_user_by_devmtn_id({devmtn_id}).then( userArr => {
         if(userArr.length) {

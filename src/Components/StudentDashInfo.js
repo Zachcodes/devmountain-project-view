@@ -4,7 +4,7 @@ import axios from 'axios';
 export default class StudentDashInfo extends Component {
     constructor(props) {
         super(props)
-        let {about, first, last, email, linkedin, portfolio, github, image} = props.studentInfo 
+        let {about, first, last, email, linkedin, portfolio, github, image, cohort} = props.studentInfo 
         this.state = {
             about: about ? about : '',
             first: first ? first : '',
@@ -14,6 +14,7 @@ export default class StudentDashInfo extends Component {
             portfolio: portfolio ? portfolio : '',
             github: github ? github : '',
             image: image ? image : '',
+            cohort: cohort ? cohort : 0,
             edit: false
         }
     }
@@ -25,8 +26,8 @@ export default class StudentDashInfo extends Component {
     }
 
     saveInfo() {
-        let {about, first, last, email, linkedin, portfolio, github, image} = this.state 
-        let newStudentInfo = {about, first, last, email, linkedin, portfolio, github, image};
+        let {about, first, last, email, linkedin, portfolio, github, image, cohort} = this.state 
+        let newStudentInfo = {about, first, last, email, linkedin, portfolio, github, image, cohort};
         axios.put('/api/students/info', newStudentInfo).then(res => {
             this.props.updateStudentInfo(res.data)
             this.setState({
