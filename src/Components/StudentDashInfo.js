@@ -55,7 +55,7 @@ export default class StudentDashInfo extends Component {
                     </div>
                     :
                     <div className="student-dash-info-container">
-                        <img src={image} className="student-dashboard-info-picture"/>
+                        <img src={this.props.studentInfo.image} className="student-dashboard-info-picture"/>
                         <span className="student-dashboard-info-text">{first} {last}</span>
                         <span className="student-dashboard-info-text">{about}</span>
                         <span className="student-dashboard-info-text">{email}</span>
