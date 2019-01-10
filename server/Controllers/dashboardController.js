@@ -3,8 +3,12 @@ const {splitPersonalAndGroup, addImagesToProject} = require('../Utilities/jsUtil
 module.exports = {
     loadDashboard: (req, res) => {
         const db = req.app.get('db')
+        let newUser = req.session.passport.user.newUser
+        // TODO: Remove this after testing
+        newUser = true
         let response = {
-            role: ''
+            role: '',
+            newUser
         }
         if(req.session.isAdmin) response.role = 'admin'
         if(req.session.isStaff) response.role = 'staff'
@@ -71,7 +75,6 @@ module.exports = {
     loadStudentDashboard: (req, res) => {
         const db = req.app.get('db')
         let {userId} = req.session;
-        let newUser = req.session.passport.user.newUser
         db.students.get_student_by_user_id({userId}).then( studentArr => {
 
             if(studentArr.length) {
@@ -116,8 +119,7 @@ module.exports = {
                                 group,
                                 personal,
                                 student,
-                                cohortStudents: students,
-                                newUser
+                                cohortStudents: students
                             }
                             res.status(200).send(returnObj)
                         })

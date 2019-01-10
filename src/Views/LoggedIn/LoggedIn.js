@@ -6,6 +6,7 @@ import './LoggedIn.css'
 import StudentDash from '../StudentDash/StudentDash'
 import Staff from '../../Components/Staff'
 import Admin from '../../Components/Admin'
+import NewUser from '../NewUser/NewUser'
 
 export default class LoggedIn extends Component {
     constructor() {
@@ -18,7 +19,8 @@ export default class LoggedIn extends Component {
     }
     componentDidMount() {
         axios.get('/api/loadDashboard').then(response => {
-            this.setState({initialAuth: true, role: response.data.role})
+            let {role, newUser} = response.data
+            this.setState({initialAuth: true, role, newUser})
         }).catch(err => this.setState({initialAuth: true, redirect: true}))
     }
 
@@ -27,13 +29,17 @@ export default class LoggedIn extends Component {
     }
     
     render() {
-        let {role, initialAuth, redirect} = this.state
+        let {role, initialAuth, redirect, newUser} = this.state
         let {redirectToLogin} = this
         let typeToRender = ''
         role = 'student'
-        if(role === 'student') typeToRender = <StudentDash {...this.props}/>
-        if(role === 'staff') typeToRender = <Staff {...this.props}/>
-        if(role === 'admin') typeToRender = <Admin {...this.props}/>
+        if(initialAuth && newUser && role === 'student') typeToRender = <NewUser {...this.props}/>
+        else if(initialAuth) {
+            if(role === 'student') typeToRender = <StudentDash {...this.props}/>
+            if(role === 'staff') typeToRender = <Staff {...this.props}/>
+            if(role === 'admin') typeToRender = <Admin {...this.props}/>
+        }
+        // TODO: Remove this after development
         if(initialAuth) redirect = false;
         if(initialAuth && redirect) redirectToLogin()
         return (

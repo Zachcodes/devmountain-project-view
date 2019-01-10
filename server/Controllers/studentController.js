@@ -55,5 +55,13 @@ module.exports = {
         db.students.update_student_info({id, about, first, last, email, linkedin, portfolio, github, image}).then(updatedStudent => {
             res.status(200).send(updatedStudent[0])
         }).catch( err => res.status(500).send('Could not update student details'))
+    },
+    getStudentInfo(req, res) {
+        let db = req.app.get('db')
+        let {id} = req.session.passport.user;
+        db.students.get_student_by_user_id({userId: id}).then(dbRes => {
+            let student = dbRes[0]
+            res.status(200).send(student)
+        })
     }
 }
