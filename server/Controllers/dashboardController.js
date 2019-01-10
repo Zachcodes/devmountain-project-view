@@ -71,18 +71,14 @@ module.exports = {
     loadStudentDashboard: (req, res) => {
         const db = req.app.get('db')
         let {userId} = req.session;
-        console.log('userId', userId)
+        let newUser = req.session.passport.user.newUser
         db.students.get_student_by_user_id({userId}).then( studentArr => {
-        console.log('studentArr', studentArr)
 
             if(studentArr.length) {
-                console.log('getting inside if 1')
                 let student = studentArr[0]
                 let {id, cohort, image, first, last} = student
-                console.log('student', student)
                 //go get all the projects associated with student 
                 db.students.get_projects_by_student_id({id}).then( projects => {
-                    console.log('projects', projects)
                     let projectsObj = {}
                     projects.forEach( p => {
                         addImagesToProject(p, projectsObj)
@@ -107,14 +103,12 @@ module.exports = {
                         })
                     }
                     Promise.all(promiseArr).then( values => {
-                        console.log('values', values)
                         if(values.length) {
                             values.forEach((members, i) => {
                                 group[i].members = members
                             })
                         }
                         db.cohorts.get_students_by_cohort({cohort}).then(students => {
-                            console.log(22112121, students)
                             //TODO: Possibly bring back in tags depending on what user wants
                             // db.tags.get_all_tags().then(tags => {
                             // })
@@ -122,7 +116,8 @@ module.exports = {
                                 group,
                                 personal,
                                 student,
-                                cohortStudents: students
+                                cohortStudents: students,
+                                newUser
                             }
                             res.status(200).send(returnObj)
                         })

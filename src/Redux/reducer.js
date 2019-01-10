@@ -22,7 +22,6 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     switch(action.type) {
         case GET_PROGRAMS_FULFILLED:
-            console.log(action.payload)
             return {
                 ...state,
                 programs: action.payload.data.types,

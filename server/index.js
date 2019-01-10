@@ -76,7 +76,9 @@ passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, us
     let db = app.get('db')
     db.auth.get_user_by_devmtn_id({devmtn_id}).then( userArr => {
         if(userArr.length) {
-            done(null, userArr[0])
+            userDone = userArr[0]
+            userDone.newUser = false;
+            done(null, userDone)
         }
         else {
             let isStudent = Devmtn.checkRoles(user, 'student')
@@ -103,16 +105,18 @@ passport.use('devmtn', new DevmtnStrategy(devmtnAuthConfig, function(jwtoken, us
 
             db.auth.create_user(newUser).then( user => {
                 let userId;
-                if(user[0]) userId = user[0].id
+                let userDone = user[0];
+                userDone.newUser = true;
+                userId = user.id
                 if(projectBrowserRole === 3 && userId) {
                     let defaultPictureUrl = process.env.DEFAULT_PICTURE
                     cohortId = cohortId ? cohortId : null;
                     db.auth.create_student({first_name, last_name, cohortId, userId, defaultPictureUrl}).then( student => {
-                        done(null, user)
+                        done(null, userDone)
                     })
                 }
                 else {
-                    done(null, user)
+                    done(null, userDone)
                 }
             })
         }
@@ -151,9 +155,19 @@ app.get('/api/auth', passport.authenticate('devmtn'))
 
 app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
     if(req.user) {
-        res.redirect(`/#/dashboard`)
+        if(process.env.ENVIRONMENT === 'development') {
+            res.redirect(`http://localhost:3005/#/dashboard`)
+        }
+        else {
+            res.redirect(`/#/dashboard`)
+        }
     } else {
-        res.redirect(`/#/`)
+        if(process.env.ENVIRONMENT === 'development') {
+            res.redirect(`http://localhost:3005/#/`)
+        }
+        else {
+            res.redirect(`/#/`)
+        }
     }
 })
 
@@ -211,10 +225,6 @@ app.get('/api/loadDashboard/student', sessionCheck, dc.loadStudentDashboard)
 
 //filter routes 
 app.get('/api/filter/:cohortId', fc.filterProjects)
-
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../build/index.html'))
-// })
 
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
