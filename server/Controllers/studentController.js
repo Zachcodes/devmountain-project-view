@@ -62,9 +62,13 @@ module.exports = {
         let studentArr = await db.students.get_student_by_user_id({userId: id})
         let student = studentArr[0]
         let cohorts = await db.cohorts.get_cohorts_for_new_user()
+        let cohortTypes = cohorts.reduce((a, c) => {
+            a[c.type] ? a[c.type].push(c) : a[c.type] = []
+            return a;
+        }, {})
         let returnObj = {
             student,
-            cohorts
+            cohorts: cohortTypes
         }
         res.status(200).send(returnObj)
         
