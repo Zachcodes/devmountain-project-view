@@ -13,6 +13,7 @@ module.exports = {
         if(req.session.isAdmin) response.role = 'admin'
         if(req.session.isStaff) response.role = 'staff'
         if(req.session.isStudent) response.role = 'student'
+        console.log(343434)
         res.status(200).send(response)
     },
     loadAdminDashboard: (req, res) => {

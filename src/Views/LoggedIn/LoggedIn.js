@@ -34,11 +34,12 @@ export default class LoggedIn extends Component {
         let typeToRender = ''
         role = 'student'
         if(initialAuth && newUser && role === 'student') typeToRender = <NewUser {...this.props}/>
-        else if(initialAuth) {
-            if(role === 'student') typeToRender = <StudentDash {...this.props}/>
-            if(role === 'staff') typeToRender = <Staff {...this.props}/>
-            if(role === 'admin') typeToRender = <Admin {...this.props}/>
-        }
+        // else if(initialAuth) {
+        //     console.log(111)
+        //     if(role === 'student') typeToRender = <StudentDash {...this.props}/>
+        //     if(role === 'staff') typeToRender = <Staff {...this.props}/>
+        //     if(role === 'admin') typeToRender = <Admin {...this.props}/>
+        // }
         // TODO: Remove this after development
         if(initialAuth) redirect = false;
         if(initialAuth && redirect) redirectToLogin()
