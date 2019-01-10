@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
+
 export default class NewUser extends Component {
     constructor() {
         super()
@@ -19,9 +20,6 @@ export default class NewUser extends Component {
     handleChange(val, key) {
         let obj = {...this.state.student}
         obj[key] = val;
-        console.log('this', this)
-        console.log('obj', obj)
-        console.log('test')
         this.setState({student: obj})
     }
 

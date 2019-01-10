@@ -56,12 +56,17 @@ module.exports = {
             res.status(200).send(updatedStudent[0])
         }).catch( err => res.status(500).send('Could not update student details'))
     },
-    getStudentInfo(req, res) {
+    async getStudentInfo(req, res) {
         let db = req.app.get('db')
         let {id} = req.session.passport.user;
-        db.students.get_student_by_user_id({userId: id}).then(dbRes => {
-            let student = dbRes[0]
-            res.status(200).send(student)
-        })
+        let studentArr = await db.students.get_student_by_user_id({userId: id})
+        let student = studentArr[0]
+        let cohorts = await db.cohorts.get_cohorts_for_new_user()
+        let returnObj = {
+            student,
+            cohorts
+        }
+        res.status(200).send(returnObj)
+        
     }
 }
