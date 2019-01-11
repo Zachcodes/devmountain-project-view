@@ -43,11 +43,7 @@ app.use(bodyParser.json())
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    secret: process.env.SESSION_SECRET,
-    cookie: {
-        secure: false,
-        maxAge: 100000
-    }
+    secret: process.env.SESSION_SECRET
 }))
 
 //massive setup 
@@ -155,14 +151,14 @@ app.get('/api/auth', passport.authenticate('devmtn'))
 
 app.get('/api/auth/callback', passport.authenticate('devmtn'), (req, res) => {
     if(req.user) {
-        if(process.env.ENVIRONMENT === 'development') {
+        if(process.env.WORKING_ENVIRONMENT === 'development') {
             res.redirect(`http://localhost:3005/#/dashboard`)
         }
         else {
             res.redirect(`/#/dashboard`)
         }
     } else {
-        if(process.env.ENVIRONMENT === 'development') {
+        if(process.env.WORKING_ENVIRONMENT === 'development') {
             res.redirect(`http://localhost:3005/#/`)
         }
         else {
