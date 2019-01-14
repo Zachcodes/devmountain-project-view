@@ -1,6 +1,4 @@
-import React, {
-    Component
-} from 'react'
+import React, {Component} from 'react'
 import axios from 'axios'
 
 
@@ -32,11 +30,11 @@ export default class NewUser extends Component {
                 cohorts,
                 cohortTypes
             } = res.data
-            let o = this.setSelectedCohortAndType(student.cohort, cohorts)
+            let obj = this.setSelectedCohortAndType(student.cohort, cohorts)
             let {
                 selectedType,
                 selectedCohortId
-            } = o
+            } = obj
             this.setState({
                 student,
                 cohorts,
@@ -69,8 +67,7 @@ export default class NewUser extends Component {
     }
 
     handleStudentChange(val, key) {
-        let obj = { ...this.state.student
-        }
+        let obj = { ...this.state.student}
         obj[key] = val;
         this.setState({
             student: obj
@@ -124,17 +121,10 @@ export default class NewUser extends Component {
                 <select name="cohorts" value={selectedCohortId} onChange={(e) => this.handleChange(e.target.value, 'selectedCohortId')}>
                 <option value='none'>None</option>
                 {
-                cohorts.map(c => {
-                return <option value= {
-                    c.id
-                }
-                key={
-                    c.id
-                }> {
-                    c.name
-                } </option>
-            })
-        } 
+                    cohorts.map(c => {
+                    return <option value={c.id} key={c.id}> { c.name }</option>
+                    })
+                } 
         </select> </div><div> Email: <input value={email} onChange = {(e) => this.handleStudentChange(e.target.value, 'email')}/></div>
             <div> First: <input value={first} onChange={(e) => this.handleStudentChange(e.target.value, 'first')}/></div>
             <div> Github: <input value={github} onChange={(e) => this.handleStudentChange(e.target.value, 'github')}/></div>
